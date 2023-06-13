@@ -72,7 +72,11 @@ module.exports = (sequelize) => {
           type:DataTypes.BOOLEAN,
           allowNull: false,
           defaultValue:true
-        }
+        },
+        rool: {
+          type: DataTypes.ENUM('Opción 1', 'Opción 2', 'Opción 3'),
+          defaultValue: 'Opción 1',
+        },
         
 
       }
