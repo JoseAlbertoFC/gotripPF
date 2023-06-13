@@ -73,10 +73,11 @@ module.exports = (sequelize) => {
           allowNull: false,
           defaultValue:true
         },
-        rool: {
-          type: DataTypes.ENUM('Opción 1', 'Opción 2', 'Opción 3'),
-          defaultValue: 'Opción 1',
-        },
+        rol:{
+          type: DataTypes.ENUM('user', 'admin', 'host'),
+          defaultValue: 'user',
+          allowNull: false,
+        }
         
 
       }
