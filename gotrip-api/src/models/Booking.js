@@ -11,12 +11,12 @@ module.exports = (sequelize) => {
         allowNull: false,
         defaultValue: Sequelize.UUIDV4
       },
-      checkIn: {
-        type: DataTypes.DATE,
+      dateIn: {
+        type: DataTypes.DATEONLY,
         allowNull: false,
       },
-      checkOut: {
-        type: DataTypes.DATE,
+      dateOut: {
+        type: DataTypes.DATEONLY,
         allowNull: false,
       },
       roomNum: {

@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
       allowNull: false,
       validate: {
         min: 0,
-        max: 10000,
+        max: 100000,
       },
       kindRoom: {
         type: DataTypes.ENUM("Standard", "Executive", "Premium", "VIP"),

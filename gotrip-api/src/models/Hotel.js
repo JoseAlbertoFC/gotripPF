@@ -47,8 +47,20 @@ module.exports = (sequelize) => {
           },
         },
       },
+      checkIn: {
+        type: DataTypes.TIME,
+        allowNull: false,
+      },
+      checkOut: {
+        type: DataTypes.TIME,
+        allowNull: false,
+      },
       numberRooms: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      overview: {
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       status: {
