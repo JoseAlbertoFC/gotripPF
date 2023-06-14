@@ -1,13 +1,13 @@
 // Aqui va el modelo Destination.
 
-const{DataTypes, UUIDV4}=require('sequelize');
+const{DataTypes, Sequelize}=require('sequelize');
 
 module.exports =(sequelize)=>{
 sequelize.define('Destination', {
 id:{
     type: DataTypes.UUID,
     primaryKey: true,
-    defaultValue: UUIDV4,
+    defaultValue: Sequelize.UUIDV4,
 },
 country:{
     type: DataTypes.STRING,
