@@ -1,6 +1,6 @@
 // Aqui va el modelo User.
 
-const { DataTypes, Sequelize, UUIDV4 } = require("sequelize");
+const { DataTypes, UUIDV4 } = require("sequelize");
 
 module.exports = (sequelize) => {
   // TODO Definicion del modelo
@@ -31,7 +31,6 @@ module.exports = (sequelize) => {
             }
           },
         },
-        // },
       },
       Birthday: {
         type: DataTypes.DATEONLY,
@@ -52,32 +51,32 @@ module.exports = (sequelize) => {
             }
           },
         },
-        password: {
-          type: DataTypes.STRING,
-          allowNull: false,
-          validate: {
-            isAlphanumeric: true,
-            len: [8, 16], // Longitud mínima y máxima de la contraseña
-          },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isAlphanumeric: true,
+          len: [8, 16], // Longitud mínima y máxima de la contraseña
         },
-        address: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
-        dniPasaport: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-        status: {
-          type: DataTypes.BOOLEAN,
-          allowNull: false,
-          defaultValue: true,
-        },
-        rol: {
-          type: DataTypes.ENUM("user", "admin", "host"),
-          defaultValue: "user",
-          allowNull: false,
-        },
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      dniPasaport: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      status: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
+      rol: {
+        type: DataTypes.ENUM("user", "admin", "host"),
+        defaultValue: "user",
+        allowNull: false,
       },
     },
     { timestamps: true }
