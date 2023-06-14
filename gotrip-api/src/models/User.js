@@ -1,90 +1,85 @@
 // Aqui va el modelo User.
 
-const {DataTypes,Sequelize, UUIDV4} = require('sequelize');
-
+const { DataTypes, Sequelize, UUIDV4 } = require("sequelize");
 
 module.exports = (sequelize) => {
-
-  // TODO Definicion del modelo 
+  // TODO Definicion del modelo
 
   sequelize.define(
-    'User',
+    "User",
     {
-      id:{
-        type:DataTypes.UUID,
+      id: {
+        type: DataTypes.UUID,
         primaryKey: true,
         allowNull: false,
-        defaultValue:UUIDV4
+        defaultValue: UUIDV4,
       },
-      name:{
-        type:DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
-      gender:{
-        type:DataTypes.STRING,
+      gender: {
+        type: DataTypes.STRING,
         allowNull: false,
         // Pendiente  para ver si las validaciones viene del FRONT-END
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           esGeneroValido(value) {
-            if (!['Masculino', 'Femenino', 'No binario'].includes(value)) {
-              throw new Error('El género especificado no es válido');
+            if (!["Masculino", "Femenino", "No binario"].includes(value)) {
+              throw new Error("El género especificado no es válido");
             }
-          }
-        }
-      // },
+          },
+        },
+        // },
       },
-      Birthday:{
+      Birthday: {
         type: DataTypes.DATEONLY,
         allowNull: false,
         validate: {
           isDate: true,
-          min: '1900-01-01', // Fecha mínima permitida
-          max: new Date().toISOString().split('T')[0] // Fecha máxima permitida (hoy)
-        }
-      },
-      email:{
-        isEmail(email) {
-          if (/^[^\s@]+@[^\s@]+.[^\s@]+$/.test(email)) {
-            throw new Error("This is an invalid email.");
-          }
-        
+          min: "1900-01-01", // Fecha mínima permitida
+          max: new Date().toISOString().split("T")[0], // Fecha máxima permitida (hoy)
         },
-        password:{
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        Validate: {
+          isEmail(email) {
+            if (/^[^\s@]+@[^\s@]+.[^\s@]+$/.test(email)) {
+              throw new Error("This is an invalid email.");
+            }
+          },
+        },
+        password: {
           type: DataTypes.STRING,
           allowNull: false,
-            validate: {
-              isAlphanumeric: true,
-              len: [8, 16] // Longitud mínima y máxima de la contraseña
-            }
+          validate: {
+            isAlphanumeric: true,
+            len: [8, 16], // Longitud mínima y máxima de la contraseña
+          },
         },
-        address:{
-          type:DataTypes.STRING,
+        address: {
+          type: DataTypes.STRING,
           allowNull: false,
         },
-        dniPasaport:{
-          type:DataTypes.INTEGER,
+        dniPasaport: {
+          type: DataTypes.INTEGER,
           allowNull: false,
-
         },
-        status:{
-          type:DataTypes.BOOLEAN,
+        status: {
+          type: DataTypes.BOOLEAN,
           allowNull: false,
-          defaultValue:true
+          defaultValue: true,
         },
-        rol:{
-          type: DataTypes.ENUM('user', 'admin', 'host'),
-          defaultValue: 'user',
+        rol: {
+          type: DataTypes.ENUM("user", "admin", "host"),
+          defaultValue: "user",
           allowNull: false,
-        }
-        
-
-      }
-
+        },
+      },
     },
     { timestamps: true }
-  )
-
-}
-
+  );
+};

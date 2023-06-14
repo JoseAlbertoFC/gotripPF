@@ -1,6 +1,6 @@
 // Aqui va el modelo Pay.
 
-const {DataTypes,Sequelize, UUIDV4} = require('sequelize');
+const {DataTypes,UUIDV4} = require('sequelize');
 
 
 module.exports = (sequelize) => {
@@ -8,15 +8,15 @@ module.exports = (sequelize) => {
   // TODO Definicion del modelo 
 
   sequelize.define(
-    'Pagos',
+    'Pay',
     {
       id:{
         type:DataTypes.UUID,
         primaryKey: true,
         allowNull: false,
-        defaultValue:UUIDV4
+        defaultValue: UUIDV4
       },
-      monto:{
+      amount:{
         type: DataTypes.DECIMAL(10, 2), // Definir tipo de dato DECIMAL con 10 dígitos y 2 decimales
         allowNull: false,
         validate: {
@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
           min: 0, // Mínimo valor permitido
           max: 100000 // Máximo valor permitido
         },
-        fechaPago:{
+        paymentDate:{
           type: DataTypes.DATEONLY,
           allowNull: false,
           validate: {
@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
             isBefore: new Date().toISOString().split('T')[0] // Fecha máxima permitida (hoy)
           }
         },
-        statusPago:{
+        paymentStatus:{
           type:DataTypes.DATEONLY,
           allowNull: false,
         },

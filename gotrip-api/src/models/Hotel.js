@@ -47,6 +47,10 @@ module.exports = (sequelize) => {
           },
         },
       },
+      numberRooms: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       status: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
