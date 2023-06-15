@@ -30,6 +30,12 @@ module.exports = (sequelize) => {
               // throw new Error("El género especificado no es válido");
             // }
           // },
+
+        //   esGeneroValido(value) {
+        //     if (!["Masculino", "Femenino", "No binario"].includes(value)) {
+        //       throw new Error("El género especificado no es válido");
+        //     }
+        //   },
         // },
       },
       birthday: {
@@ -72,6 +78,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
     },
-    { timestamps: true }
+    { timestamps: true },
+    { paranoid: true }
   );
 };
