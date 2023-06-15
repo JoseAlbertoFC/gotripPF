@@ -1,18 +1,11 @@
 const { Router } = require ("express");
 // Aqui va el midleware de User
 
-// Ejemplo:
-// const { Router } = require ("express"); 
-// const { getCountries, getCountryById } = require ("../handlers/Countries")
+const { userNew } = require("../handlers/UserHandlers/getUsers");
+// Aqui va el midleware de User
 
-// const countriesRoutes = Router();
+const userRoute = Router();
 
-// countriesRoutes.get("/", getCountries);
-// countriesRoutes.get("/:id", getCountryById);
-// otra ruta
-// otra ruta
+userRoute.post("/createNewUser", userNew)
 
-
-// module.exports = countriesRoutes;
-
-//Borra este comentario guia al empezar a codear!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+module.exports = userRoute
