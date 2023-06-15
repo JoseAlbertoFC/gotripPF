@@ -22,15 +22,15 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
         // Pendiente  para ver si las validaciones viene del FRONT-END
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          esGeneroValido(value) {
-            if (!["Masculino", "Femenino", "No binario"].includes(value)) {
-              throw new Error("El género especificado no es válido");
-            }
-          },
-        },
+        // type: DataTypes.STRING,
+        // allowNull: false,
+        // validate: {
+        //   esGeneroValido(value) {
+        //     if (!["Masculino", "Femenino", "No binario"].includes(value)) {
+        //       throw new Error("El género especificado no es válido");
+        //     }
+        //   },
+        // },
       },
       birthday: {
         type: DataTypes.DATEONLY,
