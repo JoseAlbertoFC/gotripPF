@@ -1,6 +1,6 @@
 // Aqui va el modelo User.
 
-const { DataTypes, UUIDV4 } = require("sequelize");
+const { DataTypes,Sequelize } = require("sequelize");
 
 module.exports = (sequelize) => {
   // TODO Definicion del modelo
@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         primaryKey: true,
         allowNull: false,
-        defaultValue: UUIDV4,
+        defaultValue: Sequelize.UUIDV4,
       },
       name: {
         type: DataTypes.STRING,
@@ -22,35 +22,28 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
         // Pendiente  para ver si las validaciones viene del FRONT-END
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          esGeneroValido(value) {
-            if (!["Masculino", "Femenino", "No binario"].includes(value)) {
-              throw new Error("El género especificado no es válido");
-            }
-          },
-        },
+        // type: DataTypes.STRING,
+        // allowNull: false,
+        // validate: {
+          // esGeneroValido(value) {
+            // if (!["Masculino", "Femenino", "No binario"].includes(value)) {
+              // throw new Error("El género especificado no es válido");
+            // }
+          // },
+        // },
       },
       birthday: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-          isDate: true,
-          min: "1900-01-01", // Fecha mínima permitida
-          max: new Date().toISOString().split("T")[0], // Fecha máxima permitida (hoy)
-        },
+        // validate: {
+          // isDate: true,
+          // min: "1900-01-01", // Fecha mínima permitida
+          // max: new Date().toISOString().split("T")[0], // Fecha máxima permitida (hoy)
+        // },
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
-        Validate: {
-          isEmail(email) {
-            if (/^[^\s@]+@[^\s@]+.[^\s@]+$/.test(email)) {
-              throw new Error("This is an invalid email.");
-            }
-          },
-        },
+        allowNull: false, 
       },
       password: {
         type: DataTypes.STRING,
