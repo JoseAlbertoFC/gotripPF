@@ -1,22 +1,14 @@
-// En esta carpeta van los handlers de Booking
-// Porfa crea un archivo para cada handler
+const { getAllBookings } = require("../../controllers/BookingControllers/getAllBookings");
 
-// Ejemplo:
-// const {countryDetail} = require("../controllers/Countries");
+const getBookings = async (req, res) => {
+    try {
+      const result = await getAllBookings();
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  };
 
-// const getCountryById = async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     const result = await countryDetail(id.toUpperCase());
-//     res.status(200).json(result);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
-
-// module.exports = {
-//   getCountryById,
-// };
-
-//Borra este comentario guia al empezar a codear!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+module.exports = {
+  getBookings,
+};
