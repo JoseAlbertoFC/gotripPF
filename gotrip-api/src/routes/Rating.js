@@ -1,18 +1,11 @@
 const { Router } = require ("express");
-// Aqui va el midleware de Rating
+const { postRating } = require("../handlers/RatingHandlers/postRating");
 
-// Ejemplo:
-// const { Router } = require ("express"); 
-// const { getCountries, getCountryById } = require ("../handlers/Countries")
+const ratingRoutes = Router();
 
-// const countriesRoutes = Router();
-
-// countriesRoutes.get("/", getCountries);
-// countriesRoutes.get("/:id", getCountryById);
-// otra ruta
-// otra ruta
+ratingRoutes.post("/", postRating);
 
 
-// module.exports = countriesRoutes;
 
-//Borra este comentario guia al empezar a codear!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+module.exports = ratingRoutes;
+
