@@ -39,29 +39,29 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { Hotel, Rooms, Service, Pay, User, Gallery, Rating, Destination, Booking } =
   sequelize.models;
 
-  Hotel.hasMany(Rooms, { as: 'rooms', foreignKey: 'roomsId' });
+  Hotel.hasMany(Rooms, { as: 'rooms', foreignKey: 'hotelId' });
   Rooms.belongsTo(Hotel, { as: 'hotel', foreignKey: 'hotelId' });
   
-  Destination.hasMany(Hotel, { as: 'hotel', foreignKey: 'hotelId' });
+  Destination.hasMany(Hotel, { as: 'hotel', foreignKey: 'destinationId' });
   Hotel.belongsTo(Destination, { as: 'destination', foreignKey: 'destinationId' });
   
-  Hotel.hasMany(Gallery, { as: 'gallery', foreignKey: 'galleryId' });
+  Hotel.hasMany(Gallery, { as: 'gallery', foreignKey: 'hotelId' });
   Gallery.belongsTo(Hotel, { as: 'hotel', foreignKey: 'hotelId' });
   
-  Hotel.hasMany(Rating, { as: 'rating', foreignKey: 'ratingId' });
+  Hotel.hasMany(Rating, { as: 'rating', foreignKey: 'hotelId' });
   Rating.belongsTo(Hotel, { as: 'hotel', foreignKey: 'hotelId' });
   Rating.belongsTo(User, { as: 'user', foreignKey: 'userId' });
   
-  Hotel.hasMany(Booking, { as: 'booking', foreignKey: 'bookingId' });
+  Hotel.hasMany(Booking, { as: 'booking', foreignKey: 'hotelId' });
   Booking.belongsTo(Hotel, { as: 'hotel', foreignKey: 'hotelId' });
   Booking.belongsTo(User, { as: 'user', foreignKey: 'userId' });
   
-  User.hasMany(Pay, { as: 'pay', foreignKey: 'payId' });
+  User.hasMany(Pay, { as: 'pay', foreignKey: 'userId' });
   Pay.belongsTo(User, { as: 'user', foreignKey: 'userId' });
-  Pay.hasOne(Booking, { as: 'booking', foreignKey: 'bookingId' });
+  Pay.hasOne(Booking, { as: 'booking', foreignKey: 'payId' });
   
-  Booking.hasMany(Rooms, { as: 'rooms', foreignKey: 'roomsId' });
-  Booking.hasOne(Pay, { as: 'pay', foreignKey: 'payId' });
+  Booking.hasMany(Rooms, { as: 'rooms', foreignKey: 'bookingId' });
+  Booking.hasOne(Pay, { as: 'pay', foreignKey: 'bookingId' });
   Rooms.belongsTo(Booking, { as: 'booking', foreignKey: 'bookingId' });
 
 Rooms.belongsToMany(Service, {through: "Rooms_Service"});
