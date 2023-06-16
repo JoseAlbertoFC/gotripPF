@@ -39,30 +39,30 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { Hotel, Rooms, Service, Pay, User, Gallery, Rating, Destination, Booking } =
   sequelize.models;
 
-Hotel.hasMany(Rooms, { as: 'rooms', foreignKey: 'id' });
-Rooms.belongsTo(Hotel, { as: 'hotel', foreignKey: 'id' });
-
-Destination.hasMany(Hotel, { as: 'hotel', foreignKey: 'id' });
-Hotel.belongsTo(Destination, { as: 'destination', foreignKey: 'id' });
-
-Hotel.hasMany(Gallery, { as: 'gallery', foreignKey: 'id' });
-Gallery.belongsTo(Hotel, { as: 'hotel', foreignKey: 'id' });
-
-Hotel.hasMany(Rating, { as: 'rating', foreignKey: 'id' });
-Rating.belongsTo(Hotel, { as: 'hotel', foreignKey: 'id' });
-Rating.belongsTo(User, { as: 'user', foreignKey: 'id' });
-
-Hotel.hasMany(Booking, { as: 'booking', foreignKey: 'id' });
-Booking.belongsTo(Hotel, { as: 'hotel', foreignKey: 'id' });
-Booking.belongsTo(User, { as: 'user', foreignKey: 'id' });
-
-User.hasMany(Pay, { as: 'pay', foreignKey: 'id' });
-Pay.belongsTo(User, { as: 'user', foreignKey: 'id' });
-Pay.hasOne(Booking, { as: 'booking', foreignKey: 'id' });
-
-Booking.hasMany(Rooms, { as: 'rooms', foreignKey: 'id' });
-Booking.hasOne(Pay, { as: 'pay', foreignKey: 'id' });
-Rooms.belongsTo(Booking, { as: 'booking', foreignKey: 'id' });
+  Hotel.hasMany(Rooms, { as: 'rooms', foreignKey: 'hotelId' });
+  Rooms.belongsTo(Hotel, { as: 'hotel', foreignKey: 'hotelId' });
+  
+  Destination.hasMany(Hotel, { as: 'hotel', foreignKey: 'destinationId' });
+  Hotel.belongsTo(Destination, { as: 'destination', foreignKey: 'destinationId' });
+  
+  Hotel.hasMany(Gallery, { as: 'gallery', foreignKey: 'hotelId' });
+  Gallery.belongsTo(Hotel, { as: 'hotel', foreignKey: 'hotelId' });
+  
+  Hotel.hasMany(Rating, { as: 'rating', foreignKey: 'hotelId' });
+  Rating.belongsTo(Hotel, { as: 'hotel', foreignKey: 'hotelId' });
+  Rating.belongsTo(User, { as: 'user', foreignKey: 'userId' });
+  
+  Hotel.hasMany(Booking, { as: 'booking', foreignKey: 'hotelId' });
+  Booking.belongsTo(Hotel, { as: 'hotel', foreignKey: 'hotelId' });
+  Booking.belongsTo(User, { as: 'user', foreignKey: 'userId' });
+  
+  User.hasMany(Pay, { as: 'pay', foreignKey: 'userId' });
+  Pay.belongsTo(User, { as: 'user', foreignKey: 'userId' });
+  Pay.hasOne(Booking, { as: 'booking', foreignKey: 'payId' });
+  
+  Booking.hasMany(Rooms, { as: 'rooms', foreignKey: 'bookingId' });
+  Booking.hasOne(Pay, { as: 'pay', foreignKey: 'bookingId' });
+  Rooms.belongsTo(Booking, { as: 'booking', foreignKey: 'bookingId' });
 
 Rooms.belongsToMany(Service, {through: "Rooms_Service"});
 Service.belongsToMany(Rooms, {through: "Rooms_Service"});
