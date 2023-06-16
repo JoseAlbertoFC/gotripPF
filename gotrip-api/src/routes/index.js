@@ -2,18 +2,23 @@ const { Router } = require("express");
 const userRoute = require("./User");
 const bookingRoutes = require("./Booking");
 const payUser = require("./Pay");
-// Importar todos los routers;
-// Ejemplo: const countriesRoutes = require("./Countries");
+
+/**LAAR */
+const hotelRoute= require("./Hotel");  
+const roomsRoute= require("./Rooms");  
+
+
 
 const router = Router();
-// Configurar los routers
-// Ejemplo: router.use("/countries", countriesRoutes);
 
 
 router.use("/user",userRoute)
 router.use("/booking", bookingRoutes)
 router.use("/payment", payUser)
 
+/**LAAR*/
+router.use("/hotel",hotelRoute);  
+//router.use("/room",roomsRoute);  
 
 module.exports = router;
 
