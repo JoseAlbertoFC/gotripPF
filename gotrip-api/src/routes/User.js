@@ -2,10 +2,13 @@ const { Router } = require ("express");
 // Aqui va el midleware de User
 
 const { userNew } = require("../handlers/UserHandlers/getUsers");
+const { deleteUserhandler } = require("../handlers/UserHandlers/deleteUser");
 // Aqui va el midleware de User
 
 const userRoute = Router();
 
 userRoute.post("/createNewUser", userNew)
+
+userRoute.delete("/deleteUser/:id", deleteUserhandler)
 
 module.exports = userRoute
