@@ -24,15 +24,14 @@ module.exports = (sequelize) => {
         },
       },
       paymentDate: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           isDate: true,
-          isBefore: new Date().toISOString().split("T")[0], // Fecha máxima permitida (hoy)
         },
       },
       paymentStatus: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },

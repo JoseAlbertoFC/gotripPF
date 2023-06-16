@@ -1,7 +1,7 @@
 // En esta carpeta van los controllers de Users
 // Porfa crea un archivo para cada controller
 const { User } = require("../../db");
-//TODO Este controlador aun no esta listo
+
 const newUser = async (
   name,
   email,
@@ -12,17 +12,6 @@ const newUser = async (
   dniPasaport,
   rol
 ) => {
-  console.log(User);
-  console.log(
-    name,
-    email,
-    password,
-    gender,
-    birthday,
-    address,
-    dniPasaport,
-    rol
-  );
   try {
     const newUser = new User({
       name: name,
