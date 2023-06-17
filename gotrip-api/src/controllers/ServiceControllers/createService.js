@@ -1,4 +1,4 @@
-const { Service, Rooms, Hotel } = require("../../db");
+const { Service, Rooms } = require("../../db");
 
 const createService = async (name) => {
   try {

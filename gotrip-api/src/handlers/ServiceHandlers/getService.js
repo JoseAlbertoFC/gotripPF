@@ -1,22 +1,14 @@
-// En esta carpeta van los handlers de Service
-// Porfa crea un archivo para cada handler
+const { getAllServices } = require("../../controllers/ServiceControllers/getAllService");
 
-// Ejemplo:
-// const {countryDetail} = require("../controllers/Countries");
+const getServices = async (req, res) => {
+    try {
+      const result = await getAllServices();
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  };
 
-// const getCountryById = async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     const result = await countryDetail(id.toUpperCase());
-//     res.status(200).json(result);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
-
-// module.exports = {
-//   getCountryById,
-// };
-
-//Borra este comentario guia al empezar a codear!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+module.exports = {
+  getServices,
+};
