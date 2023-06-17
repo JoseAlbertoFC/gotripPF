@@ -15,7 +15,8 @@ const {
   try {
 
     const result = await updatePay({id,amount,paymentDate,paymentStatus});
-
+    
+    if(result === null) return  res.status(404).json({ error: 'Pago no encontrado.' }) 
     
 
     res.status(200).json(result);

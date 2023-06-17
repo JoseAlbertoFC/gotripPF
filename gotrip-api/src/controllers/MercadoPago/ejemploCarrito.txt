@@ -1,0 +1,18 @@
+Se espera que por boy se mande un carrito con las siguientes propiedades de ejemplo posteriormente se adaptara el carrito a lo sitems del hotel 
+
+{
+  "carrito": [
+    {
+      "id": 1,
+      "nombre": "Camiseta",
+      "precio": 29.99,
+      "cantidad": 2
+    },
+    {
+      "id": 2,
+      "nombre": "Pantalón",
+      "precio": 49.99,
+      "cantidad": 134
+    }
+  ]
+}
