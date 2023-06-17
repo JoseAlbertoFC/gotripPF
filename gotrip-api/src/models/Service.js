@@ -12,17 +12,8 @@ module.exports = (sequelize) => {
         defaultValue: Sequelize.UUIDV4,
       },
       name: {
-        type: DataTypes.ENUM(
-          "All Inclusive",
-          "2 Meals a Day",
-          "Morning Buffet",
-          "Free Drinks",
-          "Spa Sessions",
-          "Private Jacuzzi",
-          "Laundry Service",
-        ),
+        type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "All Inclusive"
       },
       status: {
         type: DataTypes.BOOLEAN,

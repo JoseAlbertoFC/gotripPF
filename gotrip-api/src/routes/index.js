@@ -3,18 +3,27 @@ const userRoute = require("./User");
 const bookingRoutes = require("./Booking");
 const payUser = require("./Pay");
 
+
 /**LAAR */
 const hotelRoute= require("./Hotel");  
 const roomsRoute= require("./Rooms");  
 
 
 
+const ratingRoutes = require("./Rating")
+const serviceRoutes = require("./Service")
+// Importar todos los routers;
+// Ejemplo: const countriesRoutes = require("./Countries");
+
+
 const router = Router();
 
 
-router.use("/user",userRoute)
-router.use("/booking", bookingRoutes)
-router.use("/payment", payUser)
+router.use("/user",userRoute);
+router.use("/booking", bookingRoutes);
+router.use("/payment", payUser);
+router.use("/comments", ratingRoutes);
+router.use("/service", serviceRoutes);
 
 /**LAAR*/
 router.use("/hotel",hotelRoute);  
