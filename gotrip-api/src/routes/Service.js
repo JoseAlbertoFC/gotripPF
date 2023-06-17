@@ -1,18 +1,12 @@
-const { Router } = require ("express");
-// Aqui va el midleware de Service
+const { Router } = require("express");
+const { postService } = require("../handlers/ServiceHandlers/postService");
+const { getServices } = require("../handlers/ServiceHandlers/getService");
+const { deleteService } = require("../handlers/ServiceHandlers/deleteService");
 
-// Ejemplo:
-// const { Router } = require ("express"); 
-// const { getCountries, getCountryById } = require ("../handlers/Countries")
+const serviceRoutes = Router();
 
-// const countriesRoutes = Router();
+serviceRoutes.post("/", postService);
+serviceRoutes.get("/", getServices);
+serviceRoutes.delete("/:id", deleteService)
 
-// countriesRoutes.get("/", getCountries);
-// countriesRoutes.get("/:id", getCountryById);
-// otra ruta
-// otra ruta
-
-
-// module.exports = countriesRoutes;
-
-//Borra este comentario guia al empezar a codear!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+module.exports = serviceRoutes;

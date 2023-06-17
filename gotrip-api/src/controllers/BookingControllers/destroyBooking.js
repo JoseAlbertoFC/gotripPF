@@ -1,14 +1,13 @@
 const { Booking } = require("../../db");
 
-const getAllBookings = async () => {
+const destroyBooking = async (id) => {
   try {
-    return await Booking.findAll();
+    return await Booking.destroy({where: {id: id}});
   } catch (error) {
-    console.log({ error: error.message });
     throw new Error({ error: error.message });
   }
 };
 
 module.exports = {
-  getAllBookings,
+  destroyBooking,
 };

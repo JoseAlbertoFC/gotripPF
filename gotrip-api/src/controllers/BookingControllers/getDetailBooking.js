@@ -1,14 +1,13 @@
 const { Booking } = require("../../db");
 
-const getAllBookings = async () => {
+const getDetailBooking = async (id) => {
   try {
-    return await Booking.findAll();
+    return await Booking.findByPk(id);
   } catch (error) {
-    console.log({ error: error.message });
     throw new Error({ error: error.message });
   }
 };
 
 module.exports = {
-  getAllBookings,
+  getDetailBooking,
 };

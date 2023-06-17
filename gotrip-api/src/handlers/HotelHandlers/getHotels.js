@@ -1,22 +1,31 @@
-// En esta carpeta van los handlers de Hotel
-// Porfa crea un archivo para cada handler
+const {postHotelDB} = require("../../controllers/HotelControllers/indexControlers.js")
 
-// Ejemplo:
-// const {countryDetail} = require("../controllers/Countries");
+const getHotel = async(req,res) =>{
+    try{
+        res.status(200).json("primera prueba getHotel");
+    }catch(error){
+        res.status(400).json({error: error.mesage});
+    }    
+}
+const getHotelId= async(req,res) =>{
+    const {idHotel} = req.params ;
+    // console.log(idHotel);
+    try{
+        console.log("*******getHotelId***************");
+        console.log(idHotel);
+        console.log("**********************");
+        const dataHotelID = await getHotelById(idHotel)
+        res.status(200).json(dataHotelID);
+    }catch(error){
+        res.status(400).json({error: error.mesage});
+    }    
+}
 
-// const getCountryById = async (req, res) => {
-//   const { id } = req.params;
 
-//   try {
-//     const result = await countryDetail(id.toUpperCase());
-//     res.status(200).json(result);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
 
-// module.exports = {
-//   getCountryById,
-// };
 
-//Borra este comentario guia al empezar a codear!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+module.exports = {
+    getHotel   
+    ,getHotelId
+}
