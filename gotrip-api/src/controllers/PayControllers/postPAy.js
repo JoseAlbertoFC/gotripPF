@@ -1,10 +1,10 @@
-const { Pay } = require("../../db");
+const { Pay , User , Booking } = require("../../db");
 
 const newPay = async (
   amount,
   paymentDate,
   paymentStatus,
-
+  userId,bookingId
 
 
 ) => {
@@ -13,9 +13,19 @@ const newPay = async (
      amount: amount,
      paymentDate: paymentDate,
      paymentStatus: paymentStatus,
+     userId: userId,
+     bookingId:bookingId,
     });
 
     const savedPay = await newPay.save();
+
+    const payWithDetails = await Pay.findOne({
+      where: { id: newPay.id },
+      include: [
+        { model: User, as: 'user', attributes: ['name', 'email', 'dniPasaport'] },
+        { model: Booking, as: 'booking', attributes: ['id', 'reservationStatus'] },
+      ],
+    });
 
     return savedPay;
   } catch (error) {
