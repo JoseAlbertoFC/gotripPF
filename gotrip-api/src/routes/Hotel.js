@@ -1,18 +1,23 @@
 const { Router } = require ("express");
-// Aqui va el midleware de Hotel
 
-// Ejemplo:
-// const { Router } = require ("express"); 
-// const { getCountries, getCountryById } = require ("../handlers/Countries")
+const {putUpdateHotel  , 
+        postNewHotel,
+        getHotel,
+        getHotelId,
+        deleteHotel} = require("../handlers/HotelHandlers/indexHandlers.js")
 
-// const countriesRoutes = Router();
+const hotelRoute = Router();
 
-// countriesRoutes.get("/", getCountries);
-// countriesRoutes.get("/:id", getCountryById);
-// otra ruta
-// otra ruta
+hotelRoute.post('/newhotel',postNewHotel)
+
+hotelRoute.get('/findhotel',getHotel)
+
+hotelRoute.get('/findhotel/:idHotel',getHotelId)
+
+hotelRoute.put('/updhotel',putUpdateHotel)
+
+hotelRoute.delete('/delhotel',deleteHotel)
 
 
-// module.exports = countriesRoutes;
 
-//Borra este comentario guia al empezar a codear!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+module.exports = hotelRoute
