@@ -1,4 +1,4 @@
-const {getHotel, getHotelId } = require("./getHotels.js")
+const {getHotel, getHotelId, getHotelAll} = require("./getHotels.js")
 const {deleteHotel} = require("./delHotels.js")
 const {postNewHotel} = require("./newHotels.js")
 const {putUpdateHotel} = require("./updHotels.js")
@@ -10,5 +10,6 @@ module.exports = {
     postNewHotel,
     getHotel,
     getHotelId,
+    getHotelAll,
     deleteHotel
 }

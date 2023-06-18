@@ -4,7 +4,20 @@ const WEBHOOK_PAGO = async (payment,id) => {
     try {
         if(payment.type === 'payment'){
             const data = await mercadopago.payment.findById(id)
-            console.log(data.body)
+            const dataPay = {
+                ip:data.body.additional_info.ip_address,
+                idpay:data.body.id,
+                order:data.body.order.id,
+                orderType:data.body.order.type,
+                operationType:data.body.operation_type,
+                metodo:data.body.payment_method_id,
+                currentOperation:data.body.currency_id,
+                data_aprove:data.body.date_approved,
+                total_paid_amount:data.body.transaction_details.total_paid_amount,
+                net_received_amount:data.body.transaction_details.net_received_amount
+                
+            }
+            console.log(dataPay)
         }
         
         return ({HOOK:"Enviado"})

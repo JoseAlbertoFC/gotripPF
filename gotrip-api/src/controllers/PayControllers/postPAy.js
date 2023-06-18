@@ -23,11 +23,11 @@ const newPay = async (
       where: { id: newPay.id },
       include: [
         { model: User, as: 'user', attributes: ['name', 'email', 'dniPasaport'] },
-        { model: Booking, as: 'booking', attributes: ['id', 'reservationStatus'] },
+        { model: Booking, as: 'booking', attributes: ['roomNum', 'reservationStatus','gests'] },
       ],
     });
 
-    return savedPay;
+    return payWithDetails;
   } catch (error) {
     console.log(error.message);
     throw new Error({ error: error.message });
