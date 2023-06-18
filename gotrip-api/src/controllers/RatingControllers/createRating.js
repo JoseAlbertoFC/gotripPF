@@ -1,8 +1,8 @@
 const { User, Rating, Hotel } = require("../../db");
 
-const createRating = async (rating, comment) => {
+const createRating = async (rating, comment, userId, hotelId) => {
   try {
-    const newRating = await Rating.create({rating, comment});
+    const newRating = await Rating.create({rating, comment, userId, hotelId});
 
     const ratingWithDetails = await Rating.findOne({
       where: { id: newRating.id },
