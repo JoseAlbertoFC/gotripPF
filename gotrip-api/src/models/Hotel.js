@@ -23,13 +23,13 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
-        validate: {
-          isEmail(email) {
-            if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-              throw new Error("This is an invalid email.");
-            }
-          },
-        },
+        // validate: {
+        //   isEmail(email) {
+        //     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        //       throw new Error("This is an invalid email.");
+        //     }
+        //   },
+        // },
       },
       address: {
         type: DataTypes.STRING,
@@ -38,7 +38,7 @@ module.exports = (sequelize) => {
       phone: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        // unique: true,
         validate: {
           isPhoneNumber(value) {
             if (!/^\d{10}$/.test(value)) {

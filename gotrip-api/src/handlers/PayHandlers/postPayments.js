@@ -1,12 +1,12 @@
 const { newPay } = require("../../controllers/PayControllers/postPAy")
 
 const paymentNew = async (req,res) => {
-  const {amount,paymentDate,paymentStatus} = req.body
+  const {amount,paymentDate,paymentStatus,userId,bookingId} = req.body
   
 
   try {
 
-    const result = await newPay(amount,paymentDate,paymentStatus)
+    const result = await newPay(amount,paymentDate,paymentStatus,userId,bookingId)
     res.status(200).json(result)
     
   } catch (error) {

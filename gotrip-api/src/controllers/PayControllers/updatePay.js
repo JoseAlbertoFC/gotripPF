@@ -17,7 +17,7 @@ const updatePay = async (
       await pay.save();
       return (pay);
     } else {
-      return ({ error: 'Pago no encontrado.' });
+      return (pay);
     }
   } catch (error) {
     console.error('Error al actualizar el pago:', error);

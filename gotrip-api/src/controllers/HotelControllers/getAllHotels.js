@@ -1,23 +1,17 @@
-// En esta carpeta van los controllers de Hotel
-// Porfa crea un archivo para cada controller
+const { Hotel} = require("../../db")
 
-// Ejemplo
 
-// const axios = require("axios");
-// const { Activity, Country } = require("../db");
+const getHotelById = async(id) =>{
+    if (!id) throw new Error(`The id is required`);
+    console.log("**********************");
+    console.log(id);
+    console.log("**********************");
+    const objHotel = await Hotel.findByPk(id);
+    if (!objHotel ) return;
+    return {...objHotel.toJSON()}
+}
 
-// const countryDetail = async (id) => {           
-//     try {                                            
-//       return await Country.findByPk(id, {
-//         include: [Activity],
-//       });
-//     } catch (error) {
-//       throw new Error("Ups! We got a problem.");
-//     }
-//   };
 
-// module.exports = {
-//     countryDetail,
-//   };
-
-//Borra este comentario guia al empezar a codear!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+module.exports = {
+    getHotelById 
+}

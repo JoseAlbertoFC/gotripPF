@@ -4,20 +4,38 @@ const bookingRoutes = require("./Booking");
 const payUser = require("./Pay");
 const galleryRoutes = require('./Gallery');
 const destinationRoutes = require("./Destination");
-// Importar todos los routers;
-// Ejemplo: const countriesRoutes = require("./Countries");
+const payMercado = require("./MercadoPago");
+
+
+
+
+const hotelRoute= require("./Hotel");  
+const roomsRoute= require("./Rooms");  
+
+
+
+const ratingRoutes = require("./Rating")
+const serviceRoutes = require("./Service")
+
+
+
 
 const router = Router();
-// Configurar los routers
-// Ejemplo: router.use("/countries", countriesRoutes);
 
 
-router.use("/user",userRoute)
-router.use("/booking", bookingRoutes)
-router.use("/payment", payUser)
+
+
+
 router.use("/gallery", galleryRoutes)
 router.use("/destination", destinationRoutes)
-
+router.use("/urlPago",payMercado)
+router.use("/user",userRoute);
+router.use("/booking", bookingRoutes);
+router.use("/payment", payUser);
+router.use("/comments", ratingRoutes);
+router.use("/service", serviceRoutes);
+router.use("/hotel",hotelRoute);  
+//router.use("/room",roomsRoute);  
 
 module.exports = router;
 
