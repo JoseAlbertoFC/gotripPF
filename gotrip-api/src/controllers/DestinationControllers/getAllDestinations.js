@@ -1,3 +1,37 @@
+const api = require('../../../api/apiHotels.json');
+
+const {Destination, Hotel}= require('../../db');
+
+const getAllDestinations= async()=>{
+    //JSON
+    try{
+    const infoDestination= api.map((hotel)=>{
+        return {
+            id: hotel.country_id,
+            country: hotel.country,
+            state: hotel.state,
+            city: hotel.city,
+            moneyType: hotel.rates_currency,
+            status: hotel?true: false,
+        }
+    })
+console.log(infoDestination);
+    //BD
+    const bdDestination= await Destination.findAll({
+        include:[
+            {model: Hotel, as: 'hotel', attributes:['name']}
+        ]
+    });
+
+    if(infoDestination.length>0|| bdDestination.length>0)
+    return [...bdDestination, ...infoDestination];}
+    catch(err){
+        throw Error(err.message)
+    }
+}
+
+module.exports= {getAllDestinations};
+
 // En esta carpeta van los controllers de Destination
 // Porfa crea un archivo para cada controller
 
