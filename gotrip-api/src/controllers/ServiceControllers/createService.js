@@ -9,7 +9,6 @@ const createService = async (name) => {
       include: [
         {
           model: Rooms,
-          attributes: ["room", "kindRoom"],
         },
       ],
     });
