@@ -19,11 +19,11 @@ const putUpdateHotel = async (req, res) => {
             latitude,
             destinationId,
           }
-          console.log("***updatedData*************");
-          console.log(id);
-          console.log(updatedData);
-          console.log("***updatedData*************");
-      const hotelDataUpd = await updateHotelBD( );
+          // console.log("***updatedData*************");
+          // console.log(id);
+          // console.log(updatedData);
+          // console.log("***updatedData*************");
+      const hotelDataUpd = await updateHotelBD( id,updatedData);
       res.status(200).json(hotelDataUpd);
     // res.status(200).json("actualizando");
     } catch (error) {

@@ -4,13 +4,10 @@ const getHotel = async(req,res) =>{
     
     const querysHotel = req.query;
     const cantQuerys = Object.keys(querysHotel).length;
-    // console.log("********querysHotel ***********");
-    // console.log(querysHotel );
-    // console.log("********cantQuerys***********");
-    // console.log(cantQuerys);
+
     try{
         if(cantQuerys > 0){            
-            const dataHotels = await getHotelParams(querysHotel,cantQuerys)
+            const dataHotels = await getHotelParams(querysHotel)
             res.status(200).json(dataHotels );
         }else{            
             const dataHotels = await getHotelAll()
