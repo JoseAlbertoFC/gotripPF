@@ -1,4 +1,5 @@
 const mercadopago = require("mercadopago")
+const { newPay } = require("../PayControllers/postPAy")
 
 
 
@@ -26,8 +27,10 @@ const WEBHOOK_PAGO = async (payment,id,bookingId,userId) => {
             // return dataPay
             
         }
+
+        const pay = await newPay(dataPay)
         
-        return dataPay
+        return ({Payment:"Aprovado"})
     } catch (error) {
         throw new Error({ error: error.message });
         
