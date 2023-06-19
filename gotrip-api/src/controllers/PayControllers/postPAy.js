@@ -1,6 +1,7 @@
 const { Pay , User , Booking } = require("../../db");
 
 const newPay = async (
+  result,
   amount,
   paymentDate,
   paymentStatus,
@@ -8,13 +9,14 @@ const newPay = async (
 
 
 ) => {
+  
   try {
     const newPay = new Pay({
-     amount: amount,
-     paymentDate: paymentDate,
-     paymentStatus: paymentStatus,
-     userId: userId,
-     bookingId:bookingId,
+     amount: result.total_paid_amount,
+     paymentDate: result.data_aprove,
+     paymentStatus: result.metodo,
+     userId: result.userId,
+     bookingId:result.bookingId,
     });
 
     const savedPay = await newPay.save();

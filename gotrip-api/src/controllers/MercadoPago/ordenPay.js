@@ -2,7 +2,7 @@ require("dotenv").config();
 const mercadopago = require("mercadopago");
 const { ACCES_TOKEN } = process.env;
 
-const ORDEN_PAGO = async (carrito) => {
+const ORDEN_PAGO = async (carrito,userId,bookingId) => {
   mercadopago.configure({
     access_token:ACCES_TOKEN
   });
@@ -11,8 +11,21 @@ const ORDEN_PAGO = async (carrito) => {
     title: item.nombre,
     unit_price: item.precio,
     currency_id: "MXN",
-    quantity: item.cantidad
+    quantity: item.cantidad,
   }));
+  
+ 
+  const notificationURL = "https://355e-2806-2f0-49a0-113b-c5e6-1109-2050-8ae5.ngrok.io/urlPago/webhook-pago/";
+const additionalData = {
+  userId: userId,
+  bookingId: bookingId
+};
+
+const encodedData = Object.entries(additionalData)
+  .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+  .join("&");
+
+const notificationURLWithParams = `${notificationURL}?${encodedData}`;
 
   const compra = await mercadopago.preferences.create({
     items,
@@ -21,10 +34,14 @@ const ORDEN_PAGO = async (carrito) => {
       failure: "http://localhost:3001/urlPago/failure",
       pending: "http://localhost:3001/urlPago/pending"
     },
-    notification_url: "https://179b-2806-2f0-49a0-113b-c5e6-1109-2050-8ae5.ngrok.io/urlPago/webhook-pago"
+    notification_url: notificationURLWithParams
   });
-
-  return compra.body.init_point
+  const status = {
+    status:compra.body.redirect_urls,
+    linkPago: compra.body.init_point,
+    items:compra.body.items.map(item => ({title:item.title}))
+  }
+  return status
 };
 
 module.exports = ORDEN_PAGO;
