@@ -77,6 +77,11 @@ module.exports = (sequelize) => {
         defaultValue: "user",
         allowNull: false,
       },
+      googleLogin: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
     },
     { timestamps: true },
     { paranoid: true }
