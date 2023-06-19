@@ -16,7 +16,7 @@ hotelRoute.get('/findhotel/:idHotel',getHotelId)
 
 hotelRoute.put('/updhotel',putUpdateHotel)
 
-hotelRoute.delete('/delhotel',deleteHotel)
+hotelRoute.delete('/delhotel/:idHotel',deleteHotel)
 
 
 

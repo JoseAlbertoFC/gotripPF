@@ -3,19 +3,38 @@ const { Hotel} = require("../../db")
 
 
 const updateHotelBD = async (idHotel, updatedData) => {
-    try {
-      if (!idHotel) throw new Error('The id is required');
+  const dataState = {
+    state: false,
+    text: "",
+    detail: "",
+  };  
+  try {
+        
+      if (!idHotel) {
+        dataState.text = "The hotel ID is required";
+        return dataState;
+      }
       
-      const hotel = await Hotel.findByPk(idHotel);
-      
-      if (!hotel) throw new Error('Hotel not found');
-      
-      const updatedHotel = await hotel.update(updatedData);
-      
-      return updatedHotel.toJSON();
+
+      const hotel = await Hotel.findByPk(idHotel);      
+      if (!hotel){
+        dataState.text = "Hotel not found";
+        return dataState;
+      }else{
+        const updatedHotel = await hotel.update(updatedData);
+        dataState.state= true,
+        dataState.text = "SUCCESSFULLY UPDATED HOTEL";
+        dataState.detail=  updatedHotel.toJSON();
+        return dataState;
+  
+      }
+
     } catch (error) {
-      throw new Error(error.message);
-    }
+        dataState.state = "Error";
+        dataState.text = error.message;
+        dataState.detail =error.parent.detail;
+        return dataState;
+      }
   };
 
   module.exports = {

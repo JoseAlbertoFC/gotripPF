@@ -14,45 +14,40 @@ const getHotelAll = async()=>{
     }catch(error){
 
     }
-}
+};
 
-const getHotelParams = async(querysHotel,cantQuerys)=> {
+
+const getHotelParams = async (querysHotel) => {
     try {
-        let whereCondition = {}; // Objeto para almacenar las condiciones de búsqueda
-
-     
-        for (let key in querysHotel) {
-            if (querysHotel.hasOwnProperty(key)) {
-              const value = querysHotel[key];
-              if (key === "status" || key === "destinationId" ){
-                whereCondition[key] =value;
-              }else{
-                whereCondition[key] = { [Op.iLike]: `%${value}%` };
-              }
-
-          }
+      const whereCondition = {}; // Objeto para almacenar las condiciones de búsqueda
+      const keyValues = ["status", "destinationId"];
+      
+      Object.entries(querysHotel).forEach(([key, value]) => {
+        if (keyValues.includes(key)) {
+          whereCondition[key] = value;
+        } else {
+          whereCondition[key] = { [Op.iLike]: `%${value}%` };
         }
+      });
   
+      // Consultar la tabla de hoteles con las condiciones de búsqueda
+      const hotels = await Hotel.findAll({
+        where: whereCondition,
+        include: [
+          {
+            model: Destination,
+            as: "destination",
+            attributes: ["country", "state", "city", "moneyType"],
+          },
+        ],
+      });
   
-        // Consultar la tabla de hoteles con las condiciones de búsqueda
-        const hotels = await Hotel.findAll({
-          where: whereCondition,
-          include: [
-            {
-              model: Destination,
-              as: "destination",
-              attributes: ["country", "state", "city", "moneyType"],
-            },
-          ],
-        });
-    
-        return hotels;
-    }catch(error){
-        // throw new Error({ error: error.message });
-        return error
+      return hotels;
+    } catch (error) {
+      // throw new Error({ error: error.message });
+      throw new Error(error.message);
     }
-}
-
+  };
 
 
 
