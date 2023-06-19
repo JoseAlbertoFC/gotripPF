@@ -1,6 +1,8 @@
 Se espera que por boy se mande un carrito con las siguientes propiedades de ejemplo posteriormente se adaptara el carrito a lo sitems del hotel 
 
 {
+  "userId":"1234",
+  "bookingId":"123",
   "carrito": [
     {
       "id": 1,

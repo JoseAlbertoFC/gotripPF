@@ -1,10 +1,12 @@
 const mercadopago = require("mercadopago")
 
-const WEBHOOK_PAGO = async (payment,id) => {
+
+
+const WEBHOOK_PAGO = async (payment,id,bookingId,userId) => {
     try {
         if(payment.type === 'payment'){
             const data = await mercadopago.payment.findById(id)
-            const dataPay = {
+             dataPay = {
                 ip:data.body.additional_info.ip_address,
                 idpay:data.body.id,
                 order:data.body.order.id,
@@ -14,13 +16,18 @@ const WEBHOOK_PAGO = async (payment,id) => {
                 currentOperation:data.body.currency_id,
                 data_aprove:data.body.date_approved,
                 total_paid_amount:data.body.transaction_details.total_paid_amount,
-                net_received_amount:data.body.transaction_details.net_received_amount
+                net_received_amount:data.body.transaction_details.net_received_amount,
+                userId:userId,
+                bookingId:bookingId
                 
             }
-            console.log(dataPay)
+            
+        
+            // return dataPay
+            
         }
         
-        return ({HOOK:"Enviado"})
+        return dataPay
     } catch (error) {
         throw new Error({ error: error.message });
         
