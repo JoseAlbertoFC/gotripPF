@@ -17,11 +17,7 @@ const getAllDestinations= async()=>{
     })
 console.log(infoDestination);
     //BD
-    const bdDestination= await Destination.findAll({
-        include:[
-            {model: Hotel, as: 'hotel', attributes:['name']}
-        ]
-    });
+    const bdDestination= await Destination.findAll();
 
     if(infoDestination.length>0|| bdDestination.length>0)
     return [...bdDestination, ...infoDestination];}
