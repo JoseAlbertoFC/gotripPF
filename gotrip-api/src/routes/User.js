@@ -1,9 +1,9 @@
 const { Router } = require ("express");
 // Aqui va el midleware de User
 
-const { userNew } = require("../handlers/UserHandlers/getUsers");
+const { userNew } = require("../handlers/UserHandlers/createUsers");
 const { deleteUserhandler } = require("../handlers/UserHandlers/deleteUser");
-const { readallUser } = require("../handlers/UserHandlers/readUser");
+const { readallUser } = require("../handlers/UserHandlers/readAllUser");
 const { updatedataUser } = require("../handlers/UserHandlers/updateUser");
 
 // Aqui va el midleware de User

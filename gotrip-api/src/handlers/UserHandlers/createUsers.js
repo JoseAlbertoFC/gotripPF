@@ -1,6 +1,6 @@
 // En esta carpeta van los handlers de User
 // Porfa crea un archivo para cada handler
-const { newUser } = require("../../controllers/UserControllers/getAllUsers")
+const { newUser } = require("../../controllers/UserControllers/createUsers")
 
 // Porfa crea un archivo para cada handler
 const userNew = async (req,res) => {
