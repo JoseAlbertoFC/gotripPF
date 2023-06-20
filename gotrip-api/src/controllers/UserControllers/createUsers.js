@@ -10,7 +10,10 @@ const newUser = async (
   birthday,
   address,
   dniPasaport,
-  rol
+  rol,
+  postalCode,
+  phone,
+  thirdPartyCreated
 ) => {
   try {
     const newUser = new User({
@@ -22,6 +25,9 @@ const newUser = async (
       address: address,
       dniPasaport: dniPasaport,
       rol: rol,
+      postalCode: postalCode,
+      phone: phone,
+      thirdPartyCreated: thirdPartyCreated,
     });
 
     const savedUser = await newUser.save();
