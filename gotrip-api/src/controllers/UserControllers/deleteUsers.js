@@ -2,6 +2,7 @@ const { User } = require("../../db");
 
 const deleteUserDB = async (userId) => {
   try {
+    
     const deletedUser = await User.destroy({ where: { id: userId } });
 
     return deletedUser;

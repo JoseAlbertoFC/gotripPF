@@ -21,39 +21,20 @@ module.exports = (sequelize) => {
       gender: {
         type: DataTypes.STRING,
         allowNull: false,
-        // Pendiente  para ver si las validaciones viene del FRONT-END
-        // type: DataTypes.STRING,
-        // allowNull: false,
-        // validate: {
-          // esGeneroValido(value) {
-            // if (!["Masculino", "Femenino", "No binario"].includes(value)) {
-              // throw new Error("El género especificado no es válido");
-            // }
-          // },
-
-        //   esGeneroValido(value) {
-        //     if (!["Masculino", "Femenino", "No binario"].includes(value)) {
-        //       throw new Error("El género especificado no es válido");
-        //     }
-        //   },
-        // },
       },
       birthday: {
         type: DataTypes.STRING,
         allowNull: false,
-        // validate: {
-          // isDate: true,
-          // min: "1900-01-01", // Fecha mínima permitida
-          // max: new Date().toISOString().split("T")[0], // Fecha máxima permitida (hoy)
-        // },
       },
       email: {
         type: DataTypes.STRING,
         allowNull: false, 
+        unique: true,
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
           isAlphanumeric: true,
           len: [8, 16], // Longitud mínima y máxima de la contraseña
@@ -77,7 +58,7 @@ module.exports = (sequelize) => {
         defaultValue: "user",
         allowNull: false,
       },
-      googleLogin: {
+      thirdPartyCreated: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
