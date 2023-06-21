@@ -21,6 +21,6 @@ router.use("/payment", payUser);
 router.use("/comments", ratingRoutes);
 router.use("/service", serviceRoutes);
 router.use("/hotel", hotelRoute);
-// router.use("/room",roomsRoute);
+router.use("/rooms",roomsRoute);
 
 module.exports = router;

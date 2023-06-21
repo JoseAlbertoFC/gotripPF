@@ -12,7 +12,7 @@ const getHotelAll = async()=>{
         });
         return objHotel ;
     }catch(error){
-
+      throw new Error(error.message);
     }
 };
 

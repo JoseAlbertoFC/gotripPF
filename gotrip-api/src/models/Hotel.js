@@ -14,6 +14,7 @@ module.exports = (sequelize) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
       image: {
         type: DataTypes.STRING,
@@ -22,30 +23,31 @@ module.exports = (sequelize) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
-        // validate: {
-        //   isEmail(email) {
-        //     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        //       throw new Error("This is an invalid email.");
-        //     }
-        //   },
-        // },
+        // unique: true,
+        validate: {
+          isEmail(email) {
+            if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+              throw new Error("This is an invalid email.");
+            }
+          },
+        },
       },
       address: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
       phone: {
         type: DataTypes.STRING,
         allowNull: false,
         // unique: true,
-        validate: {
-          isPhoneNumber(value) {
-            if (!/^\d{10}$/.test(value)) {
-              throw new Error("This is an invalid phone number.");
-            }
-          },
-        },
+        // validate: {
+        //   isPhoneNumber(value) {
+        //     if (!/^\d{10}$/.test(value)) {
+        //       throw new Error("This is an invalid phone number.");
+        //     }
+        //   },
+        // },
       },
       checkIn: {
         type: DataTypes.TIME,
