@@ -7,8 +7,8 @@ const postNewHotel = async(req,res) =>{
         const hotelNew = await postHotelDB(name, image, email, address, phone, checkIn, checkOut, numberRooms, overview, longitude, latitude, destinationId)
         res.status(200).json(hotelNew);
 
-    }catch(error){
-        res.status(400).json({error: error.mesage});
+    }catch(error){        
+        res.status(400).json({error: error});
     }    
 }
 

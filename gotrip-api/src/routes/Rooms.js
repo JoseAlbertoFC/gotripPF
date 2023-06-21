@@ -1,18 +1,15 @@
 const { Router } = require ("express");
-// Aqui va el midleware de Rooms
+const {getRooms,getRoomsId,newRooms,putUpdateRooms,deleteRooms} = require("../handlers/RoomsHandlers/indexHandlers.js")
 
-// Ejemplo:
-// const { Router } = require ("express"); 
-// const { getCountries, getCountryById } = require ("../handlers/Countries")
+const roomsRoute =Router();
 
-// const countriesRoutes = Router();
-
-// countriesRoutes.get("/", getCountries);
-// countriesRoutes.get("/:id", getCountryById);
-// otra ruta
-// otra ruta
+roomsRoute.get('/findRooms',getRooms)
+roomsRoute.get('/findRooms/:idRoom',getRoomsId)
+roomsRoute.post('/newRooms',newRooms)
+roomsRoute.put('/updRooms',putUpdateRooms)
+roomsRoute.delete('/delRooms/:idRoom',deleteRooms)
 
 
-// module.exports = countriesRoutes;
 
-//Borra este comentario guia al empezar a codear!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+module.exports = roomsRoute 
