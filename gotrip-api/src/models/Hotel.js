@@ -24,13 +24,13 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
         // unique: true,
-        validate: {
-          isEmail(email) {
-            if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-              throw new Error("This is an invalid email.");
-            }
-          },
-        },
+        // validate: {
+        //   isEmail(email) {
+        //     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        //       throw new Error("This is an invalid email.");
+        //     }
+        //   },
+        // },
       },
       address: {
         type: DataTypes.STRING,
@@ -50,11 +50,11 @@ module.exports = (sequelize) => {
         // },
       },
       checkIn: {
-        type: DataTypes.TIME,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       checkOut: {
-        type: DataTypes.TIME,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       numberRooms: {
@@ -66,11 +66,11 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       longitude: {
-        type: DataTypes.STRING,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       latitude: {
-        type: DataTypes.STRING,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       status: {
