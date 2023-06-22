@@ -7,6 +7,8 @@ const ORDEN_PAGO = async (carrito,userId,bookingId) => {
     access_token:ACCES_TOKEN
   });
 
+
+
   const items = carrito.map(item => ({
     title: item.nombre,
     unit_price: item.precio,
