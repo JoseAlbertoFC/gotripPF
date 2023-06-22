@@ -1,32 +1,43 @@
-const api = require('../../../api/apiHotels.json');
+const api = require("../../../api/apiHotels.json");
 
-const {Destination, Hotel}= require('../../db');
+const { Destination, Hotel } = require("../../db");
 
-const getAllDestinations= async()=>{
-    //JSON
-    try{
-    const infoDestination= api.map((hotel)=>{
-        return {
-            id: hotel.country_id,
-            country: hotel.country,
-            state: hotel.state,
-            city: hotel.city,
-            moneyType: hotel.rates_currency,
-            status: hotel?true: false,
-        }
-    })
-console.log(infoDestination);
+const getAllDestinations = async () => {
+  //JSON
+  try {
+    const infoDestination = api.map((hotel) => {
+      return {
+        id: hotel.country_id,
+        country: hotel.country,
+        state: hotel.state? hotel.state: 'This information isnt available',
+        city: hotel.city,
+        moneyType: hotel.rates_currency,
+        status: true,
+      };
+    });
+
+    infoDestination.forEach(async (destiny) => {
+      await Destination.findOrCreate({
+        where: {
+          country: destiny.country,
+          state: destiny.state,
+          city: destiny.city,
+          moneyType: destiny.moneyType,
+          status: destiny.status,
+        },
+      });
+    });
+
     //BD
-    const bdDestination= await Destination.findAll();
+    const bdDestination = await Destination.findAll();
 
-    if(infoDestination.length>0|| bdDestination.length>0)
-    return [...bdDestination, ...infoDestination];}
-    catch(err){
-        throw Error(err.message)
-    }
-}
+    if (bdDestination.length > 0) return [...bdDestination];
+  } catch (err) {
+    throw Error(err.message);
+  }
+};
 
-module.exports= {getAllDestinations};
+module.exports = { getAllDestinations };
 
 // En esta carpeta van los controllers de Destination
 // Porfa crea un archivo para cada controller
@@ -36,8 +47,8 @@ module.exports= {getAllDestinations};
 // const axios = require("axios");
 // const { Activity, Country } = require("../db");
 
-// const countryDetail = async (id) => {           
-//     try {                                            
+// const countryDetail = async (id) => {
+//     try {
 //       return await Country.findByPk(id, {
 //         include: [Activity],
 //       });
