@@ -23,13 +23,25 @@ module.exports = (sequelize) => {
         allowNull: true,
         
       },
+      birthday: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      country: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       phone:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      phoneCode:{
+        type: DataTypes.STRING,
         allowNull: false,
       },
       gender: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       email: {
         type: DataTypes.STRING,
@@ -39,7 +51,14 @@ module.exports = (sequelize) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        validate: {
+          isAlphanumeric: true,
+          len: [8, 16], // Longitud mínima y máxima de la contraseña
+        },
+      },
+      confirmPassword: {
+        type: DataTypes.STRING,
+        allowNull: false,
         validate: {
           isAlphanumeric: true,
           len: [8, 16], // Longitud mínima y máxima de la contraseña
@@ -47,11 +66,11 @@ module.exports = (sequelize) => {
       },
       address: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       dniPasaport: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       status: {
         type: DataTypes.BOOLEAN,

@@ -1,6 +1,6 @@
 const { User } = require("../../db");
 const updateUser = async ( 
-  {name,
+  name,
   email,
   password,
   gender,
@@ -8,19 +8,13 @@ const updateUser = async (
   address,
   dniPasaport,
   rol,
-  id}
+  id,
+  phoneCode,
+  confirmPassword,
+  country,
+
   ) => {
-  console.log(  name,
-    email,
-    password,
-    gender,
-    birthday,
-    address,
-    dniPasaport,
-    rol,)
-  
-
-
+ 
   try {
     const user = await User.findByPk(id);
     if (user) {
@@ -32,6 +26,9 @@ const updateUser = async (
       user.address = address;
       user.dniPasaport = dniPasaport;
       user.rol =rol;
+      user.phoneCode = phoneCode;
+      user.confirmPassword = confirmPassword;
+      user.country = country;
     
       
       await user.save();

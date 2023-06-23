@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const {Destination}= require('../../db');
+const {Destination, Hotel}= require('../../db');
 
 const getDestinationByCity = async(cityName)=>{
     try{
@@ -8,6 +8,9 @@ const getCity = await Destination.findAll({
         city: {
             [Op.iLike]: `%${cityName}%`
         }
+    },
+    include:{
+        model: Hotel, as: 'hotel'
     }
 })
 
