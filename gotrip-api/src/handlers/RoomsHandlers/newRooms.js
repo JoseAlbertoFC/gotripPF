@@ -1,21 +1,21 @@
+const { postNewRoomDB} = require("../../controllers/RoomsControllers/indexControlers.js")
 
-
-const newRooms = async(req,res) =>{
+const postNewRoom = async(req,res) =>{
+    const {room, price,numRooms,kindRoom, status, hotelId} = req.body
     
-    const {idroom} = req.params ;
+    // console.log("handler");
+    // console.log("req.body----> " + room+"****"+price+"****"+numRooms+"****"+status+"****"+hotelId+"****");
     try{
-        
-        console.log("*newRooms *********************");
+        const RoomNew = await postNewRoomDB(room, price,numRooms,kindRoom, status, hotelId)
+        console.log("RoomNew---- " +RoomNew);
+        res.status(200).json(RoomNew);
 
-        // const dataHotels = await hotelDelete(idHotel)
-        // res.status(200).json(dataHotels );        
-        
-    }catch(error){
-        res.status(400).json({error: error.mesage});
+    }catch(error){        
+        res.status(400).json({error: error});
     }    
 }
 
 
 module.exports = {
-    newRooms   
+    postNewRoom   
 }

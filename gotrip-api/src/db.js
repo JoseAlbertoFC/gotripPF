@@ -60,18 +60,21 @@ Gallery.belongsTo(Hotel, { as: "hotel", foreignKey: "hotelId" });
 Hotel.hasMany(Rating, { as: "rating", foreignKey: "hotelId" });
 Rating.belongsTo(Hotel, { as: "hotel", foreignKey: "hotelId" });
 Rating.belongsTo(User, { as: "user", foreignKey: "userId" });
-  
+Rating.belongsTo(Rooms, { as: "rooms", foreignKey: "userId" });
+
+// Booking.hasMany(Rooms, { as: 'rooms', foreignKey: 'bookingId' });
+Booking.hasOne(Pay, { as: 'pay', foreignKey: 'bookingId' });
+//Rooms.belongsTo(Booking, { as: 'booking', foreignKey: 'bookingId' })
+
+
 Hotel.hasMany(Booking, { as: 'booking', foreignKey: 'hotelId' });
 Booking.belongsTo(Hotel, { as: 'hotel', foreignKey: 'hotelId' });
-Booking.belongsTo(User, { as: 'user', foreignKey: 'userId' });
+Booking.belongsTo(User, { as: 'user', foreignKey: 'hotelId' });
   
 User.hasMany(Pay, { as: 'pay', foreignKey: 'userId' });
 Pay.belongsTo(User, { as: 'user', foreignKey: 'userId' });
 Pay.belongsTo(Booking, { as: 'booking', foreignKey: 'bookingId' });
   
-Booking.hasMany(Rooms, { as: 'rooms', foreignKey: 'bookingId' });
-Booking.hasOne(Pay, { as: 'pay', foreignKey: 'bookingId' });
-Rooms.belongsTo(Booking, { as: 'booking', foreignKey: 'bookingId' })
 
 Rooms.belongsToMany(Service, { through: "Rooms_Service" });
 Service.belongsToMany(Rooms, { through: "Rooms_Service" });

@@ -29,12 +29,20 @@ module.exports = (sequelize) => {
           max: 100000,
         },
       },
-      kindRoom: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        // type: DataTypes.ENUM("Standard", "Executive", "Premium", "VIP"),
-        // allowNull: false,
-        // defaultValue: "VIP",
+      // kindRoom: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      //   // type: DataTypes.ENUM("Standard", "Executive", "Premium", "VIP"),
+      //   // allowNull: false,
+      //   // defaultValue: "VIP",
+      // },
+      numRooms: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      availableRooms: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
       },
       status: {
         type: DataTypes.BOOLEAN,
