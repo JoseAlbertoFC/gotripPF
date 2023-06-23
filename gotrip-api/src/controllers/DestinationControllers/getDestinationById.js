@@ -7,7 +7,7 @@ const getDestinationById = async (id) => {
     try{
   if (isNaN(id)) {
     const bdId = await Destination.findByPk(id, {
-      include: { model: Hotel, as: "hotel", attributes: ["name"] },
+      include: { model: Hotel, as: "hotel" },
     });
     return bdId;
   } else if(!isNaN(id)){

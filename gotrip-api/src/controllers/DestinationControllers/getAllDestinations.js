@@ -25,12 +25,18 @@ const getAllDestinations = async () => {
           moneyType: destiny.moneyType,
           status: destiny.status,
         },
+        
       });
     });
 
     //BD
-    const bdDestination = await Destination.findAll();
-
+    const bdDestination = await Destination.findAll({
+      include:{
+        model: Hotel, as: 'hotel'
+      },
+    }
+    );
+console.log(bdDestination);
     if (bdDestination.length > 0) return [...bdDestination];
   } catch (err) {
     throw Error(err.message);
