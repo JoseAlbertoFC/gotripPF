@@ -15,7 +15,57 @@ const { pending } = require("../handlers/MercadoPago/getPending");
 
 const payMercado = Router(); 
 
+
+/**
+ * @swagger
+ * /orden-pago:
+ *   post:
+ *     summary: Genera una orden de pago
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/OrdenPagoInput'
+ *     responses:
+ *       200:
+ *         description: Orden de pago generada exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/OrdenPagoResponse'
+ *       500:
+ *         description: Error al generar la orden de pago
+ */
+
+// Resto del código de la función ORDEN_PAGO
+
+
 payMercado.post("/mercadoPago", payment)
+/**
+ * @swagger
+ * /urlPago/webhook-pago:
+ *   post:
+ *     summary: Webhook para recibir notificaciones de pagos
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/WebhookPagoInput'
+ *     responses:
+ *       200:
+ *         description: Pago aprobado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/WebhookPagoResponse'
+ *       500:
+ *         description: Error en el webhook de pago
+ */
+
+// Resto del código de la función WEBHOOK_PAGO
+
 
 payMercado.post("/webhook-pago",webhook)
 
