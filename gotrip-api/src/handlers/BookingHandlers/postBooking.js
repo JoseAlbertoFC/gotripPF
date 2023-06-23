@@ -10,6 +10,7 @@ const postBooking = async (req, res) => {
     reservationStatus,
     gests,
     hotelId,
+    roomId,
     userId,
   } = req.body;
   try {
@@ -20,6 +21,7 @@ const postBooking = async (req, res) => {
       reservationStatus,
       gests,
       hotelId,
+      roomId,
       userId
     );
     res.status(200).json(result);

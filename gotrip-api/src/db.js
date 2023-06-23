@@ -45,36 +45,35 @@ const {
   Booking,
 } = sequelize.models;
 
-Hotel.hasMany(Rooms, { as: "rooms", foreignKey: "hotelId" });
-Rooms.belongsTo(Hotel, { as: "hotel", foreignKey: "hotelId" });
-
 Destination.hasMany(Hotel, { as: "hotel", foreignKey: "destinationId" });
-Hotel.belongsTo(Destination, {
-  as: "destination",
-  foreignKey: "destinationId",
-});
 
+Hotel.hasMany(Rooms, { as: "rooms", foreignKey: "hotelId" });
+Hotel.belongsTo(Destination, {as: "destination", foreignKey: "destinationId",});
 Hotel.hasMany(Gallery, { as: "gallery", foreignKey: "hotelId" });
-Gallery.belongsTo(Hotel, { as: "hotel", foreignKey: "hotelId" });
-
-Hotel.hasMany(Rating, { as: "rating", foreignKey: "hotelId" });
-Rating.belongsTo(Hotel, { as: "hotel", foreignKey: "hotelId" });
-Rating.belongsTo(User, { as: "user", foreignKey: "userId" });
-  
 Hotel.hasMany(Booking, { as: 'booking', foreignKey: 'hotelId' });
+Hotel.hasMany(Rating, { as: "rating", foreignKey: "hotelId" });
+
+Rooms.belongsTo(Hotel, { as: "hotel", foreignKey: "hotelId" });
+Rooms.belongsTo(Booking, { as: 'booking', foreignKey: 'bookingId' })
+Rooms.belongsToMany(Service, { through: "Rooms_Service" });
+
+Service.belongsToMany(Rooms, { through: "Rooms_Service" });
+
+// Booking.hasMany(Rooms, { as: 'rooms', foreignKey: 'bookingId' });
 Booking.belongsTo(Hotel, { as: 'hotel', foreignKey: 'hotelId' });
+Booking.belongsTo(Rooms, { as: 'rooms', foreignKey: 'roomId' });
 Booking.belongsTo(User, { as: 'user', foreignKey: 'userId' });
-  
-User.hasMany(Pay, { as: 'pay', foreignKey: 'userId' });
+Booking.hasOne(Pay, { as: 'pay', foreignKey: 'bookingId' });
+
 Pay.belongsTo(User, { as: 'user', foreignKey: 'userId' });
 Pay.belongsTo(Booking, { as: 'booking', foreignKey: 'bookingId' });
-  
-Booking.hasMany(Rooms, { as: 'rooms', foreignKey: 'bookingId' });
-Booking.hasOne(Pay, { as: 'pay', foreignKey: 'bookingId' });
-Rooms.belongsTo(Booking, { as: 'booking', foreignKey: 'bookingId' })
 
-Rooms.belongsToMany(Service, { through: "Rooms_Service" });
-Service.belongsToMany(Rooms, { through: "Rooms_Service" });
+Rating.belongsTo(Hotel, { as: "hotel", foreignKey: "hotelId" });
+Rating.belongsTo(User, { as: "user", foreignKey: "userId" });
+
+Gallery.belongsTo(Hotel, { as: "hotel", foreignKey: "hotelId" });
+
+User.hasMany(Pay, { as: 'pay', foreignKey: 'userId' });
 
 module.exports = {
   ...sequelize.models,

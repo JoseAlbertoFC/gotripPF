@@ -7,6 +7,7 @@ const createBooking = async (
   reservationStatus,
   gests,
   hotelId,
+  roomId,
   userId
 ) => {
   try {
@@ -17,6 +18,7 @@ const createBooking = async (
       reservationStatus,
       gests,
       hotelId,
+      roomId,
       userId,
     });
 
@@ -26,17 +28,14 @@ const createBooking = async (
         {
           model: User,
           as: "user",
-          attributes: ["name", "email", "dniPasaport"],
         },
         {
           model: Hotel,
           as: "hotel",
-          attributes: ["name", "checkIn", "checkOut", "email"],
         },
         {
           model: Rooms,
           as: "rooms",
-          attributes: ["room", "price", "kindRoom"],
         },
       ],
     });
