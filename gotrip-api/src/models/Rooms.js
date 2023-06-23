@@ -26,6 +26,7 @@ module.exports = (sequelize) => {
           max: 100000,
         },
       },
+
       numRooms: {
         type: DataTypes.INTEGER,
         allowNull: true,
