@@ -17,9 +17,6 @@ module.exports = (sequelize) => {
       room: {
         type: DataTypes.STRING,
         allowNull: false,
-        // type: DataTypes.ENUM("simple", "familiar", "group"),
-        // defaultValue: "simple",
-        // allowNull: false,
       },
       price: {
         type: DataTypes.INTEGER,
@@ -29,12 +26,17 @@ module.exports = (sequelize) => {
           max: 100000,
         },
       },
-      kindRoom: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        // type: DataTypes.ENUM("Standard", "Executive", "Premium", "VIP"),
-        // allowNull: false,
-        // defaultValue: "VIP",
+      numRooms: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      availableRooms: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: true,
       },
       status: {
         type: DataTypes.BOOLEAN,
