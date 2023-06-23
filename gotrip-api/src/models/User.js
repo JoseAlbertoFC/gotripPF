@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       phone:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       phoneCode:{
@@ -51,7 +51,6 @@ module.exports = (sequelize) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
         validate: {
           isAlphanumeric: true,
           len: [8, 16], // Longitud mínima y máxima de la contraseña
@@ -60,7 +59,6 @@ module.exports = (sequelize) => {
       confirmPassword: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
         validate: {
           isAlphanumeric: true,
           len: [8, 16], // Longitud mínima y máxima de la contraseña
@@ -71,7 +69,7 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
       dniPasaport: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: true,
       },
       status: {
