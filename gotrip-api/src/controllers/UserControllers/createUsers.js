@@ -18,10 +18,6 @@ const newUser = async ({
   confirmPassword,
   phoneCode,
 }) => {
-  const existingUser = await User.findOne({ email });
-  if (existingUser) {
-    throw new Error("El correo electrónico ya está registrado");
-  }
   try {
     const newUser = new User({
       name: name,
