@@ -1,6 +1,6 @@
 const { User } = require("../../db");
 const updateUser = async ( 
-  name,
+  {name,
   email,
   password,
   gender,
@@ -11,9 +11,10 @@ const updateUser = async (
   id,
   phoneCode,
   confirmPassword,
-  country,
+  country,}
 
   ) => {
+  
  
   try {
     const user = await User.findByPk(id);

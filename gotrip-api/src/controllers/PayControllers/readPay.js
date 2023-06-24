@@ -15,7 +15,7 @@ const readpay = async () => {
 
     
     
-    return payWithDetails
+    return payments
   } catch (error) {
     console.log(error.message);
     throw new Error({ error: error.message });

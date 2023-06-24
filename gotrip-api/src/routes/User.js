@@ -11,9 +11,15 @@ const userRoute = Router();
 
 /**
  * @swagger
+ * tags:
+ *   - name: Users
+ *     description: Operaciones relacionadas con usuarios
+ *
  * /user/createNewUser:
  *   post:
  *     summary: Crea un nuevo usuario
+ *     tags:
+ *       - Users
  *     requestBody:
  *       required: true
  *       content:
@@ -90,13 +96,16 @@ const userRoute = Router();
  *                 updatedAt:
  *                   type: string
  */
+
 userRoute.post("/createNewUser", userNew)
 
 /**
  * @swagger
- * /users/{userId}:
+ * /user/deleteUser/{userId}:
  *   delete:
  *     summary: Elimina un usuario por su ID
+ *     tags:
+ *       - Users
  *     parameters:
  *       - in: path
  *         name: userId
@@ -113,13 +122,16 @@ userRoute.post("/createNewUser", userNew)
  *         description: Error al eliminar el usuario
  */
 
+
 userRoute.delete("/deleteUser/:id", deleteUserhandler)
 
 /**
  * @swagger
- * /users:
+ * /user/readUser:
  *   get:
  *     summary: Obtiene todos los usuarios
+ *     tags:
+ *       - Users
  *     responses:
  *       200:
  *         description: Lista de usuarios obtenida exitosamente
@@ -162,12 +174,15 @@ userRoute.delete("/deleteUser/:id", deleteUserhandler)
  *         description: Error al obtener la lista de usuarios
  */
 
+
 userRoute.get("/readUser", readallUser)
 /**
  * @swagger
- * /users/{userId}:
+ * /user/updateUser/{userId}:
  *   put:
  *     summary: Actualiza un usuario por su ID
+ *     tags:
+ *       - Users
  *     parameters:
  *       - in: path
  *         name: userId
@@ -180,34 +195,7 @@ userRoute.get("/readUser", readallUser)
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *               gender:
- *                 type: string
- *               birthday:
- *                 type: string
- *               address:
- *                 type: string
- *               dniPasaport:
- *                 type: string
- *               rol:
- *                 type: string
- *               phoneCode:
- *                 type: string
- *               confirmPassword:
- *                 type: string
- *               country:
- *                 type: string
- *             required:
- *               - name
- *               - email
- *               - password
+ *             $ref: '#/components/schemas/UserUpdateInput'
  *     responses:
  *       200:
  *         description: Usuario actualizado exitosamente
@@ -215,7 +203,52 @@ userRoute.get("/readUser", readallUser)
  *         description: Usuario no encontrado
  *       500:
  *         description: Error al actualizar el usuario
+ *
+ * @swagger
+ * components:
+ *   schemas:
+ *     UserUpdateInput:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Nombre del usuario
+ *         email:
+ *           type: string
+ *           description: Correo electrónico del usuario
+ *         password:
+ *           type: string
+ *           description: Contraseña del usuario
+ *         gender:
+ *           type: string
+ *           description: Género del usuario
+ *         birthday:
+ *           type: string
+ *           description: Fecha de nacimiento del usuario
+ *         address:
+ *           type: string
+ *           description: Dirección del usuario
+ *         dniPasaport:
+ *           type: string
+ *           description: DNI o pasaporte del usuario
+ *         rol:
+ *           type: string
+ *           description: Rol del usuario
+ *         phoneCode:
+ *           type: string
+ *           description: Código telefónico del usuario
+ *         confirmPassword:
+ *           type: string
+ *           description: Confirmación de contraseña del usuario
+ *         country:
+ *           type: string
+ *           description: País del usuario
+ *       required:
+ *         - name
+ *         - email
+ *         - password
  */
+
 
 userRoute.put("/updateUser/:id", updatedataUser)
 
