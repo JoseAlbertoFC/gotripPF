@@ -1,21 +1,17 @@
+const {roomDelete} = require("../../controllers/RoomsControllers/indexControlers.js")
 
+const deleteRooms = async (req, res) => {
+    const { idRoom } = req.params;
 
-const deleteRooms = async(req,res) =>{
-    
-    const {idHotel} = req.params ;
-    try{
-        
-        console.log("*DELETE *********************");
-     
-        // const dataHotels = await hotelDelete(idHotel)
-        // res.status(200).json(dataHotels );        
-        
-    }catch(error){
-        res.status(400).json({error: error.mesage});
-    }    
+    try {
+      const result = await roomDelete(idRoom);
+      if (result === 0) return res.status(400).json("This Rooms  was not deleted correctly");
+      res.status(200).json("This Romms was successfully removed");
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
 }
 
-
-module.exports = {
-    deleteRooms   
+module.exports ={
+    deleteRooms
 }
