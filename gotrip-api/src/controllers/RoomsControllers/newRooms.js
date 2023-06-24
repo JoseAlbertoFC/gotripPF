@@ -1,4 +1,5 @@
 const { Rooms} = require("../../db")
+const {Op} = require("sequelize")
 
 
 const postNewRoomDB = async (room, price,numRooms,kindRoom, status, hotelId) => {

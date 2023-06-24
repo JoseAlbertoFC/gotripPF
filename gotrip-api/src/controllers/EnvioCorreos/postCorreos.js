@@ -1,10 +1,14 @@
-const { Pay , User , Booking } = require("../../db");
 const nodemailer = require('nodemailer');
 
 const envioCorreo = async (
 
+  result
+
+
+
 
 ) => {
+  console.log(result)
   
   try {
     const transporter = nodemailer.createTransport({
