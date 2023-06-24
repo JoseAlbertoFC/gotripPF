@@ -1,5 +1,6 @@
 const mercadopago = require("mercadopago")
 const { newPay } = require("../PayControllers/postPAy")
+const { envioCorreo } = require("../EnvioCorreos/postCorreos")
 
 
 
@@ -29,6 +30,8 @@ const WEBHOOK_PAGO = async (payment,id,bookingId,userId) => {
         }
 
         const pay = await newPay(dataPay)
+
+        const emailData = await envioCorreo(dataPay)
         
         return ({Payment:"Aprovado"})
     } catch (error) {
