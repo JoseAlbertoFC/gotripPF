@@ -5,6 +5,7 @@ const { userNew } = require("../handlers/UserHandlers/createUsers");
 const { deleteUserhandler } = require("../handlers/UserHandlers/deleteUser");
 const { readallUser } = require("../handlers/UserHandlers/readAllUser");
 const { updatedataUser } = require("../handlers/UserHandlers/updateUser");
+const { Loginuser } = require("../handlers/UserHandlers/loginUsers");
 
 // Aqui va el midleware de User
 const userRoute = Router();
@@ -251,5 +252,44 @@ userRoute.get("/readUser", readallUser)
 
 
 userRoute.put("/updateUser/:id", updatedataUser)
+/**
+ * @swagger
+ * /user/login:
+ *   post:
+ *     summary: Iniciar sesión de usuario
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/LoginInput'
+ *     responses:
+ *       200:
+ *         description: Inicio de sesión exitoso
+ *       400:
+ *         description: Credenciales inválidas
+ *       500:
+ *         description: Error en el servidor
+ *
+ * @swagger
+ * components:
+ *   schemas:
+ *     LoginInput:
+ *       type: object
+ *       properties:
+ *         username:
+ *           type: string
+ *           description: Nombre de usuario o correo electrónico
+ *         password:
+ *           type: string
+ *           description: Contraseña del usuario
+ *       required:
+ *         - username
+ *         - password
+ */
+
+userRoute.post("/login",Loginuser)
 
 module.exports = userRoute
