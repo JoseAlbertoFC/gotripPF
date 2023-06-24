@@ -12,6 +12,10 @@ const {
   address,
   dniPasaport,
   rol,
+  phoneCode,
+  country,
+  confirmPassword,
+
  } = req.body;
 
 
@@ -25,11 +29,15 @@ const {
       birthday,
       address,
       dniPasaport,
-      rol,id});
+      rol,id,phoneCode,country,confirmPassword});
 
     
+    if (result.error){
+      res.status(404).json(result);
 
+    }else{
     res.status(200).json(result);
+    }
    
     
   } catch (error) {

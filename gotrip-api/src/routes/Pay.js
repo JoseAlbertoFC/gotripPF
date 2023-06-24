@@ -14,9 +14,14 @@ const { deletePayhandler } = require("../handlers/PayHandlers/deletePaysments");
 const payUser = Router(); 
 /**
  * @swagger
- * /pays:
+ * tags:
+ *   - name: Pagos
+ *     description: Operaciones relacionadas con pagos
+ * /payment/newPay:
  *   post:
  *     summary: Crea un nuevo pago
+ *     tags:
+ *       - Pagos
  *     requestBody:
  *       required: true
  *       content:
@@ -82,12 +87,15 @@ const payUser = Router();
 // Resto del código de la ruta de creación de pago
 
 
+
 payUser.post("/newPay", paymentNew)
 /**
  * @swagger
- * /pays:
+ * /payment/paymentsall:
  *   get:
  *     summary: Obtiene todos los pagos
+ *     tags:
+ *       - Pagos
  *     responses:
  *       200:
  *         description: Lista de pagos obtenida exitosamente
@@ -104,25 +112,28 @@ payUser.post("/newPay", paymentNew)
 // Resto del código de la ruta de lectura de pagos
 
 
+
 payUser.get("/paymentsall", readallPays)
 /**
  * @swagger
- * /pays/{id}:
+ * /payment/updatePay/{userid}:
  *   put:
  *     summary: Actualiza un pago por ID
+ *     tags:
+ *       - Pagos
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: userid
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
  *         description: ID del pago a actualizar
- *       - in: body
- *         name: pay
- *         required: true
- *         description: Datos del pago a actualizar
- *         schema:
- *           $ref: '#/components/schemas/PayUpdateInput'
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdatePayInput'
  *     responses:
  *       200:
  *         description: Pago actualizado exitosamente
@@ -132,17 +143,45 @@ payUser.get("/paymentsall", readallPays)
  *               $ref: '#/components/schemas/PayWithDetails'
  *       500:
  *         description: Error al actualizar el pago
+ *
+ * @swagger
+ * components:
+ *   schemas:
+ *     UpdatePayInput:
+ *       type: object
+ *       properties:
+ *         userid:
+ *           type: string
+ *           description: ID del pago a actualizar
+ *         amount:
+ *           type: number
+ *           description: Nuevo monto del pago
+ *         paymentDate:
+ *           type: string
+ *           format: date
+ *           description: Nueva fecha de pago (en formato YYYY-MM-DD)
+ *         paymentStatus:
+ *           type: string
+ *           description: Nuevo estado de pago
+ *       required:
+ *         - userid
+ *         - amount
+ *         - paymentDate
+ *         - paymentStatus
  */
 
 // Resto del código de la ruta de actualización de pago
 
 
+
 payUser.put("/updatePay/:id",updatedataPay)
 /**
  * @swagger
- * /pays/{userId}:
+ * /payment/deletePay/{userId}:
  *   delete:
  *     summary: Elimina un pago por ID de usuario
+ *     tags:
+ *       - Pagos
  *     parameters:
  *       - in: path
  *         name: userId
@@ -150,14 +189,32 @@ payUser.put("/updatePay/:id",updatedataPay)
  *         schema:
  *           type: string
  *         description: ID del usuario asociado al pago a eliminar
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/DeletePayInput'
  *     responses:
  *       200:
  *         description: Pago eliminado exitosamente
  *       500:
  *         description: Error al eliminar el pago
+ *
+ * @swagger
+ * components:
+ *   schemas:
+ *     DeletePayInput:
+ *       type: object
+ *       properties:
+ *         userId:
+ *           type: string
+ *           description: ID del usuario asociado al pago a eliminar
+ *       required:
+ *         - userId
  */
 
-// Resto del código de
+// Resto del código de la ruta de eliminación de pago
 
 
 payUser.delete("/deletePay/:id",deletePayhandler)
