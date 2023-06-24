@@ -17,7 +17,7 @@ const ORDEN_PAGO = async (carrito,userId,bookingId) => {
   }));
   
  
-  const notificationURL = "https://444d-2806-2f0-49a0-708-150c-b560-33bf-30a6.ngrok.io/urlPago/webhook-pago/";
+  const notificationURL = "https://2777-2806-2f0-49a0-708-150c-b560-33bf-30a6.ngrok.io/urlPago/webhook-pago/";
 const additionalData = {
   userId: userId,
   bookingId: bookingId
