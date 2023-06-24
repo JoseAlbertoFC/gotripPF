@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Hotel, Destination , Rooms} = require("../../db")
+const { Rooms} = require("../../db")
 
 const getRoomsAll = async()=>{
     try{
