@@ -1,7 +1,7 @@
 const { Rooms} = require("../../db")
 const { Op } = require("sequelize");
 
-const postNewRoomDB = async (room, price,numRooms,availableRooms, status, hotelId) => {
+const postNewRoomDB = async (room, price,numRooms,availableRooms, description,status, hotelId) => {
     const dataState = {
       state: false,
       text: "",
@@ -17,7 +17,7 @@ const postNewRoomDB = async (room, price,numRooms,availableRooms, status, hotelI
           ]
         }
       });
-   //   console.log("validateRoom*********************" +validateRoom);
+     console.log("validateRoom*********************" +validateRoom);
       if (validateRoom) {
         console.log("****Room or Hotel already exist**************************");
         dataState.text = "Room or Hotel already exists";
@@ -31,6 +31,7 @@ const postNewRoomDB = async (room, price,numRooms,availableRooms, status, hotelI
         status: status,
         availableRooms: availableRooms,
         numRooms: numRooms,
+        description: description,
         hotelId: hotelId
         
       });
@@ -42,6 +43,7 @@ const postNewRoomDB = async (room, price,numRooms,availableRooms, status, hotelI
     } catch (error) {
       dataState.text = "Error creating room";
       dataState.detail = error.message;
+      console.log("dataState*error******" + JSON.stringify(dataState));
       throw new Error(JSON.stringify(dataState));
     }
   };

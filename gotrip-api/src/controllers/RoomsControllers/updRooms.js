@@ -8,6 +8,8 @@ const putUpdateRooms = async (idRoom,updatedData) => {
       detail: ""
     };
     console.log("validateRoom*********************")
+    console.log("updatedData**************" + updatedData)
+    console.log("idRoom*******" + idRoom);
     try {
         if (!idRoom) {
             dataState.text = "The Room ID is required";
