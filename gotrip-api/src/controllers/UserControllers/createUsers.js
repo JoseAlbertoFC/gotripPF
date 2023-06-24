@@ -2,6 +2,8 @@
 // Porfa crea un archivo para cada controller
 const { User } = require("../../db");
 
+const bcrypt = require('bcrypt');
+
 const newUser = async ({
   name,
   email,
@@ -18,11 +20,37 @@ const newUser = async ({
   confirmPassword,
   phoneCode,
 }) => {
+
+  // Vamos a  encryptar la contrasena 
+
+  function hashPassword(password) {
+    const saltRounds = 10;
+    const hashedPassword = bcrypt.hashSync(password, saltRounds);
+    return hashedPassword;
+  }
+
+  function hashConfirmPassword(confirmPassword) {
+    const saltRounds = 10;
+    const hashedConfimPassword = bcrypt.hashSync(confirmPassword, saltRounds);
+    return hashedConfimPassword;
+  }
+  
+  
+
+  const hashedPassword = hashPassword(password);
+
+  const hashedConfimPassword = hashConfirmPassword(confirmPassword);
+
+  
+
+  
+  
+
   try {
     const newUser = new User({
       name: name,
       email: email,
-      password: password,
+      password: hashedPassword,
       gender: gender,
       address: address,
       dniPasaport: dniPasaport,
@@ -31,7 +59,7 @@ const newUser = async ({
       phone: phone,
       thirdPartyCreated: thirdPartyCreated,
       phoneCode: phoneCode,
-      confirmPassword: confirmPassword,
+      confirmPassword: hashedConfimPassword,
       birthday: birthday,
       country: country,
     });

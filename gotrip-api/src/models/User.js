@@ -51,18 +51,10 @@ module.exports = (sequelize) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-          isAlphanumeric: true,
-          len: [8, 16], // Longitud mínima y máxima de la contraseña
-        },
       },
       confirmPassword: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-          isAlphanumeric: true,
-          len: [8, 16], // Longitud mínima y máxima de la contraseña
-        },
       },
       address: {
         type: DataTypes.STRING,
