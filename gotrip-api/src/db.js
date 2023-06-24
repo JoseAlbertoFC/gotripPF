@@ -62,9 +62,8 @@ Rating.belongsTo(Hotel, { as: "hotel", foreignKey: "hotelId" });
 Rating.belongsTo(User, { as: "user", foreignKey: "userId" });
 Rating.belongsTo(Rooms, { as: "rooms", foreignKey: "userId" });
 
-// Booking.hasMany(Rooms, { as: 'rooms', foreignKey: 'bookingId' });
+Booking.belongsTo(Rooms, { as: 'rooms', foreignKey: 'roomId' });
 Booking.hasOne(Pay, { as: 'pay', foreignKey: 'bookingId' });
-//Rooms.belongsTo(Booking, { as: 'booking', foreignKey: 'bookingId' })
 
 
 Hotel.hasMany(Booking, { as: 'booking', foreignKey: 'hotelId' });
