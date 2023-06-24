@@ -8,14 +8,14 @@ const envioCorreo = async (
 
 
 ) => {
-  console.log(result)
+  console.log("Soy el correo ",result)
   
   try {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: 'hoteldeveloperfull@gmail.com',
-        pass: ''
+        pass: 'arxofdylvrvlxmoy'
       },
         secure: true, // Habilitar la conexión segura
       tls: {
@@ -23,7 +23,7 @@ const envioCorreo = async (
       }
     });
     
-    const name = "nodemailer"
+    const name = "juan Daniel Luevano Ruiz"
     const mailOptions = {
       from: 'hoteldeveloperfull@gmail.com',
       to: 'mcdany996@gmail.com',
@@ -88,28 +88,28 @@ const envioCorreo = async (
                  <p><strong>Hotel Reserva</strong></p>
                 <p>Dirección del hotel, Ciudad</p>
                 <p>Teléfono: 123-456789</p>
-                <p>${name}</p>
+                <p>Gracias port tu Reserva ${name}</p>
            
             <h2>Detalles de la Reserva</h2>
             <table class="table">
                  <thead>
                     <tr>
-                        <th>Fecha de Check-In</th>
-                        <th>Fecha de Check-Out</th>
-                        <th>Habitación</th>
-                        <th>Precio por Noche</th>
-                        <th>Noches</th>
+                        <th>No.</th>
+                        <th>Orden de Pago</th>
+                        <th>Metodo de pago</th>
+                        <th>Tipo de pago</th>
+                        <th>Status de Pago</th>
                         <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Fecha Check-In</td>
-                        <td>Fecha Check-Out</td>
-                        <td>Tipo de Habitación</td>
-                        <td>Precio por Noche</td>
-                        <td>Noches</td>
-                        <td>Total</td>
+                        <td>${result.idpay}</td>
+                        <td>${result.order}</td>
+                        <td>${result.orderType}</td>
+                        <td>${result.operationType}</td>
+                        <td>${result.data_aprove}</td>
+                        <td>${result.total_paid_amount}</td>
                     </tr>
                 </tbody>
             </table>
