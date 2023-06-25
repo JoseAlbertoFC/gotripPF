@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const { User } = require("../../db");
+const tokenSing = require('./generateToken');
 
 const login = async (username, passwordlogin ) => {
 
@@ -22,13 +23,20 @@ const login = async (username, passwordlogin ) => {
 
     const isPasswordMatch = bcrypt.compareSync(passwordlogin, user.password);
 
-    console.log(isPasswordMatch)
+     const tokenSession = await tokenSing(user)
+
+
     if (!isPasswordMatch) {
       return ({ error: 'Contraseña incorrecta' });
     }
 
+    const data = {
+      data: user,
+      tokenSession
+    }
+
     // Proceso de inicio de sesión exitoso
-    return ({ message: 'Inicio de sesión exitoso' });
+    return data
   } catch (error) {
     console.error(error);
     return ({ error: 'Error en el servidor' });
