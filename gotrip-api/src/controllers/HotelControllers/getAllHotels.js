@@ -1,14 +1,17 @@
 const { Op } = require("sequelize");
-const { Hotel, Destination,Rooms } = require("../../db");
-//const api = require("../../../api/apiHotels.json");
-//const Rooms = require("../../models/Rooms");
+const { Hotel, Destination,Rooms,Gallery } = require("../../db");
+
 const {validaApi} = require("./buscaApi.js")
 const getHotelAll = async () => {
   try {
 
    const datos =  validaApi()
       const createdHotels = await Hotel.findAll({
-        include: [{ model: Destination, as: "destination" },{model: Rooms, as: "rooms" },],
+        include: [
+          {model: Destination, as: "destination" },
+          {model: Rooms, as: "rooms" },
+          {model: Gallery, as: "gallery" },
+        ],
       });
       return createdHotels;
     
@@ -29,17 +32,14 @@ const getHotelParams = async (querysHotel) => {
         whereCondition[key] = { [Op.iLike]: `%${value}%` };
       }
     });
-    console.log(whereCondition);
+    //console.log(whereCondition);
     // Consultar la tabla de hoteles con las condiciones de búsqueda
     const hotels = await Hotel.findAll({
       where: whereCondition,
       include: [
-        {
-          model: Destination,
-          as: "destination",
-          attributes: ["country", "state", "city", "moneyType"],
-        },
+        {model: Destination, as: "destination" },
         {model: Rooms, as: "rooms" },
+        {model: Gallery, as: "gallery" },
       ],
     });
 
@@ -55,12 +55,9 @@ const getHotelById = async (idHotel) => {
     if (!idHotel) throw new Error(`The id is required`);
     const objHotel = await Hotel.findByPk(idHotel, {
       include: [
-        {
-          model: Destination,
-          as: "destination",
-          attributes: ["country", "state", "city", "moneyType"],
-        },
+        {model: Destination, as: "destination" },
         {model: Rooms, as: "rooms" },
+        {model: Gallery, as: "gallery" },
       ],
     });
     if (!objHotel) return;

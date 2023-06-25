@@ -1,12 +1,22 @@
-const { Op } = require("sequelize");
-const { Rooms} = require("../../db")
+const { Op,Sequelize,DataTypes  } = require("sequelize");
+const { Rooms,Services} = require("../../db")
 
 const getRoomsAll = async()=>{
     try{
-        const objRooms = await Rooms.findAll()
-        return objRooms ;
+      const rooms = await Rooms.findAll(
+        // { include: {
+        //   model: Services,
+        //   where: {
+        //     id: {
+        //       [Op.in]: Rooms.ServicesRoom
+        //     },
+        //   },  }, }
+      );
+  
+      return rooms;
     }
     catch(error){
+      console.log("error:::: " + error);
         throw new Error(error.message);
     }
 }
@@ -35,7 +45,11 @@ const getRoomRarams = async (querysRooms) => {
           }
       });
       const RoomsData = await Rooms.findAll({
-        where: whereCondition
+        where: whereCondition,
+        // include: {
+        //   model: Services,
+        //   where: { id: { [Op.in]: literal('Rooms."ServicesRoom"') } },
+        // },
       });
   
       if (RoomsData.length === 0) {
@@ -53,12 +67,25 @@ const getRoomRarams = async (querysRooms) => {
 
 const getRoomById = async(idRoom)=>{
     try {
-        // console.log("***idRoom *** " +idRoom);
-        // console.log("*******************");
+    
         if (!idRoom) throw new Error(`The id is required`);
+        console.log("***idRoom *** " +idRoom);
+        console.log("*******************");
         const objRooms = await Rooms.findByPk(idRoom);
-        if (!objRooms) return;
-        return { ...objRooms.toJSON() };
+          // , {include: {
+          //   model: Services,
+          //   where: { id: { [Sequelize.Op.in]: Sequelize.literal('Rooms."ServicesRoom"') } },
+          // }, }
+          
+        if (!objRooms){
+          // console.log("***objRooms error*** " +objRooms);
+          // console.log("*******************");
+          throw new Error(error);
+        }else{
+          // console.log("***objRooms toJSON *** " +objRooms);
+          // console.log("*******************");
+          return { ...objRooms.toJSON() };
+        }                 
       } catch (error) {
         throw new Error(error.message);
       }

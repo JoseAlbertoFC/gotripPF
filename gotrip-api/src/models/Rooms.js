@@ -30,10 +30,12 @@ module.exports = (sequelize) => {
       numRooms: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        defaultValue: 0,
       },
-      availableRooms: {
+      roomsInUse: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        defaultValue: 0,
       },
       description: {
         type: DataTypes.TEXT,
@@ -43,6 +45,10 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
+      },
+      ServicesRoom: {
+        type: DataTypes.ARRAY(DataTypes.UUID),
+        defaultValue: [],
       },
     },
     { timestamps: true },
