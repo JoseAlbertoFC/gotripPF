@@ -9,6 +9,7 @@ const hotelRoute = require("./Hotel");
 const ratingRoutes = require("./Rating");
 const serviceRoutes = require("./Service");
 const roomsRoute = require("./Rooms");
+const paypalRoutes = require("./Paypal")
 
 const router = Router();
 
@@ -22,5 +23,6 @@ router.use("/comments", ratingRoutes);
 router.use("/service", serviceRoutes);
 router.use("/hotel", hotelRoute);
 router.use("/rooms",roomsRoute);
+router.use("/urlPaypal", paypalRoutes);
 
 module.exports = router;
