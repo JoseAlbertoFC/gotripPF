@@ -44,8 +44,8 @@ const postHotelDB = async(name, image, email, address, phone, checkIn, checkOut,
     dataState.state = false;
     dataState.text = error.message;
     dataState.detail =error.parent.detail;
-    throw new Error(JSON.stringify(dataState));
-      // return dataState ;
+    // throw new Error(JSON.stringify(dataState));
+    return dataState ;
     }
 };
 

@@ -48,6 +48,6 @@ const validaApi= async () =>{
     }
 
     module.exports = {
-        validaApi
+    validaApi
       };
       

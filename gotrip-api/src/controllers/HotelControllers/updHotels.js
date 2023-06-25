@@ -9,7 +9,9 @@ const updateHotelBD = async (idHotel, updatedData) => {
     detail: "",
   };  
   try {
-        
+       
+    console.log("******idHotel ** " +idHotel );
+    console.log("******updatedData ** " +updatedData );
       if (!idHotel) {
         dataState.text = "The hotel ID is required";
         return dataState;
@@ -22,6 +24,7 @@ const updateHotelBD = async (idHotel, updatedData) => {
         return dataState;
       }else{
         const updatedHotel = await hotel.update(updatedData);
+
         dataState.state= true,
         dataState.text = "SUCCESSFULLY UPDATED HOTEL";
         dataState.detail=  updatedHotel.toJSON();
