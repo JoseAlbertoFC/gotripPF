@@ -22,7 +22,7 @@ const createBooking = async (
       roomId,
       userId,
     });
-    const DataUpd = await bookingVal( id,numRooms,description);
+    const DataUpd = await bookingVal( roomId ,1,"ADD");
     if(DataUpd.state){
       //hace de todo
       const bookingWithDetails = await Booking.findOne({
