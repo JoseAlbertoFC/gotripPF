@@ -3,6 +3,8 @@ const { verifyToken } = require("./generateToken")
 const checkAuth = async  (req,res,next) => {
 
   try {
+    const token = req.headers
+    console.log(token)
     const tokenData = await verifyToken(token)
     console.log(tokenData)
     if(tokenData._id){
