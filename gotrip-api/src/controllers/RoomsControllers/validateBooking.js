@@ -46,18 +46,18 @@ const bookingVal = async(idRoom,cantReq,eventRooms) =>{
                     const searchHotel = await Hotel.findByPk(hotelId);
                     
                     const totalNumRooms = await sumNumRoomsByHotel(hotelId);
-                    console.log("****totalNumRooms*** " + totalNumRooms);
-                    console.log("****numRooms***" + searchRooms.numRooms);
+                    // console.log("****totalNumRooms*** " + totalNumRooms);
+                    // console.log("****numRooms***" + searchRooms.numRooms);
 
                     if (totalNumRooms >= searchHotel.numberRooms) {
-                        console.log("ACTUALIZA EL HOTEL********************");
+                        // console.log("ACTUALIZA EL HOTEL********************");
                         const updatedDataHotel = { status: false };
                         // const searchHotel = await Hotel.findByPk(hotelId);
                         Object.assign(searchHotel, updatedDataHotel);
                         await searchHotel.save();
                       }
 
-                console.log(`Total number of rooms for hotel ${hotelId}: ${totalNumRooms}`);
+                // console.log(`Total number of rooms for hotel ${hotelId}: ${totalNumRooms}`);
 
                 dataState.state = true;
                 dataState.text = `The ${room} room is available for the required amount (${cantReq})`;
@@ -95,7 +95,7 @@ const bookingVal = async(idRoom,cantReq,eventRooms) =>{
 
 const sumNumRoomsByHotel = async (hotelId) => {
     try {
-        console.log("**dentro de la funcion******" + hotelId);
+        // console.log("**dentro de la funcion******" + hotelId);
       const result = await Rooms.findOne({
         attributes: [
           [Sequelize.literal('SUM("roomsInUse")'), 'totalNumRooms'],

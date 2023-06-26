@@ -3,11 +3,11 @@ const {getRoomsAll,getRoomRarams,getRoomById} = require("../../controllers/Rooms
 const getRooms = async(req,res) =>{
     const querysRooms = req.query;
     const cantQuerys = Object.keys(querysRooms).length;
-    console.log("***cantQuerys *********************");
+    // console.log("***cantQuerys *********************");
     try{
         
-        console.log(cantQuerys );
-        console.log("***cantQuerys *********************");
+        // console.log(cantQuerys );
+        // console.log("***cantQuerys *********************");
         if(cantQuerys > 0){            
             const dataRooms = await getRoomRarams(querysRooms)
             res.status(200).json(dataRooms );
@@ -23,8 +23,8 @@ const getRooms = async(req,res) =>{
 
 const getRoomsId= async(req,res) =>{
     const {idRoom} = req.params ;
-     console.log(idRoom);
-     console.log("*********************");
+    //  console.log(idRoom);
+    //  console.log("*********************");
     try{
         const dataRoomID = await getRoomById(idRoom)
         res.status(200).json(dataRoomID );

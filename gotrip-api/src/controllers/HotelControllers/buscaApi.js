@@ -33,7 +33,7 @@ const validaApi= async () =>{
                 moneyType: hotel.rates_currency,
               },
             };
-            console.log(apiData);
+            // console.log(apiData);
             const createdHotel = await Hotel.create(apiData, {
               include: [{ model: Destination, as: "destination" },{model: Rooms, as: "rooms" },],
             });

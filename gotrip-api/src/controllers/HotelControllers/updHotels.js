@@ -10,8 +10,8 @@ const updateHotelBD = async (idHotel, updatedData) => {
   };  
   try {
        
-    console.log("******idHotel ** " +idHotel );
-    console.log("******updatedData ** " +updatedData );
+    // console.log("******idHotel ** " +idHotel );
+    // console.log("******updatedData ** " +updatedData );
       if (!idHotel) {
         dataState.text = "The hotel ID is required";
         return dataState;

@@ -6,7 +6,7 @@ const getAllServices = async () => {
       include: [{ model: Rooms }],
     });
   } catch (error) {
-    console.log({ error: error.message });
+    // console.log({ error: error.message });
     throw new Error({ error: error.message });
   }
 };
