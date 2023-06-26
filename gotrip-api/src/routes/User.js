@@ -6,6 +6,8 @@ const { deleteUserhandler } = require("../handlers/UserHandlers/deleteUser");
 const { readallUser } = require("../handlers/UserHandlers/readAllUser");
 const { updatedataUser } = require("../handlers/UserHandlers/updateUser");
 const { Loginuser } = require("../handlers/UserHandlers/loginUsers");
+const checkAuth = require("../controllers/UserControllers/auth");
+
 
 // Aqui va el midleware de User
 const userRoute = Router();
@@ -176,7 +178,7 @@ userRoute.delete("/deleteUser/:id", deleteUserhandler)
  */
 
 
-userRoute.get("/readUser", readallUser)
+userRoute.get("/readUser",checkAuth, readallUser)
 /**
  * @swagger
  * /user/updateUser/{userId}:
@@ -296,6 +298,8 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const session = require('express-session');
 const config = require('../controllers/GoogleAuth/google');
+
+
 
 // Configuración de Express
 userRoute.use(session({ secret: 'secretStuff', resave: false, saveUninitialized: true }));

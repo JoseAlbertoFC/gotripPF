@@ -14,6 +14,7 @@ const {
   rol,
   phoneCode,
   country,
+  phone,
   confirmPassword,
 
  } = req.body;
@@ -29,7 +30,7 @@ const {
       birthday,
       address,
       dniPasaport,
-      rol,id,phoneCode,country,confirmPassword});
+      rol,id,phoneCode,country,confirmPassword,phone});
 
     
     if (result.error){
