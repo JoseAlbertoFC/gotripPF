@@ -1,24 +1,13 @@
-const { verifyToken } = require("./generateToken")
+const { verifyToken } = require("./generateToken");
 
-const checkAuth = async  (req,res,next) => {
-
+const checkAuth = async (token) => {
   try {
-    const token = req.headers
-    console.log(token)
-    const tokenData = await verifyToken(token)
-    console.log(tokenData)
-    if(tokenData._id){
-      next()
-    }else{
-      res.status(404)
-      res.send({error:"token not valid"})
+    const tokenData = await verifyToken(token);
 
-    }
-    
+    return tokenData
   } catch (e) {
-    res.status(400).send({ error: e.message })
-    
+    return ({ error: e.message });
   }
-}
+};
 
-module.exports = checkAuth
+module.exports = checkAuth;
