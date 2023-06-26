@@ -9,21 +9,25 @@ const updateBooking = async (id, {
   gests,
 }) => {
   try {
-    //"Rejected", "Pending", "Approved"
-    if(reservationStatus=== "Rejected"){
-      const DataUpd = await bookingVal( roomId ,1,"SUS");
-      if(!DataUpd.state){
-        return DataUpd;
-      }
-    }  
-
+  
     const booking = await Booking.findByPk(id);
     if (booking) {
-      booking.dateIn = dateIn;
-      booking.dateOut = dateOut;
-      booking.roomNum = roomNum;
-      booking.reservationStatus = reservationStatus;
-      booking.gests = gests;
+        //"Rejected", "Pending", "Approved"
+        
+        booking.dateIn = dateIn;
+        booking.dateOut = dateOut;
+        booking.roomNum = roomNum;
+        booking.reservationStatus = reservationStatus;
+        booking.gests = gests;
+        
+        let idRoom = booking.roomId
+        
+        if(reservationStatus=== "Rejected"){
+          const DataUpd = await bookingVal( idRoom ,1,"SUS");
+          if(!DataUpd.state){
+            return DataUpd;
+          }
+        }
 
       await booking.save();
       return booking;

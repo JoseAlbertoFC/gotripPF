@@ -1,5 +1,5 @@
 const {putUpdateRooms} = require("../../controllers/RoomsControllers/indexControlers.js")
-const {bookingVal} = require("../../controllers/RoomsControllers/validateBooking.js")
+
 const putRoomUpdate = async (req, res) => {
     const {id,room,price,numRooms,roomsInUse,description,status,hotelId,ServicesRoom } = req.body;
  

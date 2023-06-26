@@ -5,8 +5,8 @@ const deleteHotel = async(req,res) =>{
     const {idHotel} = req.params ;
     try{
         
-        console.log("*DELETE *********************");
-        console.log(idHotel);
+        // console.log("*DELETE *********************");
+        // console.log(idHotel);
         const dataHotels = await hotelDelete(idHotel)
         res.status(200).json(dataHotels );        
         

@@ -1,22 +1,40 @@
 const { Op,Sequelize,DataTypes  } = require("sequelize");
-const { Rooms,Services} = require("../../db")
+const { Rooms,Service} = require("../../db")
+
+const findServices = async(objRoomsServices)=>{
+  try{
+   // console.log("******objRoomsServices**** " + JSON.stringify(objRoomsServices, null, 2));
+    const roomsWithServices = await Promise.all(objRoomsServices?.map(async (room) => {
+      const servicesDetail = await Promise.all(room.ServicesRoom?.map(async (serviceId) => {
+        const service = await Service.findByPk(serviceId);
+        return {
+          id: service.id,
+          name: service.name,
+        };
+      }));    
+      return { ...room.toJSON(), ServicesDetail: servicesDetail };
+    }));
+    return roomsWithServices;
+  } catch(error){
+    // console.log("error:::: " + error);
+      throw new Error(error.message);
+  }
+}
 
 const getRoomsAll = async()=>{
     try{
-      const rooms = await Rooms.findAll(
-        // { include: {
-        //   model: Services,
-        //   where: {
-        //     id: {
-        //       [Op.in]: Rooms.ServicesRoom
-        //     },
-        //   },  }, }
-      );
-  
-      return rooms;
+      const objRooms = await Rooms.findAll();
+      // console.log("***objRooms***" + objRooms);
+      if (!objRooms) {
+        
+        throw new Error(error);
+      } else {
+        const roomsServices = findServices(objRooms);
+        return roomsServices;
+      }     
     }
     catch(error){
-      console.log("error:::: " + error);
+      // console.log("error:::: " + error);
         throw new Error(error.message);
     }
 }
@@ -44,19 +62,16 @@ const getRoomRarams = async (querysRooms) => {
             whereCondition[key] = value;
           }
       });
-      const RoomsData = await Rooms.findAll({
+      const objRooms = await Rooms.findAll({
         where: whereCondition,
-        // include: {
-        //   model: Services,
-        //   where: { id: { [Op.in]: literal('Rooms."ServicesRoom"') } },
-        // },
       });
   
-      if (RoomsData.length === 0) {
+      if (objRooms.length === 0) {
         throw new Error("No data found");
       }
-  
-      return RoomsData;
+      const roomsServices = findServices(objRooms);
+      return roomsServices;
+     // return RoomsData;
     } catch (error) {
       // throw new Error({ error: error.message });
     //console.log(error);
@@ -69,30 +84,25 @@ const getRoomById = async(idRoom)=>{
     try {
     
         if (!idRoom) throw new Error(`The id is required`);
-        console.log("***idRoom *** " +idRoom);
-        console.log("*******************");
-        const objRooms = await Rooms.findByPk(idRoom);
-          // , {include: {
-          //   model: Services,
-          //   where: { id: { [Sequelize.Op.in]: Sequelize.literal('Rooms."ServicesRoom"') } },
-          // }, }
-          
-        if (!objRooms){
-          // console.log("***objRooms error*** " +objRooms);
-          // console.log("*******************");
+         const objRooms = await Rooms.findByPk(idRoom);
+        if (!objRooms){       
           throw new Error(error);
         }else{
-          // console.log("***objRooms toJSON *** " +objRooms);
-          // console.log("*******************");
-          return { ...objRooms.toJSON() };
+          const servicesDetail = await Promise.all(objRooms.ServicesRoom?.map(async (serviceId) => {
+            const service = await Service.findByPk(serviceId);
+            return {
+              id: service.id,
+              name: service.name,
+            };
+          }));    
+          return { ...objRooms.toJSON(), ServicesDetail: servicesDetail };
+         
+         // return { ...objRooms.toJSON() };
         }                 
       } catch (error) {
         throw new Error(error.message);
       }
 }
-
-
-
 module.exports = {
     getRoomsAll,
     getRoomById,

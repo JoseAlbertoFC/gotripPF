@@ -6,14 +6,14 @@ const getHotelAll = async () => {
   try {
 
    const datos =  validaApi()
-      const createdHotels = await Hotel.findAll({
+      const objHotels = await Hotel.findAll({
         include: [
           {model: Destination, as: "destination" },
           {model: Rooms, as: "rooms" },
           {model: Gallery, as: "gallery" },
         ],
       });
-      return createdHotels;
+      return objHotels;
     
       } catch (error) {
         throw Error(error.message);

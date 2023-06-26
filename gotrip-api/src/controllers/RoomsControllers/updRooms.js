@@ -22,8 +22,8 @@ const putUpdateRooms = async (idRoom,updatedData) => {
     Object.assign(room, updatedData); // Aplica los datos actualizados al objeto de la habitación
     await room.save(); // Guarda los cambios en la base de datos
 
-      console.log("*****room.dataValues********");  
-      console.log( room);
+      // console.log("*****room.dataValues********");  
+      // console.log( room);
         dataState.state= true,
         dataState.text = "SUCCESSFULLY UPDATED ROOM";
         dataState.detail= room.toJSON();

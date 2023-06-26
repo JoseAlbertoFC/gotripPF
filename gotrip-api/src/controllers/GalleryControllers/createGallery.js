@@ -14,7 +14,7 @@ const createGallery = async (info) => {
     });
     if (fireProofe == null) {
       await letsCreateGallery.setHotel(idHotel);
-      console.log(letsCreateGallery);
+      // console.log(letsCreateGallery);
       return letsCreateGallery;
     } else return "Ya existe una galería en la bd con estas credenciales";
   } catch (error) {
