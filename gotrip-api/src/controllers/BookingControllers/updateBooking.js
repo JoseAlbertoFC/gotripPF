@@ -1,4 +1,5 @@
 const { Booking } = require("../../db");
+const {bookingVal} = require("../RoomsControllers/validateBooking.js");
 
 const updateBooking = async (id, {
   dateIn,
@@ -8,6 +9,14 @@ const updateBooking = async (id, {
   gests,
 }) => {
   try {
+    //"Rejected", "Pending", "Approved"
+    if(reservationStatus=== "Rejected"){
+      const DataUpd = await bookingVal( roomId ,1,"SUS");
+      if(!DataUpd.state){
+        return DataUpd;
+      }
+    }  
+
     const booking = await Booking.findByPk(id);
     if (booking) {
       booking.dateIn = dateIn;

@@ -1,9 +1,9 @@
 const {updateHotelBD} = require("../../controllers/HotelControllers/indexControlers.js")
 
 const putUpdateHotel = async (req, res) => {
-    const { id, name, image, email, address, phone, checkIn, checkOut, numberRooms, overview, longitude, latitude, destinationId } = req.body;
+    const { id, name, image, email, address, phone, checkIn, checkOut, numberRooms, overview, longitude, latitude,status, destinationId } = req.body;
     
-  
+    
     try {
         const updatedData = {
             name,
@@ -17,6 +17,7 @@ const putUpdateHotel = async (req, res) => {
             overview,
             longitude,
             latitude,
+            status,
             destinationId,
           }
           // console.log("***updatedData*************");

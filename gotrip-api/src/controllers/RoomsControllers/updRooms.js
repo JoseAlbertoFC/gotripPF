@@ -7,32 +7,34 @@ const putUpdateRooms = async (idRoom,updatedData) => {
       text: "",
       detail: ""
     };
-    console.log("validateRoom*********************")
-    console.log("updatedData**************" + updatedData)
-    console.log("idRoom*******" + idRoom);
+  
     try {
         if (!idRoom) {
-            dataState.text = "The Room ID is required";
-            return dataState;
+            throw new Error("The Room ID is required");
           }
-          
-    //   const validateRoom = await Rooms.findByPk(idRoom);
-      const validateRoom = await Rooms.findByPk(idRoom);      
-      if (!validateRoom){
-        dataState.text = "Room not found";
-        return dataState;
-      }else{
-        const updatedHotel = await Rooms.update(updatedData);
+      
+          const room = await Rooms.findByPk(idRoom);
+      
+          if (!room) {
+            throw new Error("Room not found");
+          }
+
+    Object.assign(room, updatedData); // Aplica los datos actualizados al objeto de la habitación
+    await room.save(); // Guarda los cambios en la base de datos
+
+      console.log("*****room.dataValues********");  
+      console.log( room);
         dataState.state= true,
         dataState.text = "SUCCESSFULLY UPDATED ROOM";
-        dataState.detail=  updatedHotel.toJSON();
+        dataState.detail= room.toJSON();
         return dataState;
   
-      }
+      
     } catch (error) {
-      dataState.text = "Error creating room";
-      dataState.detail = error.message;
-      throw new Error(JSON.stringify(dataState));
+        dataState.state= false,
+        dataState.text = "Error to update room";
+        dataState.detail = error.message;
+        return dataState;
     }
   };
 
