@@ -178,7 +178,7 @@ userRoute.delete("/deleteUser/:id", deleteUserhandler)
  */
 
 
-userRoute.get("/readUser",checkAuth, readallUser)
+userRoute.get("/readUser", readallUser)
 /**
  * @swagger
  * /user/updateUser/{userId}:
