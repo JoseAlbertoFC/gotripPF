@@ -292,4 +292,59 @@ userRoute.put("/updateUser/:id", updatedataUser)
 
 userRoute.post("/login",Loginuser)
 
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const session = require('express-session');
+const config = require('../controllers/GoogleAuth/google');
+
+// Configuración de Express
+userRoute.use(session({ secret: 'secretStuff', resave: false, saveUninitialized: true }));
+userRoute.use(passport.initialize());
+userRoute.use(passport.session());
+
+// Configuración de Passport
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: config.google.clientID,
+      clientSecret: config.google.clientSecret,
+      callbackURL: config.google.callbackURL,
+    },
+    (accessToken, refreshToken, profile, done) => {
+      // Aquí puedes realizar acciones con el perfil del usuario obtenido de Google
+      console.log(profile);
+      return done(null, profile);
+    }
+  )
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
+
+// Rutas
+userRoute.get('/', (req, res) => {
+  res.send('<a href="/auth/google">Authenticate with Google</a>');
+});
+
+userRoute.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
+
+userRoute.get(
+  'user/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  (req, res) => {
+    // El usuario ha sido autenticado correctamente
+    res.redirect('/profile');
+  }
+);
+
+userRoute.get('/profile', (req, res) => {
+  // Página de perfil del usuario
+  res.send(`Hello ${req.user.displayName}. Welcome to your profile!`);
+});
+
 module.exports = userRoute
