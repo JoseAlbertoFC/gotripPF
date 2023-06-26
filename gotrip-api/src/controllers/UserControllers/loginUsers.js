@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const { User } = require("../../db");
-const tokenSing = require('./generateToken');
+const {tokenSing} = require('./generateToken');
 
 const login = async (username, passwordlogin ) => {
 
