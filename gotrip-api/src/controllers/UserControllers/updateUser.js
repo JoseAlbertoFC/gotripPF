@@ -10,6 +10,7 @@ const updateUser = async (
   rol,
   id,
   phoneCode,
+  phone,
   confirmPassword,
   country,}
 
@@ -30,6 +31,7 @@ const updateUser = async (
       user.phoneCode = phoneCode;
       user.confirmPassword = confirmPassword;
       user.country = country;
+      user.phone = phone;
     
       
       await user.save();
