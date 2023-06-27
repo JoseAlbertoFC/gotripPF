@@ -1,5 +1,7 @@
-const { Pay , User , Booking } = require("../../db");
+// Importamos las tablas de Pay de User y de Bookings
+const { Pay, User, Booking } = require("../../db");
 
+// Le mandamos datos por parametro a la funcion el objeto result trae toda la informacion.
 const newPay = async (
   result,
   amount,
@@ -9,7 +11,7 @@ const newPay = async (
 
 
 ) => {
-  
+  // Recibe el Pago con Todos los  datos  del recibo.
   try {
     const newPay = new Pay({
      amount: result.total_paid_amount,
@@ -28,9 +30,10 @@ const newPay = async (
      userId: result.userId,
      bookingId:result.bookingId,
     });
-
+    // Guardamos en la base de datos el nuevo pago que acabamos de generar.
     const savedPay = await newPay.save();
 
+    // Tenemos la relacion con la tabla user y bookings para agregar estos datos a nuestro recibo.
     const payWithDetails = await Pay.findOne({
       where: { id: newPay.id },
       include: [
@@ -39,6 +42,7 @@ const newPay = async (
       ],
     });
 
+    // Retornamos el pago realizado junto con la relacion de las demas tablas user y bookings.
     return payWithDetails;
   } catch (error) {
     console.log(error.message);
