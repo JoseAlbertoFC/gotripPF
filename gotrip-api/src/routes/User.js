@@ -328,17 +328,17 @@ passport.deserializeUser((user, done) => {
 
 // Rutas
 userRoute.get('/', (req, res) => {
-  res.send('<a href="/auth/google">Authenticate with Google</a>');
+  res.send('<a href="user/auth/google">Authenticate with Google</a>');
 });
 
 userRoute.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
 
 userRoute.get(
-  'user/auth/google/callback',
+  '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
     // El usuario ha sido autenticado correctamente
-    res.redirect('/profile');
+    res.redirect('/user/profile');
   }
 );
 
