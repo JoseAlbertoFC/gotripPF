@@ -1,15 +1,13 @@
-const { Router } = require ("express");
+
+// aqui van las librerias que usaremos en estas rutas 
+const { Router } = require("express");
 const { paymentNew } = require("../handlers/PayHandlers/postPayments");
 const { readallPays } = require("../handlers/PayHandlers/readPayments");
 const { updatedataPay } = require("../handlers/PayHandlers/updatePayments");
 const { deletePayhandler } = require("../handlers/PayHandlers/deletePaysments");
-// Aqui va el midleware de Pay
+const tokenHeader = require("../handlers/UserHandlers/auth");
+const roleUserHandler = require("../handlers/UserHandlers/roleUser");
 
-// Ejemplo:
-// const { Router } = require ("express"); 
-// const { getCountries, getCountryById } = require ("../handlers/Countries")
-
-// const countriesRoutes = Router();
 
 const payUser = Router(); 
 /**
@@ -86,9 +84,9 @@ const payUser = Router();
 
 // Resto del código de la ruta de creación de pago
 
+// Ruta protegida solo usuarios con login pueden generar pagos 
 
-
-payUser.post("/newPay", paymentNew)
+payUser.post("/newPay", tokenHeader, roleUserHandler(['user','admin', 'host']), paymentNew)
 /**
  * @swagger
  * /payment/paymentsall:
@@ -111,9 +109,9 @@ payUser.post("/newPay", paymentNew)
 
 // Resto del código de la ruta de lectura de pagos
 
+//Esta ruta cuenta con proteccion de rutas solo usuarios admin y host pueden acceder al historial de pagos 
 
-
-payUser.get("/paymentsall", readallPays)
+payUser.get("/paymentsall", tokenHeader, roleUserHandler(['admin', 'host']), readallPays)
 /**
  * @swagger
  * /payment/updatePay/{userid}:
@@ -172,9 +170,9 @@ payUser.get("/paymentsall", readallPays)
 
 // Resto del código de la ruta de actualización de pago
 
+// Esta ruta cuenta con proteccion de rutas para actualizar un pago solo los usuarios admin y host tienen acceso 
 
-
-payUser.put("/updatePay/:id",updatedataPay)
+payUser.put("/updatePay/:id", tokenHeader, roleUserHandler(['admin', 'host']) ,updatedataPay)
 /**
  * @swagger
  * /payment/deletePay/{userId}:
@@ -217,16 +215,10 @@ payUser.put("/updatePay/:id",updatedataPay)
 // Resto del código de la ruta de eliminación de pago
 
 
-payUser.delete("/deletePay/:id",deletePayhandler)
+//Las ruta para Eliminar pagos esta protegida solo los usuarios admin y host pueden acceder a eliminar algun pago 
+
+payUser.delete("/deletePay/:id", tokenHeader, roleUserHandler(['admin', 'host']) ,deletePayhandler)
 
 
-// countriesRoutes.get("/", getCountries);
-// countriesRoutes.get("/:id", getCountryById);
-// otra ruta
-// otra ruta
-
-
-// module.exports = countriesRoutes;
 module.exports = payUser;
 
-//Borra este comentario guia al empezar a codear!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

@@ -1,5 +1,5 @@
 const { Router } = require ("express");
-// Aqui va el midleware de User
+// Aqui van todas la librerias que usaremso 
 
 const { userNew } = require("../handlers/UserHandlers/createUsers");
 const { deleteUserhandler } = require("../handlers/UserHandlers/deleteUser");
@@ -10,6 +10,10 @@ const tokenHeader = require("../handlers/UserHandlers/auth");
 const roleUserHandler = require("../handlers/UserHandlers/roleUser");
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const session = require('express-session');
+const config = require('../controllers/GoogleAuth/google');
+
 
 
 
@@ -24,7 +28,7 @@ const userRoute = Router();
  *
  * /user/createNewUser:
  *   post:
- *     summary: Crea un nuevo usuario
+ *     summary: Crea un nuevo usuario la ruta no cuenta con proteccion de ruta 
  *     tags:
  *       - Users
  *     requestBody:
@@ -114,7 +118,7 @@ userRoute.post("/createNewUser", userNew)
  * @swagger
  * /user/deleteUser/{userId}:
  *   delete:
- *     summary: Elimina un usuario por su ID
+ *     summary: Elimina un usuario por su ID -la ruta cuenta con proteccion de ruta solo acepta peticiones de admin y de host 
  *     tags:
  *       - Users
  *     parameters:
@@ -140,12 +144,12 @@ userRoute.delete("/deleteUser/:id",tokenHeader,roleUserHandler(['admin','host'])
  * @swagger
  * /user/readUser:
  *   get:
- *     summary: Obtiene todos los usuarios
+ *     summary: Obtiene todos los usuarios -la ruta cuenta con proteccion de ruta solo acepta peticiones de admin y de host 
  *     tags:
  *       - Users
  *     responses:
  *       200:
- *         description: Lista de usuarios obtenida exitosamente
+ *         description: Lista de usuarios obtenida exitosamente 
  *         content:
  *           application/json:
  *             schema:
@@ -191,7 +195,7 @@ userRoute.get("/readUser",tokenHeader,roleUserHandler(['admin','host']), readall
  * @swagger
  * /user/updateUser/{userId}:
  *   put:
- *     summary: Actualiza un usuario por su ID
+ *     summary: Actualiza un usuario por su ID Esta ruta acepta peticiones de usuarios admin y host 
  *     tags:
  *       - Users
  *     parameters:
@@ -261,7 +265,7 @@ userRoute.get("/readUser",tokenHeader,roleUserHandler(['admin','host']), readall
  */
 
 
-userRoute.put("/updateUser/:id",tokenHeader,roleUserHandler(['user']), updatedataUser)
+userRoute.put("/updateUser/:id",tokenHeader,roleUserHandler(['admin','host']), updatedataUser)
 /**
  * @swagger
  * /user/login:
@@ -300,15 +304,8 @@ userRoute.put("/updateUser/:id",tokenHeader,roleUserHandler(['user']), updatedat
  *         - password
  */
 
+// El login no cuenta con proteccion de ruta cualquier usuario tiene acceso a las rutas 
 userRoute.post("/login",Loginuser)
-
-
-const GoogleStrategy = require('passport-google-oauth2').Strategy;
-const session = require('express-session');
-const config = require('../controllers/GoogleAuth/google');
-
-
-
 
 // Configuración de Express
 userRoute.use(session({ secret: 'secretStuff', resave: false, saveUninitialized: true }));

@@ -1,4 +1,7 @@
+// Libreria a utilizar para el envio de correos automatico 
 const nodemailer = require('nodemailer');
+
+// Dany trabajar en la coneccion de la data de usurio para llenar los campos de name ,from, to ,subjet
 
 const envioCorreo = async (
 
@@ -13,9 +16,9 @@ const envioCorreo = async (
   try {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
-      auth: {
-        user: 'hoteldeveloperfull@gmail.com',
-        pass: 'arxofdylvrvlxmoy'
+        auth: {
+            user: process.env.USER_CORREO,
+            pass: process.env.USER_PASS_CORREO
       },
         secure: true, // Habilitar la conexión segura
       tls: {
