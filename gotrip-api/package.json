@@ -25,6 +25,7 @@
     "nodemailer": "^6.9.3",
     "nodemon": "^1.14.9",
     "passport": "^0.6.0",
+    "passport-facebook": "^3.0.0",
     "passport-google-oauth2": "^0.2.0",
     "pg": "^8.11.0",
     "pg-hstore": "^2.3.4",
