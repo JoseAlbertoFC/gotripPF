@@ -16,7 +16,7 @@ const ORDEN_PAGO = async (carrito,userId,bookingId) => {
     quantity: item.cantidad,
   }));
   
- 
+  // En este apartado en desarrollo tienes que correr el ngrok en una consola aparte y copiar el url que te brinda.
   const notificationURL = "https://2777-2806-2f0-49a0-708-150c-b560-33bf-30a6.ngrok.io/urlPago/webhook-pago/";
 const additionalData = {
   userId: userId,
