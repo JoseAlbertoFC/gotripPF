@@ -6,7 +6,9 @@ const { deleteUserhandler } = require("../handlers/UserHandlers/deleteUser");
 const { readallUser } = require("../handlers/UserHandlers/readAllUser");
 const { updatedataUser } = require("../handlers/UserHandlers/updateUser");
 const { Loginuser } = require("../handlers/UserHandlers/loginUsers");
-const checkAuth = require("../controllers/UserControllers/auth");
+const tokenHeader = require("../handlers/UserHandlers/auth");
+const roleUserHandler = require("../handlers/UserHandlers/roleUser");
+
 
 
 // Aqui va el midleware de User
@@ -100,7 +102,7 @@ const userRoute = Router();
  *                   type: string
  */
 
-userRoute.post("/createNewUser", userNew)
+userRoute.post("/createNewUser",tokenHeader,roleUserHandler(['user','admin','Host']), userNew)
 
 /**
  * @swagger
@@ -126,7 +128,7 @@ userRoute.post("/createNewUser", userNew)
  */
 
 
-userRoute.delete("/deleteUser/:id", deleteUserhandler)
+userRoute.delete("/deleteUser/:id",tokenHeader,roleUserHandler(['admin','Host']), deleteUserhandler)
 
 /**
  * @swagger
@@ -178,7 +180,7 @@ userRoute.delete("/deleteUser/:id", deleteUserhandler)
  */
 
 
-userRoute.get("/readUser", readallUser)
+userRoute.get("/readUser",tokenHeader,roleUserHandler(['user','admin','Host']), readallUser)
 /**
  * @swagger
  * /user/updateUser/{userId}:
@@ -253,7 +255,7 @@ userRoute.get("/readUser", readallUser)
  */
 
 
-userRoute.put("/updateUser/:id", updatedataUser)
+userRoute.put("/updateUser/:id",tokenHeader,roleUserHandler(['user']), updatedataUser)
 /**
  * @swagger
  * /user/login:
@@ -298,6 +300,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const session = require('express-session');
 const config = require('../controllers/GoogleAuth/google');
+
 
 
 
