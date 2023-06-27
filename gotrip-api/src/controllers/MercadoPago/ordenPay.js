@@ -2,6 +2,7 @@ require("dotenv").config();
 const mercadopago = require("mercadopago");
 const { ACCES_TOKEN } = process.env;
 
+// Esta funcion genera una orden de pago recibe el carrito y el userid junto con el bokingid para poder registrar los datos de la reserva que el cliente esta haciendo.
 const ORDEN_PAGO = async (carrito,userId,bookingId) => {
   mercadopago.configure({
     access_token:ACCES_TOKEN
@@ -17,7 +18,7 @@ const ORDEN_PAGO = async (carrito,userId,bookingId) => {
   }));
   
   // En este apartado en desarrollo tienes que correr el ngrok en una consola aparte y copiar el url que te brinda.
-  const notificationURL = "https://2777-2806-2f0-49a0-708-150c-b560-33bf-30a6.ngrok.io/urlPago/webhook-pago/";
+    const notificationURL = "https://eb0f-187-189-163-190.ngrok.io/urlPago/webhook-pago/";
 const additionalData = {
   userId: userId,
   bookingId: bookingId
