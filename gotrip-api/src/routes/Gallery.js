@@ -1,5 +1,6 @@
 const { Router } = require("express");
-// Aqui va el midleware de Gallery
+const roleUserHandler = require("../handlers/UserHandlers/roleUser");
+const tokenHeader = require("../handlers/UserHandlers/auth");
 const {
   getGalleries,
   getGalleriesById,
@@ -7,22 +8,14 @@ const {
 const {
   deleteGalleries,
 } = require("../handlers/GalleryHandlers/deleteGalleries");
-const {postGallery}= require('../handlers/GalleryHandlers/postGallery');
+const { postGallery } = require("../handlers/GalleryHandlers/postGallery");
+
 const galleryRoutes = Router();
 
-galleryRoutes.get("/", getGalleries).get("/:id", getGalleriesById).delete("/:id", deleteGalleries).post("/", postGallery)
+galleryRoutes
+  .get("/", tokenHeader, roleUserHandler(["user", "admin", "host"]), getGalleries)
+  .get("/:id", tokenHeader, roleUserHandler(["user", "admin", "host"]), getGalleriesById)
+  .delete("/:id", tokenHeader, roleUserHandler(["host"]), deleteGalleries)
+  .post("/", tokenHeader, roleUserHandler(["user", "admin", "host"]), postGallery);
+
 module.exports = galleryRoutes;
-// Ejemplo:
-// const { Router } = require ("express");
-// const { getCountries, getCountryById } = require ("../handlers/Countries")
-
-// const countriesRoutes = Router();
-
-// countriesRoutes.get("/", getCountries);
-// countriesRoutes.get("/:id", getCountryById);
-// otra ruta
-// otra ruta
-
-// module.exports = countriesRoutes;
-
-//Borra este comentario guia al empezar a codear!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
