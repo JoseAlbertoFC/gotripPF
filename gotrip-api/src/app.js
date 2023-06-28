@@ -23,6 +23,9 @@ server.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   next();
 });
+// Configuracion para usar Facebook login 
+server.set('view engine', 'ejs');
+
 
 server.use(morgan('dev'));
 server.use('/', routes);
