@@ -1,5 +1,6 @@
 const { Router } = require ("express");
-
+const roleUserHandler = require("../handlers/UserHandlers/roleUser");
+const tokenHeader = require("../handlers/UserHandlers/auth");
 const {putUpdateHotel  , 
         postNewHotel,
         getHotel,
@@ -8,15 +9,15 @@ const {putUpdateHotel  ,
 
 const hotelRoute = Router();
 
-hotelRoute.post('/newhotel',postNewHotel)
+hotelRoute.post('/newhotel', tokenHeader, roleUserHandler(["admin", "host"]), postNewHotel)
 
-hotelRoute.get('/findhotel',getHotel)
+hotelRoute.get('/findhotel',tokenHeader, roleUserHandler(["user", "admin", "host"]), getHotel)
 
-hotelRoute.get('/findhotel/:idHotel',getHotelId)
+hotelRoute.get('/findhotel/:idHotel', tokenHeader, roleUserHandler(["user", "admin", "host"]),getHotelId)
 
-hotelRoute.put('/updhotel',putUpdateHotel)
+hotelRoute.put('/updhotel', tokenHeader, roleUserHandler(["admin", "host"]), putUpdateHotel)
 
-hotelRoute.delete('/delhotel/:idHotel',deleteHotel)
+hotelRoute.delete('/delhotel/:idHotel', tokenHeader, roleUserHandler(["admin", "host"]), deleteHotel)
 
 
 
