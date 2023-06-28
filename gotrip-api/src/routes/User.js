@@ -1,4 +1,4 @@
-const { Router } = require ("express");
+const { Router } = require("express");
 // Aqui va el midleware de User
 
 const { userNew } = require("../handlers/UserHandlers/createUsers");
@@ -8,8 +8,6 @@ const { updatedataUser } = require("../handlers/UserHandlers/updateUser");
 const { Loginuser } = require("../handlers/UserHandlers/loginUsers");
 const tokenHeader = require("../handlers/UserHandlers/auth");
 const roleUserHandler = require("../handlers/UserHandlers/roleUser");
-
-
 
 // Aqui va el midleware de User
 const userRoute = Router();
@@ -102,7 +100,12 @@ const userRoute = Router();
  *                   type: string
  */
 
-userRoute.post("/createNewUser",tokenHeader,roleUserHandler(['user','admin','Host']), userNew)
+userRoute.post(
+  "/createNewUser",
+  tokenHeader,
+  roleUserHandler(["user", "admin", "Host"]),
+  userNew
+);
 
 /**
  * @swagger
@@ -127,8 +130,12 @@ userRoute.post("/createNewUser",tokenHeader,roleUserHandler(['user','admin','Hos
  *         description: Error al eliminar el usuario
  */
 
-
-userRoute.delete("/deleteUser/:id",tokenHeader,roleUserHandler(['admin','Host']), deleteUserhandler)
+userRoute.delete(
+  "/deleteUser/:id",
+  tokenHeader,
+  roleUserHandler(["admin", "Host"]),
+  deleteUserhandler
+);
 
 /**
  * @swagger
@@ -179,8 +186,12 @@ userRoute.delete("/deleteUser/:id",tokenHeader,roleUserHandler(['admin','Host'])
  *         description: Error al obtener la lista de usuarios
  */
 
-
-userRoute.get("/readUser",tokenHeader,roleUserHandler(['user','admin','Host']), readallUser)
+userRoute.get(
+  "/readUser",
+  tokenHeader,
+  roleUserHandler(["user", "admin", "Host"]),
+  readallUser
+);
 /**
  * @swagger
  * /user/updateUser/{userId}:
@@ -254,8 +265,12 @@ userRoute.get("/readUser",tokenHeader,roleUserHandler(['user','admin','Host']), 
  *         - password
  */
 
-
-userRoute.put("/updateUser/:id",tokenHeader,roleUserHandler(['user']), updatedataUser)
+userRoute.put(
+  "/updateUser/:id",
+  tokenHeader,
+  roleUserHandler(["user"]),
+  updatedataUser
+);
 /**
  * @swagger
  * /user/login:
@@ -294,18 +309,22 @@ userRoute.put("/updateUser/:id",tokenHeader,roleUserHandler(['user']), updatedat
  *         - password
  */
 
-userRoute.post("/login",Loginuser)
+userRoute.post("/login", Loginuser);
 
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth2').Strategy;
-const session = require('express-session');
-const config = require('../controllers/GoogleAuth/google');
-
-
-
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth2").Strategy;
+const session = require("express-session");
+const config = require("../controllers/GoogleAuth/google");
 
 // Configuración de Express
-userRoute.use(session({ secret: 'secretStuff', resave: false, saveUninitialized: true }));
+userRoute.use(
+  session({
+    secret: "secretStuff",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false },
+  })
+);
 userRoute.use(passport.initialize());
 userRoute.use(passport.session());
 
@@ -326,32 +345,52 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user);
+  done(null, user, "yolo");
 });
 
 passport.deserializeUser((user, done) => {
-  done(null, user);
+  done(null, user, "yolitortillas");
 });
 
 // Rutas
-userRoute.get('/', (req, res) => {
+userRoute.get("/", (req, res) => {
   res.send('<a href="user/auth/google">Authenticate with Google</a>');
 });
 
-userRoute.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
+userRoute.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
 
 userRoute.get(
-  '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
   (req, res) => {
     // El usuario ha sido autenticado correctamente
-    res.redirect('/user/profile');
+    res.redirect("/user/profile");
   }
 );
 
-userRoute.get('/profile', (req, res) => {
+userRoute.get("/profile", (req, res) => {
   // Página de perfil del usuario
   res.send(`Hello ${req.user.displayName}. Welcome to your profile!`);
+  //res.send(`Your info is: `)
 });
 
-module.exports = userRoute
+//Para el logout de prueba
+userRoute.get("/logout", (req, res, next) => {
+  try {
+    req.logout(function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.redirect("/user");
+    });
+    //req.session.destroy();
+    //res.redirect('/user');
+  } catch (err) {
+    throw Error(err.message);
+  }
+});
+
+module.exports = userRoute;
