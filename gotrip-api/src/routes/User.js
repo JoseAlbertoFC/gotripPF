@@ -359,4 +359,72 @@ userRoute.get('/profile', (req, res) => {
 
 // Implementacion de Login de Facebook
 
+
+// Configuración de la estrategia de autenticación de Facebook
+passport.use(new FacebookStrategy({
+  clientID: process.env.TU_CLIENT_ID,
+  clientSecret: process.env.TU_CLIENT_SECRET,
+  callbackURL: process.env.TU_CALLBACK_FACEBOOK
+},
+(accessToken, refreshToken, profile, done) => {
+  // Aquí puedes hacer lo que desees con la información del perfil del usuario
+  // Por ejemplo, puedes almacenar los datos en una base de datos o crear una sesión de usuario.
+  console.log(profile);
+  done(null, profile);
+}));
+
+// Configuración de serialización y deserialización de usuarios
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
+
+
+
+// Configuración de Express
+userRoute.use(require('express-session')({
+  secret: 'secreto',
+  resave: true,
+  saveUninitialized: true
+}));
+userRoute.use(passport.initialize());
+userRoute.use(passport.session());
+
+// Ruta de inicio de sesión de Facebook
+userRoute.get('/auth/facebook', passport.authenticate('facebook'));
+
+// Ruta de retorno de Facebook después del inicio de sesión
+userRoute.get('/auth/facebook/callback', passport.authenticate('facebook', {
+  successRedirect: '/user/perfil',
+  failureRedirect: '/login'
+}));
+
+// Ruta de perfil de usuario
+userRoute.get('/perfil', (req, res) => {
+  res.render('perfil', { user: req.user });
+});
+
+// Ruta de inicio
+userRoute.get('/facebook', (req, res) => {
+  res.render('index');
+});
+
+// Ruta de logout
+userRoute.get('/logout', (req, res) => {
+    // Cerrar sesión del usuario
+    req.logout(err => {
+        if (err) {
+            // Manejar cualquier error que ocurra durante el logout
+            console.error(err);
+        }
+        // Redirigir a la página de inicio de sesión o a cualquier otra página
+        res.redirect('/login');
+    });
+});
+
+
+
 module.exports = userRoute
