@@ -1,11 +1,10 @@
 const { readUser } = require("../../controllers/UserControllers/readAllUser")
 
 // Porfa crea un archivo para cada handler
-const readallUser = async (req,res) => {
+const readallUser = async (req, res) => {
   
-  
-
-  try {
+    try {
+        
 
     const result = await readUser();
 
