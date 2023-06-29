@@ -78,7 +78,11 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
-      },
+        },
+        photoUser: {
+            type: DataTypes.ARRAY(DataTypes.STRING),
+            allowNull: true
+        },
     },
     { timestamps: true },
     { paranoid: true }
