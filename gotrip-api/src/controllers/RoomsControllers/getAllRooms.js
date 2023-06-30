@@ -1,5 +1,5 @@
 const { Op,Sequelize,DataTypes  } = require("sequelize");
-const { Rooms,Service} = require("../../db")
+const { Rooms,Service,Gallery} = require("../../db")
 
 const findServices = async(objRoomsServices)=>{
   try{
@@ -23,8 +23,12 @@ const findServices = async(objRoomsServices)=>{
 
 const getRoomsAll = async()=>{
     try{
-      const objRooms = await Rooms.findAll();
-      // console.log("***objRooms***" + objRooms);
+      const objRooms = await Rooms.findAll({
+        include: [   
+          {model: Gallery, as: "gallery" }
+        ],
+      });
+       //console.log("***objRooms***" + JSON.stringify(objRooms));
       if (!objRooms) {
         
         throw new Error(error);
@@ -34,7 +38,7 @@ const getRoomsAll = async()=>{
       }     
     }
     catch(error){
-      // console.log("error:::: " + error);
+     // console.log("error:::: " + error);
         throw new Error(error.message);
     }
 }
@@ -64,6 +68,9 @@ const getRoomRarams = async (querysRooms) => {
       });
       const objRooms = await Rooms.findAll({
         where: whereCondition,
+        include: [   
+          {model: Gallery, as: "gallery" }
+        ],
       });
   
       if (objRooms.length === 0) {
@@ -84,7 +91,10 @@ const getRoomById = async(idRoom)=>{
     try {
     
         if (!idRoom) throw new Error(`The id is required`);
-         const objRooms = await Rooms.findByPk(idRoom);
+         const objRooms = await Rooms.findByPk(idRoom,
+          { include: [   
+          {model: Gallery, as: "gallery" }
+        ],});
         if (!objRooms){       
           throw new Error(error);
         }else{

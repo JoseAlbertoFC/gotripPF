@@ -3,7 +3,7 @@ const { Hotel} = require("../../db")
 
 
 
-const postHotelDB = async(name, image, email, address, phone, checkIn, checkOut, numberRooms, overview, longitude, latitude, destinationId) => {
+const postHotelDB = async(userId,name, image, email, address, phone, checkIn, checkOut, numberRooms, overview, longitude, latitude, destinationId) => {
     const  dataState = {
         state: false,
         text:"",
@@ -14,7 +14,7 @@ const postHotelDB = async(name, image, email, address, phone, checkIn, checkOut,
        
         const [hotel, created] = await Hotel.findOrCreate({
         where: { name, destinationId },
-        defaults: { name, image, email, address, phone, checkIn, checkOut, numberRooms, overview, longitude, latitude, destinationId },
+        defaults: {userId, name, image, email, address, phone, checkIn, checkOut, numberRooms, overview, longitude, latitude, destinationId },
       });
     //   console.log("*****************created******");
     //     console.log(created);

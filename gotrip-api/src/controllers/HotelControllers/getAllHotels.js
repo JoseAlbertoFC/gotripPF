@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Hotel, Destination,Rooms,Gallery } = require("../../db");
+const { Hotel, Destination,Rooms,Gallery,User } = require("../../db");
 
 const {validaApi} = require("./buscaApi.js")
 const getHotelAll = async () => {
@@ -11,6 +11,7 @@ const getHotelAll = async () => {
           {model: Destination, as: "destination" },
           {model: Rooms, as: "rooms" },
           {model: Gallery, as: "gallery" },
+          {model: User, as: "user" },
         ],
       });
       return objHotels;
@@ -23,7 +24,7 @@ const getHotelAll = async () => {
 const getHotelParams = async (querysHotel) => {
   try {
     const whereCondition = {}; // Objeto para almacenar las condiciones de búsqueda
-    const keyValues = ["status", "destinationId"];
+    const keyValues = ["status", "destinationId","userId"];
 
     Object.entries(querysHotel).forEach(([key, value]) => {
       if (keyValues.includes(key)) {
@@ -40,6 +41,7 @@ const getHotelParams = async (querysHotel) => {
         {model: Destination, as: "destination" },
         {model: Rooms, as: "rooms" },
         {model: Gallery, as: "gallery" },
+        {model: User, as: "user" },
       ],
     });
 
@@ -58,6 +60,7 @@ const getHotelById = async (idHotel) => {
         {model: Destination, as: "destination" },
         {model: Rooms, as: "rooms" },
         {model: Gallery, as: "gallery" },
+        {model: User, as: "user" },
       ],
     });
     if (!objHotel) return;

@@ -4,7 +4,9 @@ const { Router } = require ("express");
 const { userNew } = require("../handlers/UserHandlers/createUsers");
 const { deleteUserhandler } = require("../handlers/UserHandlers/deleteUser");
 const { readallUser } = require("../handlers/UserHandlers/readAllUser");
+const { readallUserID } = require("../handlers/UserHandlers/readUserID");
 const { updatedataUser } = require("../handlers/UserHandlers/updateUser");
+const { restoreUserHandler } = require("../handlers/UserHandlers/restoreUser")
 const { Loginuser } = require("../handlers/UserHandlers/loginUsers");
 const tokenHeader = require("../handlers/UserHandlers/auth");
 const roleUserHandler = require("../handlers/UserHandlers/roleUser");
@@ -14,6 +16,8 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const session = require('express-session');
 const config = require('../controllers/GoogleAuth/google');
 const { googleHandler } = require("../handlers/Google/googleHandler");
+const twilio = require('twilio');
+
 
 
 
@@ -191,7 +195,66 @@ userRoute.delete("/deleteUser/:id",tokenHeader,roleUserHandler(['admin','host'])
  */
 
 
-userRoute.get("/readUser",tokenHeader,roleUserHandler(['admin','host']), readallUser)
+userRoute.get("/readUser", tokenHeader, roleUserHandler(['admin', 'host']), readallUser)
+/**
+ * @swagger
+ * /user/readUser/{id}:
+ *   get:
+ *     summary: Obtiene un usuario por su ID
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID del usuario a buscar
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Usuario obtenido exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 gender:
+ *                   type: string
+ *                 address:
+ *                   type: string
+ *                 dniPasaport:
+ *                   type: string
+ *                 rol:
+ *                   type: string
+ *                 postalCode:
+ *                   type: string
+ *                 phone:
+ *                   type: string
+ *                 thirdPartyCreated:
+ *                   type: boolean
+ *                 birthday:
+ *                   type: string
+ *                 country:
+ *                   type: string
+ *                 createdAt:
+ *                   type: string
+ *                 updatedAt:
+ *                   type: string
+ *       404:
+ *         description: Usuario no encontrado
+ *       500:
+ *         description: Error al obtener el usuario
+ */
+
+
+
+userRoute.get("/readUser/:id", tokenHeader, roleUserHandler(['admin', 'host']), readallUserID)
 /**
  * @swagger
  * /user/updateUser/{userId}:
@@ -266,7 +329,7 @@ userRoute.get("/readUser",tokenHeader,roleUserHandler(['admin','host']), readall
  */
 
 
-userRoute.put("/updateUser/:id",tokenHeader,roleUserHandler(['admin','host']), updatedataUser)
+userRoute.put("/updateUser/:id",tokenHeader,roleUserHandler(["user", 'admin','host']), updatedataUser)
 /**
  * @swagger
  * /user/login:
@@ -307,6 +370,7 @@ userRoute.put("/updateUser/:id",tokenHeader,roleUserHandler(['admin','host']), u
 
 // El login no cuenta con proteccion de ruta cualquier usuario tiene acceso a las rutas 
 userRoute.post("/login",Loginuser)
+userRoute.put("/restoreUser/:userId",tokenHeader, roleUserHandler(["host"]), restoreUserHandler)
 
 // Configuración de Express
 userRoute.use(session({ secret: 'secretStuff', resave: false, saveUninitialized: true }));
@@ -421,6 +485,161 @@ userRoute.get('/logout', (req, res) => {
         // Redirigir a la página de inicio de sesión o a cualquier otra página
         res.redirect('/login');
     });
+});
+
+// Whatsapp implementaicon
+
+// Configuración de Twilio
+const accountSid = process.env.WHATSAPP_CLIENT;
+const authToken = process.env.WHATSAPP_SECRET;
+const client = twilio(accountSid, authToken);
+
+// Ruta para recibir mensajes de WhatsApp
+userRoute.post('/webhooks/messages', twilio.webhook({ validate: false }), (req, res) => {
+    const message = req.body.Body;
+    const sender = req.body.From;
+    // Ejemplo de respuesta automática
+    const automaticResponses = [
+        {
+            keyword: 'hola',
+            response: '¡Hola! Bienvenido a Gotrip, tu plataforma de reservas de hoteles.'
+        },
+        {
+            keyword: 'habitaciones',
+            response: 'Gotrip ofrece una amplia variedad de habitaciones en nuestros hoteles asociados.'
+        },
+        {
+            keyword: 'disponibilidad',
+            response: 'Para verificar la disponibilidad de habitaciones, proporciona la fecha de check-in, check-out y número de huéspedes En el Formulario.'
+        },
+        {
+            keyword: 'tarifas',
+            response: 'Las tarifas de nuestros hoteles varían según la temporada y la disponibilidad.'
+        },
+        {
+            keyword: 'reservar',
+            response: 'Puedes reservar una habitación proporcionando tu nombre completo, número de teléfono y correo electrónico.'
+        },
+        {
+            keyword: 'cancelar',
+            response: 'Si deseas cancelar tu reserva, comunícate con nuestro equipo de atención al cliente al número 123456789.'
+        },
+        {
+            keyword: 'ayuda',
+            response: 'Estoy aquí para ayudarte en lo que necesites.'
+        },
+        {
+            keyword: 'adios',
+            response: '¡Gracias por contactarnos! Si tienes más preguntas, no dudes en volver. ¡Que tengas un buen día!'
+        },
+        {
+            keyword: 'default',
+            response: 'Disculpa, no he entendido tu pregunta. Por favor, sé más específico.'
+        }
+    ];
+
+    // Envía la respuesta
+    if (message === 'hola') {
+        const mensagge = client.messages.create({
+            from: 'whatsapp:+14155238886',
+            to: sender,
+            body: automaticResponses[0].response
+        }).then((mensagge) => {
+            console.log('Respuesta enviada con éxito.');
+        }).catch((err) => {
+            console.error('Error al enviar la respuesta:', err);
+        });
+    } else if (message === 'habitaciones') {
+        const mensagge = client.messages.create({
+            from: 'whatsapp:+14155238886',
+            to: sender,
+            body: automaticResponses[1].response
+        }).then((mensagge) => {
+            console.log('Respuesta enviada con éxito.');
+        }).catch((err) => {
+            console.error('Error al enviar la respuesta:', err);
+        });
+
+    } else if (message === 'disponibilidad') {
+        const mensagge = client.messages.create({
+            from: 'whatsapp:+14155238886',
+            to: sender,
+            body: automaticResponses[2].response
+        }).then((mensagge) => {
+            console.log('Respuesta enviada con éxito.');
+        }).catch((err) => {
+            console.error('Error al enviar la respuesta:', err);
+        });
+    } else if (message === 'tarifas') {
+        const mensagge = client.messages.create({
+            from: 'whatsapp:+14155238886',
+            to: sender,
+            body: automaticResponses[3].response
+        }).then((mensagge) => {
+            console.log('Respuesta enviada con éxito.');
+        }).catch((err) => {
+            console.error('Error al enviar la respuesta:', err);
+        });
+    } else if (message === 'reservar') {
+        const mensagge = client.messages.create({
+            from: 'whatsapp:+14155238886',
+            to: sender,
+            body: automaticResponses[4].response
+        }).then((mensagge) => {
+            console.log('Respuesta enviada con éxito.');
+        }).catch((err) => {
+            console.error('Error al enviar la respuesta:', err);
+        });
+    }
+    else if (message === 'cancelar') {
+        const mensagge = client.messages.create({
+            from: 'whatsapp:+14155238886',
+            to: sender,
+            body: automaticResponses[5].response
+        }).then((mensagge) => {
+            console.log('Respuesta enviada con éxito.');
+        }).catch((err) => {
+            console.error('Error al enviar la respuesta:', err);
+        });
+    } else if (message === 'ayuda') {
+        const mensagge = client.messages.create({
+            from: 'whatsapp:+14155238886',
+            to: sender,
+            body: automaticResponses[6].response
+        }).then((mensagge) => {
+            console.log('Respuesta enviada con éxito.');
+        }).catch((err) => {
+            console.error('Error al enviar la respuesta:', err);
+        });
+    } else if (message === 'adios') {
+        const mensagge = client.messages.create({
+            from: 'whatsapp:+14155238886',
+            to: sender,
+            body: automaticResponses[7].response
+        }).then((mensagge) => {
+            console.log('Respuesta enviada con éxito.');
+        }).catch((err) => {
+            console.error('Error al enviar la respuesta:', err);
+        });
+    } else if (message) {
+        const mensagge = client.messages.create({
+            from: 'whatsapp:+14155238886',
+            to: sender,
+            body: automaticResponses[8].response
+        }).then((mensagge) => {
+            console.log('Respuesta enviada con éxito.');
+        }).catch((err) => {
+            console.error('Error al enviar la respuesta:', err);
+        });
+    }
+    try {
+        res.status(200).json({ Whatsapp: "Enviado con exito" });
+
+    } catch {
+        res.status(400).json({ Whatsapp: "Mensaje no Enviado Error"})
+    }
+   
+  
 });
 
 

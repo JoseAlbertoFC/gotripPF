@@ -2,6 +2,7 @@ const {getHotel, getHotelId, getHotelAll} = require("./getHotels.js")
 const {deleteHotel} = require("./delHotels.js")
 const {postNewHotel} = require("./newHotels.js")
 const {putUpdateHotel} = require("./updHotels.js")
+const {restoreHotel} = require("./restoreHotel.js")
 
 
 
@@ -11,5 +12,6 @@ module.exports = {
     getHotel,
     getHotelId,
     getHotelAll,
-    deleteHotel
+    deleteHotel,
+    restoreHotel
 }

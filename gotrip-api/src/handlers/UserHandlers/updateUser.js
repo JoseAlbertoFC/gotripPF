@@ -15,7 +15,8 @@ const {
   phoneCode,
   country,
   phone,
-  confirmPassword,
+    confirmPassword,
+    photoUser
 
  } = req.body;
 
@@ -30,7 +31,8 @@ const {
       birthday,
       address,
       dniPasaport,
-      rol,id,phoneCode,country,confirmPassword,phone});
+        rol, id, phoneCode, country, confirmPassword, phone, photoUser
+});
 
     
     if (result.error){

@@ -18,6 +18,7 @@ const newUser = async ({
   country,
   confirmPassword,
   phoneCode,
+  photoUser
 }) => {
 
   // Vamos a  encryptar la contrasena Por motivos de seguridad la contrasena no puede ir en texto plano en la base de datos 
@@ -55,6 +56,7 @@ const newUser = async ({
       confirmPassword: hashedConfimPassword,
       birthday: birthday,
       country: country,
+      photoUser: photoUser
     });
 
     // Guardamos el usuario que antes creamos con todos los valores.
