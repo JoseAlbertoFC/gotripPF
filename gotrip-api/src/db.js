@@ -4,6 +4,9 @@ const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
+
+
+
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/gotripdb`,
   {
@@ -52,9 +55,14 @@ Hotel.belongsTo(Destination, { as: "destination", foreignKey: "destinationId"});
 Hotel.hasMany(Gallery, { as: "gallery", foreignKey: "hotelId" });
 Hotel.hasMany(Rating, { as: "rating", foreignKey: "hotelId" });
 Hotel.hasMany(Booking, { as: 'booking', foreignKey: 'hotelId' });
+Hotel.belongsTo(User, { as: 'user',foreignKey: 'userId' });
+
+User.hasMany(Hotel, { as: 'hotel', foreignKey: 'userId' });
+
 
 Rooms.belongsTo(Hotel, { as: "hotel", foreignKey: "hotelId" });
 Rooms.belongsToMany(Service, { through: "Rooms_Service" });
+Rooms.hasMany(Gallery, {as: "gallery",  foreignKey: 'roomId' });
 
 Service.belongsToMany(Rooms, { through: "Rooms_Service" });
 
@@ -73,6 +81,7 @@ Pay.belongsTo(User, { as: 'user', foreignKey: 'userId' });
 Pay.belongsTo(Booking, { as: 'booking', foreignKey: 'bookingId' });
 
 Gallery.belongsTo(Hotel, { as: "hotel", foreignKey: "hotelId" });
+Gallery.belongsTo(Rooms, { as: "rooms", foreignKey: 'roomId', allowNull: true });
 
 module.exports = {
   ...sequelize.models,
