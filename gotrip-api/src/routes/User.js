@@ -13,6 +13,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const session = require('express-session');
 const config = require('../controllers/GoogleAuth/google');
+const { googleHandler } = require("../handlers/Google/googleHandler");
 
 
 
@@ -322,7 +323,7 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       // Aquí puedes realizar acciones con el perfil del usuario obtenido de Google
-      console.log(profile);
+     // console.log(profile);
       return done(null, profile);
     }
   )
@@ -338,7 +339,7 @@ passport.deserializeUser((user, done) => {
 
 // Rutas
 userRoute.get('/', (req, res) => {
-  res.send('<a href="user/auth/google">Authenticate with Google</a>');
+  res.redirect('/user/auth/google');
 });
 
 userRoute.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
@@ -352,10 +353,7 @@ userRoute.get(
   }
 );
 
-userRoute.get('/profile', (req, res) => {
-  // Página de perfil del usuario
-  res.send(`Hello ${req.user.displayName}. Welcome to your profile!`);
-});
+userRoute.get('/profile', googleHandler);
 
 // Implementacion de Login de Facebook
 
@@ -363,8 +361,8 @@ userRoute.get('/profile', (req, res) => {
 // Configuración de la estrategia de autenticación de Facebook
 passport.use(new FacebookStrategy({
   clientID: process.env.TU_CLIENT_ID,
-  clientSecret: process.env.TU_CLIENT_SECRET,
-  callbackURL: process.env.TU_CALLBACK_FACEBOOK
+  clientSecret: process.env.TU_CLIENT_SECRET ,
+  callbackURL: process.env.TU_CALLBACK_FACEBOOK,
 },
 (accessToken, refreshToken, profile, done) => {
   // Aquí puedes hacer lo que desees con la información del perfil del usuario
