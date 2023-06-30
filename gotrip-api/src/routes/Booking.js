@@ -8,6 +8,9 @@ const {
 } = require("../handlers/BookingHandlers/getBookingById");
 const { deleteBooking } = require("../handlers/BookingHandlers/deleteBooking");
 const { putBooking } = require("../handlers/BookingHandlers/putBooking");
+const {
+  restoreBooking,
+} = require("../handlers/BookingHandlers/restoreBooking");
 
 const bookingRoutes = Router();
 
@@ -69,7 +72,12 @@ bookingRoutes.post(
   roleUserHandler(["user", "admin", "host"]),
   postBooking
 );
-bookingRoutes.get("/", tokenHeader, roleUserHandler(["host"]), getBookings);
+bookingRoutes.get(
+  "/",
+  tokenHeader,
+  roleUserHandler(["user", "admin", "host"]),
+  getBookings
+);
 bookingRoutes.get(
   "/:id",
   tokenHeader,
@@ -79,7 +87,7 @@ bookingRoutes.get(
 bookingRoutes.delete(
   "/:id",
   tokenHeader,
-  roleUserHandler(["admin", "host"]),
+  roleUserHandler(["user", "admin", "host"]),
   deleteBooking
 );
 bookingRoutes.put(
@@ -87,6 +95,12 @@ bookingRoutes.put(
   tokenHeader,
   roleUserHandler(["user", "admin", "host"]),
   putBooking
+);
+bookingRoutes.put(
+  "/restorebooking/:id",
+  tokenHeader,
+  roleUserHandler(["host"]),
+  restoreBooking
 );
 
 module.exports = bookingRoutes;

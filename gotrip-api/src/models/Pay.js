@@ -80,7 +80,7 @@ module.exports = (sequelize) => {
       },
     },
 
-    { timestamps: true },
-    { paranoid: true }
+    { timestamps: true, 
+      paranoid: true }
   );
 };

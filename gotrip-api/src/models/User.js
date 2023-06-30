@@ -1,6 +1,6 @@
 // Aqui va el modelo User.
 
-const { DataTypes,Sequelize } = require("sequelize");
+const { DataTypes, Sequelize } = require("sequelize");
 
 module.exports = (sequelize) => {
   // TODO Definicion del modelo
@@ -18,10 +18,9 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      postalCode:{
+      postalCode: {
         type: DataTypes.STRING,
         allowNull: true,
-        
       },
       birthday: {
         type: DataTypes.STRING,
@@ -31,11 +30,11 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      phone:{
+      phone: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      phoneCode:{
+      phoneCode: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -45,7 +44,7 @@ module.exports = (sequelize) => {
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false, 
+        allowNull: false,
         unique: true,
       },
       password: {
@@ -78,13 +77,13 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
-        },
-        photoUser: {
-            type: DataTypes.ARRAY(DataTypes.STRING),
-            allowNull: true
-        },
+      },
+      photoUser: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: true,
+      },
     },
-    { timestamps: true },
-    { paranoid: true }
+    { timestamps: true, 
+      paranoid: true }
   );
 };
