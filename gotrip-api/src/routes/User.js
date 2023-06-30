@@ -6,6 +6,7 @@ const { deleteUserhandler } = require("../handlers/UserHandlers/deleteUser");
 const { readallUser } = require("../handlers/UserHandlers/readAllUser");
 const { readallUserID } = require("../handlers/UserHandlers/readUserID");
 const { updatedataUser } = require("../handlers/UserHandlers/updateUser");
+const { restoreUserHandler } = require("../handlers/UserHandlers/restoreUser")
 const { Loginuser } = require("../handlers/UserHandlers/loginUsers");
 const tokenHeader = require("../handlers/UserHandlers/auth");
 const roleUserHandler = require("../handlers/UserHandlers/roleUser");
@@ -326,7 +327,7 @@ userRoute.get("/readUser/:id", tokenHeader, roleUserHandler(['admin', 'host']), 
  */
 
 
-userRoute.put("/updateUser/:id",tokenHeader,roleUserHandler(['admin','host']), updatedataUser)
+userRoute.put("/updateUser/:id",tokenHeader,roleUserHandler(["user", 'admin','host']), updatedataUser)
 /**
  * @swagger
  * /user/login:
@@ -367,6 +368,7 @@ userRoute.put("/updateUser/:id",tokenHeader,roleUserHandler(['admin','host']), u
 
 // El login no cuenta con proteccion de ruta cualquier usuario tiene acceso a las rutas 
 userRoute.post("/login",Loginuser)
+userRoute.put("/restoreUser/:userId",tokenHeader, roleUserHandler(["host"]), restoreUserHandler)
 
 // Configuración de Express
 userRoute.use(session({ secret: 'secretStuff', resave: false, saveUninitialized: true }));

@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         primaryKey: true,
         allowNull: false,
-        defaultValue: Sequelize.UUIDV4
+        defaultValue: Sequelize.UUIDV4,
       },
       dateIn: {
         type: DataTypes.DATEONLY,
@@ -23,9 +23,9 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         validation: {
-            min: 1,
-            max: 300
-        }
+          min: 1,
+          max: 300,
+        },
       },
       reservationStatus: {
         type: DataTypes.ENUM("Rejected", "Pending", "Approved"),
@@ -34,10 +34,10 @@ module.exports = (sequelize) => {
       gests: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 1
+        defaultValue: 1,
       },
     },
-    { timestamps: true },
-    { paranoid: true }
+    { timestamps: true, 
+      paranoid: true }
   );
 };

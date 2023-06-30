@@ -35,7 +35,7 @@ module.exports = (sequelize) => {
         defaultValue: true,
       },
     },
-    { timestamps: false },
-    { paranoid: true }
+    { timestamps: true, 
+      paranoid: true }
   );
 };

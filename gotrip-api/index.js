@@ -26,7 +26,7 @@ const swaggerSpec = {
 server.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc(swaggerSpec)))
 
 const PORT = 3001;
-conn.sync({ FORCE : true }).then(() => {
+conn.sync({ force : false }).then(() => {
   server.listen(3001, () => {
     console.log(`Listening on port ${PORT}`);
   });
