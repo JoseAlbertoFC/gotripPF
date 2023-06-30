@@ -1,28 +1,33 @@
 const api = require("../../../api/apiHotels.json");
 
-const { Gallery, Hotel } = require("../../db");
+const { Gallery, Hotel,Room } = require("../../db");
 
 const getAllGalleries = async () => {
   try {
     //JSON
-    const galleryHotel = api.map((hotel) => {
-      return {
-        urlIMG: [
-          hotel.photo1,
-          hotel.photo2,
-          hotel.photo3,
-          hotel.photo4,
-          hotel.photo5,
-        ],
-      };
-    });
+    // const galleryHotel = api.map((hotel) => {
+    //   return {
+    //     urlIMG: [
+    //       hotel.photo1,
+    //       hotel.photo2,
+    //       hotel.photo3,
+    //       hotel.photo4,
+    //       hotel.photo5,
+    //     ],
+    //   };
+    // });
 
     //BD
     const bdGallery = await Gallery.findAll({
-      include: [{ model: Hotel, as:'hotel', attributes:['id', 'name']}]
+      include: [
+        { model: Hotel, as:'hotel', attributes:['id', 'name']},
+        { model: Room,  as:'room',  attributes:['id', 'room']},
+    ]
     });
-    if(bdGallery.length>0 || galleryHotel.length>0)
-    return [...bdGallery, ...galleryHotel]
+   // if(bdGallery.length>0 || galleryHotel.length>0)
+    if(bdGallery.length>0 )
+    // return [...bdGallery, ...galleryHotel]
+    return [...bdGallery]
   } catch (error) {
     throw Error (error.message);
   }
