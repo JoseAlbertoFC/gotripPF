@@ -33,9 +33,9 @@ const notificationURLWithParams = `${notificationURL}?${encodedData}`;
   const compra = await mercadopago.preferences.create({
     items,
     back_urls: {
-      success: "http://localhost:3001/urlPago/succes",
-      failure: "http://localhost:3001/urlPago/failure",
-      pending: "http://localhost:3001/urlPago/pending"
+      success: "https://gotrippf-production.up.railway.app/urlPago/succes",
+      failure: "https://gotrippf-production.up.railway.app/urlPago/failure",
+      pending: "https://gotrippf-production.up.railway.app/urlPago/pending"
     },
     notification_url: notificationURLWithParams
   });

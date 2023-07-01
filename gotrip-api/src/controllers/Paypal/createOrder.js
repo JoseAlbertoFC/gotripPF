@@ -21,8 +21,8 @@ const createOrderPaypal = async () => {
         brand_name: "goTrip",
         landing_page: "NO_PREFERENCE",
         user_action: "PAY_NOW",
-        return_url: "http://localhost:3001/urlPaypal/execute-payment",
-        cancel_url: "http://localhost:3001/urlPaypal/cancel-payment",
+        return_url: "https://gotrippf-production.up.railway.app/urlPaypal/execute-payment",
+        cancel_url: "https://gotrippf-production.up.railway.app/urlPaypal/cancel-payment",
       },
     };
 
