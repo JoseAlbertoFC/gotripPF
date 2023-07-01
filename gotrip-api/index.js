@@ -16,7 +16,7 @@ const swaggerSpec = {
     },
     servers:[
       {
-        url:"http://localhost:3001"
+        url:"https://gotrippf-production.up.railway.app/"
       }
     ]
   },
