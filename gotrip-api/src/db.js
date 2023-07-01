@@ -7,12 +7,27 @@ const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
 
 
-const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/gotripdb`,
-  {
-    logging: false,
-    native: false,
-  }
+const sequelize = new Sequelize({
+  database: process.env.PGDATABASE,
+  dialect: process.env.DB_USER,
+  host: process.env.PGHOST,
+  port: process.env.PGPORT,
+  username: process.env.DB_USER,
+  password: process.env.PGPASSWORD,
+  pool: {
+    max: 3,
+    min: 1,
+    idle: 10000,
+  },
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+    keepAlive: true,
+  },
+  ssl: true
+}
 );
 const basename = path.basename(__filename);
 
