@@ -423,6 +423,7 @@ userRoute.get('/profile', googleHandler);
 userRoute.get('/logout', (req, res, next) => {
     // Cerrar sesión del usuario
     req.logout(() => {
+      req.session = null;
       res.status(200).json({ message: "Session closed succesfuly"})
     });
     req.logout(err => {
@@ -431,7 +432,6 @@ userRoute.get('/logout', (req, res, next) => {
             return next(err)
         }
         // Redirigir a la página de inicio de sesión o a cualquier otra página
-        req.session.destroy()
         res.redirect('/login');
     });
 });
