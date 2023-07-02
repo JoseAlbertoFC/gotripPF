@@ -420,20 +420,10 @@ userRoute.get(
 userRoute.get('/profile', googleHandler);
 
 // Ruta de logout
-userRoute.get('/logout', (req, res, next) => {
-    // Cerrar sesión del usuario
-    req.logout(() => {
-      req.session = null;
-      res.status(200).json({ message: "Session closed succesfuly"})
-    });
-    req.logout(err => {
-        if (err) {
-            // Manejar cualquier error que ocurra durante el logout
-            return next(err)
-        }
-        // Redirigir a la página de inicio de sesión o a cualquier otra página
-        res.redirect('/login');
-    });
+userRoute.get('/logout', (req, res) => {
+  req.logout();
+  res.status(200).json({ message: "Session closed successfully" });
+  res.redirect("/login")
 });
 
 // Whatsapp implementaicon
