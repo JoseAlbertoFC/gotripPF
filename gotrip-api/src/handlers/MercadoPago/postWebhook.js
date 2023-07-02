@@ -9,14 +9,14 @@ const webhook = async (req, res) => {
   const email = req.query["email"];
 
   try {
-    const result = await WEBHOOK_PAGO(
+    const result = await WEBHOOK_PAGO({
       payment,
       id,
       userId,
       bookingId,
       email,
-      name
-    );
+      name,
+    });
 
     res.status(200).json(result);
   } catch (error) {
