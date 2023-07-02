@@ -1,36 +1,24 @@
-// Libreria a utilizar para el envio de correos automatico 
-const nodemailer = require('nodemailer');
+// Libreria a utilizar para el envio de correos automatico
+const nodemailer = require("nodemailer");
 
 // Dany trabajar en la coneccion de la data de usurio para llenar los campos de name ,from, to ,subjet
 
-const envioCorreo = async (
-
-  result
-
-
-
-
-) => {
-  console.log("Soy el correo ",result)
-  
+const envioCorreo = async (result) => {
   try {
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
-        auth: {
-            user: process.env.USER_CORREO,
-            pass: process.env.USER_PASS_CORREO
+      service: "gmail",
+      auth: {
+        user: process.env.USER_CORREO,
+        pass: process.env.USER_PASS_CORREO,
       },
-        secure: true, // Habilitar la conexión segura
-      tls: {
-        rejectUnauthorized: false // Opción para permitir certificados autofirmados en desarrollo. Remueve esta línea en producción.
-      }
+      secure: true, // Habilitar la conexión segura
     });
-    
-    const name = "juan Daniel Luevano Ruiz"
+
+    const name = "juan Daniel Luevano Ruiz";
     const mailOptions = {
-      from: 'hoteldeveloperfull@gmail.com',
-      to: 'mcdany996@gmail.com',
-      subject: 'Comprobante de pago',
+      from: "hoteldeveloperfull@gmail.com",
+      to: "mcdany996@gmail.com",
+      subject: "Comprobante de pago",
       html: `
       <head>
         <title>Recibo de Pago - Hotel Reserva</title>
@@ -126,17 +114,16 @@ const envioCorreo = async (
             </div>
         </div>
     </body>
-      `
+      `,
     };
-    
-    transporter.sendMail(mailOptions, function(error, info) {
+
+    transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);
       } else {
-        console.log('Correo enviado: ' + info.response);
+        console.log("Correo enviado: " + info.response);
       }
     });
-   
   } catch (error) {
     throw new Error({ error: error.message });
   }
