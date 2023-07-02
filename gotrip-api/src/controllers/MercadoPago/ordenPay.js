@@ -3,12 +3,12 @@ const mercadopago = require("mercadopago");
 const { ACCES_TOKEN } = process.env;
 
 // Esta funcion genera una orden de pago recibe el carrito y el userid junto con el bokingid para poder registrar los datos de la reserva que el cliente esta haciendo.
-const ORDEN_PAGO = async (carrito, userId, bookingId, name, email) => {
+const ORDEN_PAGO = async ({ reservas, userId, bookingId, name, email }) => {
   mercadopago.configure({
     access_token: ACCES_TOKEN,
   });
 
-  const items = carrito.map((item) => ({
+  const items = reservas.map((item) => ({
     title: item.nombre,
     unit_price: item.precio,
     currency_id: "MXN",
@@ -19,10 +19,10 @@ const ORDEN_PAGO = async (carrito, userId, bookingId, name, email) => {
   const notificationURL =
     "https://gotrippf-production.up.railway.app/urlPago/webhook-pago/";
   const additionalData = {
-    userId: userId,
-    bookingId: bookingId,
-    email: email,
-    name: name,
+    userId:userId,
+    bookingId:bookingId,
+    email:email,
+    name:name,
   };
 
   const encodedData = Object.entries(additionalData)
@@ -37,9 +37,9 @@ const ORDEN_PAGO = async (carrito, userId, bookingId, name, email) => {
   const compra = await mercadopago.preferences.create({
     items,
     back_urls: {
-      success: "https://gotrippf-production.up.railway.app/urlPago/succes",
-      failure: "https://gotrippf-production.up.railway.app/urlPago/failure",
-      pending: "https://gotrippf-production.up.railway.app/urlPago/pending",
+        success: "https://gotrippf-production.up.railway.app/urlPago/succes",
+        failure: "https://gotrippf-production.up.railway.app/urlPago/failure",
+        pending: "https://gotrippf-production.up.railway.app/urlPago/pending",
     },
     notification_url: notificationURLWithParams,
   });
