@@ -11,12 +11,10 @@ const { Loginuser } = require("../handlers/UserHandlers/loginUsers");
 const tokenHeader = require("../handlers/UserHandlers/auth");
 const roleUserHandler = require("../handlers/UserHandlers/roleUser");
 const passport = require('passport');
-const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const session = require('express-session');
 const config = require('../controllers/GoogleAuth/google');
 const { googleHandler } = require("../handlers/Google/googleHandler");
-const twilio = require('twilio');
 const WhatsappHandler = require("../handlers/WhatsappHandlers/WhatsappHandler")
 
 

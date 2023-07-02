@@ -3,7 +3,7 @@ const nodemailer = require("nodemailer");
 
 // Dany trabajar en la coneccion de la data de usurio para llenar los campos de name ,from, to ,subjet
 
-const envioCorreo = async (result) => {
+const envioCorreo = async (result, res) => {
   try {
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -124,6 +124,8 @@ const envioCorreo = async (result) => {
         console.log("Correo enviado: " + info.response);
       }
     });
+
+    return res.status(200).json({ message: "Email sent successfully!"})
   } catch (error) {
     throw new Error({ error: error.message });
   }
