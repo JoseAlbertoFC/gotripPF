@@ -1,4 +1,4 @@
-const PENDIENTE_PAGO =(req,res) => {
+const PENDIENTE_PAGO = async (req,res) => {
   return ({succes:"PENDIENTE"})
 
 }
