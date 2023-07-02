@@ -12,7 +12,7 @@ const hotelRoute = Router();
 
 hotelRoute.post('/newhotel', tokenHeader, roleUserHandler(["admin", "host"]), postNewHotel)
 
-hotelRoute.get('/findhotel',tokenHeader, roleUserHandler(["user", "admin", "host"]), getHotel)
+hotelRoute.get('/findhotel', getHotel)
 
 hotelRoute.get('/findhotel/:idHotel', tokenHeader, roleUserHandler(["user", "admin", "host"]),getHotelId)
 
