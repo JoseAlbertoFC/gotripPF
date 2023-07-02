@@ -18,7 +18,7 @@ const ORDEN_PAGO = async (carrito,userId,bookingId) => {
   }));
   
   // En este apartado en desarrollo tienes que correr el ngrok en una consola aparte y copiar el url que te brinda.
-    const notificationURL = "https://eb0f-187-189-163-190.ngrok.io/urlPago/webhook-pago/";
+    const notificationURL = "https://gotrippf-production.up.railway.app/urlPago/webhook-pago/";
 const additionalData = {
   userId: userId,
   bookingId: bookingId
