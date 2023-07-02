@@ -5,7 +5,7 @@ const { envioCorreo } = require("../EnvioCorreos/postCorreos");
 
 // La funcion de pago captura el id  el pago el bokingid y el userid para poder generar el recibo con la informacion de pago.
 
-const WEBHOOK_PAGO = async ({ payment, id, bookingId, userId, email, name }) => {
+const WEBHOOK_PAGO = async (payment, id, bookingId, userId, email, name) => {
   try {
     if (payment.type === "payment") {
       const data = await mercadopago.payment.findById(id);
@@ -29,10 +29,9 @@ const WEBHOOK_PAGO = async ({ payment, id, bookingId, userId, email, name }) => 
     // Se envia la data del recibo de pago a la funcion para crear el nuego pago en la base de datos.
     const pay = await newPay(dataPay);
     // se Mandan los datos a la funcion correo  para poder enviar en automatico el correo una vez que realiza el pago.
-      const emailData = await envioCorreo(dataPay);
-
-      // Retornamos el mensaje de pago aprovado para el controlador
-      return emailData;
+    const emailData = await envioCorreo(dataPay);
+    // Retornamos el mensaje de pago aprovado para el controlador
+    return { Payment: "Aprovado" };
   } catch (error) {
     throw new Error({ error: error.message });
   }
