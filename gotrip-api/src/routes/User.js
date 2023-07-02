@@ -431,6 +431,7 @@ userRoute.get('/logout', (req, res, next) => {
             return next(err)
         }
         // Redirigir a la página de inicio de sesión o a cualquier otra página
+        req.session.destroy()
         res.redirect('/login');
     });
 });
