@@ -120,9 +120,10 @@ const envioCorreo = async (result, res) => {
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);
+        return
       } else {
         console.log("Correo enviado: " + info.response);
-        return res.status(200).json({ message: "Email sent successfully!"})
+        return
       }
     });
 
