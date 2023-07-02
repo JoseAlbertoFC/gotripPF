@@ -14,10 +14,10 @@ const envioCorreo = async (result, res) => {
       secure: true, // Habilitar la conexión segura
     });
 
-    const name = "juan Daniel Luevano Ruiz";
+    const name = `${result.name}`;
     const mailOptions = {
       from: "hoteldeveloperfull@gmail.com",
-      to: "mcdany996@gmail.com",
+      to: `${result.email}`,
       subject: "Comprobante de pago",
       html: `
       <head>
@@ -122,10 +122,10 @@ const envioCorreo = async (result, res) => {
         console.log(error);
       } else {
         console.log("Correo enviado: " + info.response);
+        return res.status(200).json({ message: "Email sent successfully!"})
       }
     });
 
-    return res.status(200).json({ message: "Email sent successfully!"})
   } catch (error) {
     throw new Error({ error: error.message });
   }
