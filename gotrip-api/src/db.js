@@ -2,10 +2,6 @@ require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
-const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
-
-
-
 
 const sequelize = new Sequelize({
   database: process.env.PGDATABASE,
@@ -26,9 +22,8 @@ const sequelize = new Sequelize({
     },
     keepAlive: true,
   },
-  ssl: true
-}
-);
+  ssl: true,
+});
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
@@ -66,37 +61,43 @@ const {
 Destination.hasMany(Hotel, { as: "hotel", foreignKey: "destinationId" });
 
 Hotel.hasMany(Rooms, { as: "rooms", foreignKey: "hotelId" });
-Hotel.belongsTo(Destination, { as: "destination", foreignKey: "destinationId"});
+Hotel.belongsTo(Destination, {
+  as: "destination",
+  foreignKey: "destinationId",
+});
 Hotel.hasMany(Gallery, { as: "gallery", foreignKey: "hotelId" });
 Hotel.hasMany(Rating, { as: "rating", foreignKey: "hotelId" });
-Hotel.hasMany(Booking, { as: 'booking', foreignKey: 'hotelId' });
-Hotel.belongsTo(User, { as: 'user',foreignKey: 'userId' });
+Hotel.hasMany(Booking, { as: "booking", foreignKey: "hotelId" });
+Hotel.belongsTo(User, { as: "user", foreignKey: "userId" });
 
-User.hasMany(Hotel, { as: 'hotel', foreignKey: 'userId' });
-
+User.hasMany(Hotel, { as: "hotel", foreignKey: "userId" });
 
 Rooms.belongsTo(Hotel, { as: "hotel", foreignKey: "hotelId" });
 Rooms.belongsToMany(Service, { through: "Rooms_Service" });
-Rooms.hasMany(Gallery, {as: "gallery",  foreignKey: 'roomId' });
+Rooms.hasMany(Gallery, { as: "gallery", foreignKey: "roomId" });
 
 Service.belongsToMany(Rooms, { through: "Rooms_Service" });
 
-Booking.belongsTo(Rooms, { as: 'rooms', foreignKey: 'roomId' });
-Booking.hasOne(Pay, { as: 'pay', foreignKey: 'bookingId' });
-Booking.belongsTo(Hotel, { as: 'hotel', foreignKey: 'hotelId' });
-Booking.belongsTo(User, { as: 'user', foreignKey: 'userId' });
+Booking.belongsTo(Rooms, { as: "rooms", foreignKey: "roomId" });
+Booking.hasOne(Pay, { as: "pay", foreignKey: "bookingId" });
+Booking.belongsTo(Hotel, { as: "hotel", foreignKey: "hotelId" });
+Booking.belongsTo(User, { as: "user", foreignKey: "userId" });
 
 Rating.belongsTo(Hotel, { as: "hotel", foreignKey: "hotelId" });
 Rating.belongsTo(User, { as: "user", foreignKey: "userId" });
 Rating.belongsTo(Rooms, { as: "rooms", foreignKey: "userId" });
 
-User.hasMany(Pay, { as: 'pay', foreignKey: 'userId' });
+User.hasMany(Pay, { as: "pay", foreignKey: "userId" });
 
-Pay.belongsTo(User, { as: 'user', foreignKey: 'userId' });
-Pay.belongsTo(Booking, { as: 'booking', foreignKey: 'bookingId' });
+Pay.belongsTo(User, { as: "user", foreignKey: "userId" });
+Pay.belongsTo(Booking, { as: "booking", foreignKey: "bookingId" });
 
 Gallery.belongsTo(Hotel, { as: "hotel", foreignKey: "hotelId" });
-Gallery.belongsTo(Rooms, { as: "rooms", foreignKey: 'roomId', allowNull: true });
+Gallery.belongsTo(Rooms, {
+  as: "rooms",
+  foreignKey: "roomId",
+  allowNull: true,
+});
 
 module.exports = {
   ...sequelize.models,
