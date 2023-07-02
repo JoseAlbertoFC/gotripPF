@@ -422,7 +422,9 @@ userRoute.get('/profile', googleHandler);
 // Ruta de logout
 userRoute.get('/logout', (req, res, next) => {
     // Cerrar sesión del usuario
-    req.logout();
+    req.logout(() => {
+      res.status(200).json({ message: "Session closed succesfuly"})
+    });
     req.logout(err => {
         if (err) {
             // Manejar cualquier error que ocurra durante el logout
