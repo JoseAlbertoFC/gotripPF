@@ -8,6 +8,7 @@ const { readallUserID } = require("../handlers/UserHandlers/readUserID");
 const { updatedataUser } = require("../handlers/UserHandlers/updateUser");
 const { restoreUserHandler } = require("../handlers/UserHandlers/restoreUser")
 const { Loginuser } = require("../handlers/UserHandlers/loginUsers");
+const { readDeletedHandler } = require("../handlers/UserHandlers/getDeletedUsers")
 const tokenHeader = require("../handlers/UserHandlers/auth");
 const roleUserHandler = require("../handlers/UserHandlers/roleUser");
 const passport = require('passport');
@@ -16,6 +17,7 @@ const session = require('express-session');
 const config = require('../controllers/GoogleAuth/google');
 const { googleHandler } = require("../handlers/Google/googleHandler");
 const WhatsappHandler = require("../handlers/WhatsappHandlers/WhatsappHandler")
+
 
 
 
@@ -369,6 +371,7 @@ userRoute.put("/updateUser/:id",tokenHeader,roleUserHandler(["user", 'admin','ho
 // El login no cuenta con proteccion de ruta cualquier usuario tiene acceso a las rutas 
 userRoute.post("/login",Loginuser)
 userRoute.put("/restoreUser/:userId",tokenHeader, roleUserHandler(["host"]), restoreUserHandler)
+userRoute.get("/readDeletedUsers", readDeletedHandler)
 
 // Configuración de Express
 userRoute.use(session({ secret: 'secretStuff', resave: false, saveUninitialized: true }));
