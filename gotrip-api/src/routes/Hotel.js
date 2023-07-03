@@ -5,14 +5,15 @@ const {putUpdateHotel  ,
         postNewHotel,
         getHotel,
         getHotelId,
+        getDeletedHotel,
         restoreHotel,
         deleteHotel} = require("../handlers/HotelHandlers/indexHandlers.js")
 
 const hotelRoute = Router();
 
-hotelRoute.post('/newhotel', tokenHeader, roleUserHandler(["admin", "host"]), postNewHotel)
-
 hotelRoute.get('/findhotel', getHotel)
+
+hotelRoute.post('/newhotel', tokenHeader, roleUserHandler(["admin", "host"]), postNewHotel)
 
 hotelRoute.get('/findhotel/:idHotel', tokenHeader, roleUserHandler(["user", "admin", "host"]),getHotelId)
 
@@ -21,5 +22,7 @@ hotelRoute.put('/updhotel', tokenHeader, roleUserHandler(["admin", "host"]), put
 hotelRoute.delete('/delhotel/:idHotel', tokenHeader, roleUserHandler(["admin", "host"]), deleteHotel)
 
 hotelRoute.put("/restoreHotel/:id", tokenHeader, roleUserHandler(["host"]), restoreHotel)
+
+hotelRoute.get("/readDeletedHotel", getDeletedHotel)
 
 module.exports = hotelRoute
