@@ -371,7 +371,7 @@ userRoute.put("/updateUser/:id",tokenHeader,roleUserHandler(["user", 'admin','ho
 // El login no cuenta con proteccion de ruta cualquier usuario tiene acceso a las rutas 
 userRoute.post("/login",Loginuser)
 userRoute.put("/restoreUser/:userId",tokenHeader, roleUserHandler(["host"]), restoreUserHandler)
-userRoute.get("/readDeletedUsers", readDeletedHandler)
+userRoute.get("/readDeletedUsers", tokenHeader, roleUserHandler(["host"]), readDeletedHandler)
 
 // Configuración de Express
 userRoute.use(session({ secret: 'secretStuff', resave: false, saveUninitialized: true }));
