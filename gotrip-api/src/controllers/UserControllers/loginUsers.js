@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const { User } = require("../../db");
-const { tokenSing } = require('./generateToken');
-const { HederCookie } = require("./generateToken")
+const {tokenSing} = require('./generateToken');
 
 const login = async (username, passwordlogin ) => {
 
@@ -24,9 +23,7 @@ const login = async (username, passwordlogin ) => {
 
     const isPasswordMatch = bcrypt.compareSync(passwordlogin, user.password);
 
-      const tokenSession = await tokenSing(user)
-
-      const cookie = await HederCookie()
+     const tokenSession = await tokenSing(user)
 
 
     if (!isPasswordMatch) {
@@ -35,9 +32,7 @@ const login = async (username, passwordlogin ) => {
 
     const data = {
       data: user,
-        tokenSession,
-        cookie
-     
+      tokenSession
     }
 
     // Proceso de inicio de sesión exitoso
