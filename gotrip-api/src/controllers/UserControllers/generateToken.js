@@ -1,47 +1,30 @@
-const { v4: uuidv4 } = require('uuid');
-
+// Vamos a usar la libreria JWT  para el token 
 const jwt = require('jsonwebtoken');
 
+
+// Recibiremso un usuario de la base de datos.
 const tokenSing = async (user) => {
-   
-
-    const token = jwt.sign({
-        _id: user.id,
-        role: user.rol,
-        
-    },
-        process.env.JWT_SECRET,
-        {
-            expiresIn: "2h"
-        });
-
-    return token;
+    // Creamos el token con la siguiente informacion  el id del usuario el rol que tiene y con una duracion de 2 horas para el token.
+  return jwt.sign({
+    _id:user.id,
+    role: user.rol
+  },
+  process.env.JWT_SECRET,
+  {
+    expiresIn:"2h"
+  }
+  )
 }
 
+// En esta fucnion vamos a verificar que el token sea valido.
 const verifyToken = async (token) => {
     try {
-        return jwt.verify(token, process.env.JWT_SECRET);
-    } catch (e) {
-        return null;
-    }
+     // recivimos el token y lo verificamos con con la llave secreta para verificar que sea un token creado pro nosotros y encryptado  por temas de seguridad.
+    return jwt.verify(token,process.env.JWT_SECRET)
+  } catch (e) {
+    return null
+    
+  }
 }
 
-const generateCookieValue = () => {
-    // Genera un UUID (v4)
-    const uuid = uuidv4();
-
-    return uuid;
-}
-
-const HederCookie = async () => {
-    const cookieName = 'mi_cookie';
-    const cookieValue = generateCookieValue(); // Generar el valor de la cookie dinámicamente
-    const expirationDate = new Date(Date.now() + 86 * 60 * 60 * 1000).toUTCString(); // Mas de 3 Dias 
-
-    const cookie = `${cookieName}=${cookieValue}; expires=${expirationDate}; path=/`;
-
-
-    return cookie
-}
-
-module.exports = { tokenSing, verifyToken, HederCookie };
+module.exports = {tokenSing, verifyToken}
