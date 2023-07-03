@@ -17,7 +17,7 @@ galleryRoutes
   .get("/", tokenHeader, roleUserHandler(["user", "admin", "host"]), getGalleries)
   .get("/:id", tokenHeader, roleUserHandler(["user", "admin", "host"]), getGalleriesById)
   .delete("/:id", tokenHeader, roleUserHandler(["host"]), deleteGalleries)
-  .post("/", tokenHeader, roleUserHandler(["admin", "host"]), postGallery)
-  .post("/upload", tokenHeader, roleUserHandler(["admin", "host"]), postImages)
+  .post("/", postGallery)
+  .post("/upload", postImages)
 
 module.exports = galleryRoutes;
