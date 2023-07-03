@@ -1,5 +1,3 @@
-const { v4: uuidv4 } = require("uuid");
-
 const jwt = require("jsonwebtoken");
 
 const tokenSing = async (user) => {
@@ -25,16 +23,9 @@ const verifyToken = async (token) => {
   }
 };
 
-const generateCookieValue = () => {
-  
-  const uuid = uuidv4();
-
-  return uuid;
-};
-
-const HederCookie = async () => {
+const HederCookie = async (token) => {
   const cookieName = "mi_cookie";
-  const cookieValue = generateCookieValue(); 
+  const cookieValue = token; 
   const expirationDate = new Date(
     Date.now() + 86 * 60 * 60 * 1000
   ).toUTCString(); 
