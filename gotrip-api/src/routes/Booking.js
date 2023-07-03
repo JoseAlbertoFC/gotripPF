@@ -11,10 +11,11 @@ const { putBooking } = require("../handlers/BookingHandlers/putBooking");
 const {
   restoreBooking,
 } = require("../handlers/BookingHandlers/restoreBooking");
-const { getDeletedBookings } = require("../handlers/BookingHandlers/getDeletedBooking")
+const {
+  getDeletedBookings,
+} = require("../handlers/BookingHandlers/getDeletedBooking");
 
 const bookingRoutes = Router();
-
 
 bookingRoutes.post(
   "/",
@@ -52,6 +53,11 @@ bookingRoutes.put(
   roleUserHandler(["host"]),
   restoreBooking
 );
-bookingRoutes.get("/getDeletedBookigs", getDeletedBookings)
+bookingRoutes.get(
+  "/getDeletedBookigs",
+  tokenHeader,
+  roleUserHandler(["host"]),
+  getDeletedBookings
+);
 
 module.exports = bookingRoutes;

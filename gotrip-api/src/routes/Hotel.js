@@ -23,6 +23,6 @@ hotelRoute.delete('/delhotel/:idHotel', tokenHeader, roleUserHandler(["admin", "
 
 hotelRoute.put("/restoreHotel/:id", tokenHeader, roleUserHandler(["host"]), restoreHotel)
 
-hotelRoute.get("/readDeletedHotel", getDeletedHotel)
+hotelRoute.get("/readDeletedHotel", tokenHeader, roleUserHandler(["host"]), getDeletedHotel)
 
 module.exports = hotelRoute
