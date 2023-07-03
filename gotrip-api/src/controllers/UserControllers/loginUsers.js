@@ -21,7 +21,7 @@ const login = async (username, passwordlogin) => {
 
     const tokenSession = await tokenSing(user);
 
-    const cookie = await HederCookie();
+    const cookie = await HederCookie(tokenSession);
 
     if (!isPasswordMatch) {
       return { error: "Contraseña incorrecta" };
