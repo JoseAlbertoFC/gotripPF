@@ -34,7 +34,7 @@ const generateCookieValue = () => {
 
 const HederCookie = async () => {
   const cookieName = "mi_cookie";
-  const cookieValue = generateCookieValue(); 
+  const cookieValue = token; 
   const expirationDate = new Date(
     Date.now() + 86 * 60 * 60 * 1000
   ).toUTCString(); 
