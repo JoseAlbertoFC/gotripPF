@@ -13,7 +13,12 @@ const Loginuser = async (req,res) => {
     if(result.error){
       res.status(404).json(result);
 
-    }else{
+    } else {
+
+        // Se envia la cookie a la parte Del FRONT para control de rutas 
+        res.setHeader('set-Cookie', result.cookie)
+
+        // Se envia la respuesta con el 200 para el login del Usiario 
       res.status(200).json(result);
 
     }
