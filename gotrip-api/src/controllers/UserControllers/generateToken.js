@@ -32,7 +32,7 @@ const generateCookieValue = () => {
   return uuid;
 };
 
-const HederCookie = async (token) => {
+const HederCookie = async () => {
   const cookieName = "mi_cookie";
   const cookieValue = token; 
   const expirationDate = new Date(
