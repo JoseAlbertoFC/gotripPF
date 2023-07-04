@@ -1,5 +1,5 @@
 const { User } = require("../../db");
-const jwt = require("jsonwebtoken");
+const tokenSing = require("../UserControllers/generateToken")
 
 const googleCompare = async (mail, disName) => {
   try {
@@ -25,31 +25,18 @@ const googleCompare = async (mail, disName) => {
         country: "Not available",
         status: true,
       });
-      const token = jwt.sign(
-        { _id: userCreated.id, rol: userCreated.rol },
-        "secret",
-        {
-          expiresIn: "3h",
-        }
-      );
+      const tokenSession = await tokenSing(userTempt);
       return {
         data: userCreated,
-        token,
+        tokenSession,
         createdInBD: true,
       };
     }
-
-    const token = jwt.sign(
-      { _id: userTempt.id, rol: userTempt.rol },
-      "secret",
-      {
-        expiresIn: "3h",
-      }
-    );
+    const tokenSession = await tokenSing(userTempt);
     
     return {
       data: userTempt,
-      token,
+      tokenSession,
       createdInBD: false,
     };
   } catch (error) {
