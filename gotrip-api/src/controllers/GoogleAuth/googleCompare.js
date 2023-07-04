@@ -1,5 +1,5 @@
 const { User } = require("../../db");
-const tokenSing = require("../UserControllers/generateToken")
+const { tokenSing }= require("../UserControllers/generateToken")
 
 const googleCompare = async (mail, disName) => {
   try {
