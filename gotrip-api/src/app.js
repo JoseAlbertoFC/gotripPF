@@ -14,8 +14,7 @@ server.use(morgan('dev'));
 server.use(cookieParser());
 server.use(
   cors({
-    origin: '*',
-    credentials: true,
+    origin: "*",
   })
 )
 // server.use(cors());
