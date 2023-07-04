@@ -14,7 +14,7 @@ server.use(cookieParser());
 server.use(morgan('dev'));
 server.use(
   cors({
-    origin: "*",
+    origin: ['http://localhost:3000'],
     credentials: true,
   })
 )
