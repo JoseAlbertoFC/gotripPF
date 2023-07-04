@@ -25,12 +25,12 @@ const verifyToken = async (token) => {
 
 const HederCookie = async (token) => {
   const cookieName = "mi_cookie";
-  const cookieValue = token; 
+  const cookieValue = token;
   const expirationDate = new Date(
     Date.now() + 86 * 60 * 60 * 1000
-  ).toUTCString(); 
+  ).toUTCString();
 
-  const cookie = `${cookieName}=${cookieValue}; expires=${expirationDate}; path=/`;
+  const cookie = `${cookieName}=${cookieValue}; expires=${expirationDate}; path=/; httpOnly; secure`;
 
   return cookie;
 };
