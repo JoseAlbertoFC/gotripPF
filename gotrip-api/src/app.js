@@ -15,6 +15,7 @@ server.use(morgan('dev'));
 server.use(
   cors({
     origin: "*",
+    credentials: true,
   })
 )
 // server.use(cors());
