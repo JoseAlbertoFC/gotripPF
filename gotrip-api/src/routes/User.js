@@ -1,6 +1,6 @@
 const { Router } = require ("express");
 // Aqui van todas la librerias que usaremso 
-
+const googleAuth = require('../dal/google-auth.dal');
 const { userNew } = require("../handlers/UserHandlers/createUsers");
 const { deleteUserhandler } = require("../handlers/UserHandlers/deleteUser");
 const { readallUser } = require("../handlers/UserHandlers/readAllUser");
