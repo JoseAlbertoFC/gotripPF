@@ -391,7 +391,7 @@ passport.use(
       // Aquí puedes realizar acciones con el perfil del usuario obtenido de Google
      // console.log(profile);
      userProfile = profile;
-      return done(null, userProfilerofile);
+      return done(null, userProfile);
     }
   )
 );
