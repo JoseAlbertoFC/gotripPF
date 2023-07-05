@@ -379,6 +379,7 @@ userRoute.use(passport.initialize());
 userRoute.use(passport.session());
 
 // Configuración de Passport
+let userProfile 
 passport.use(
   new GoogleStrategy(
     {
@@ -389,37 +390,45 @@ passport.use(
     (accessToken, refreshToken, profile, done) => {
       // Aquí puedes realizar acciones con el perfil del usuario obtenido de Google
      // console.log(profile);
-      return done(null, profile);
+     userProfile = profile;
+      return done(null, userProfilerofile);
     }
   )
 );
 
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
+// passport.serializeUser((user, done) => {
+//   done(null, user);
+// });
 
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
+// passport.deserializeUser((user, done) => {
+//   done(null, user);
+// });
 
 // Rutas
-userRoute.get('/', (req, res) => {
-  res.redirect('/user/auth/google');
-});
+// userRoute.get('/', (req, res) => {
+//   res.redirect('/user/auth/google');
+// });
 
 userRoute.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
 
-userRoute.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }),(req, res) => {
+userRoute.get('/callback', passport.authenticate('google', { failureRedirect: '/login' }),(req, res) => {
     // El usuario ha sido autenticado correctamente
 
-    res.redirect('/success');
+    res.redirect('auth/google/success');
   }
 );
 
 userRoute.get("/success", async (req, res) => {
-  const { failure, success} = await googleAuth.registerWithGoogle(profile);
-  res.render("success", { user: profile})
+  const { failure, success} = await googleAuth.registerWithGoogle(userProfile);
+  if(failure){
+    console.log("El usuario de google no existe en la base de datos")
+  } else {
+    console.log("Se ha registrado un nuevo usuario de google")
+  }
+  res.render("success", { user: userProfile})
 })
+
+userRoute.get('/error', (req, res) => res.send('Error logging in via Google..'));
 
 userRoute.get('/profile', googleHandler);
 
