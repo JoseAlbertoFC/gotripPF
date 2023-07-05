@@ -411,10 +411,10 @@ passport.use(
 
 userRoute.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
 
-userRoute.get('/callback', passport.authenticate('google', { failureRedirect: '/login' }),(req, res) => {
+userRoute.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }),(req, res) => {
     // El usuario ha sido autenticado correctamente
 
-    res.redirect('/auth/google/success');
+    res.redirect('/user/success');
   }
 );
 
