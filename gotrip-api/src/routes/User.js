@@ -414,7 +414,7 @@ userRoute.get('/auth/google', passport.authenticate('google', { scope: ['email',
 userRoute.get('/callback', passport.authenticate('google', { failureRedirect: '/login' }),(req, res) => {
     // El usuario ha sido autenticado correctamente
 
-    res.redirect('auth/google/success');
+    res.redirect('/auth/google/success');
   }
 );
 
