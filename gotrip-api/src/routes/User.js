@@ -405,9 +405,9 @@ passport.use(
 // });
 
 // Rutas
-// userRoute.get('/', (req, res) => {
-//   res.redirect('/user/auth/google');
-// });
+userRoute.get('/', (req, res) => {
+  res.redirect('/user/auth/google');
+});
 
 userRoute.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
 
