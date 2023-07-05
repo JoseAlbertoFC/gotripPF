@@ -422,13 +422,25 @@ userRoute.get("/success", async (req, res) => {
   const { failure, success} = await googleAuth.registerWithGoogle(userProfile);
   if(failure){
     console.log("El usuario de google no existe en la base de datos")
+    res.status(200).json({ user: userProfile, message: "El usuario de google no existe en la base de datos" })
   } else {
     console.log("Se ha registrado un nuevo usuario de google")
+    res.status(200).json({ user: userProfile, message: "Se ha registrado un nuevo usuario de google" })
   }
-  res.render("success", { user: userProfile})
 })
 
 userRoute.get('/error', (req, res) => res.send('Error logging in via Google..'));
+
+userRoute.get('/signout', (req, res) => {
+  try {
+    req.session.destroy(function (err) {
+      console.log('session destroyed.');
+    });
+    res.status(200).json({ message: 'Signed out successfully' });
+  } catch (err) {
+    res.status(400).json({ message: 'Failed to sign out user' });
+  }
+});
 
 userRoute.get('/profile', googleHandler);
 
