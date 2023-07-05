@@ -409,14 +409,17 @@ userRoute.get('/', (req, res) => {
 
 userRoute.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
 
-userRoute.get(
-  '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  (req, res) => {
+userRoute.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }),(req, res) => {
     // El usuario ha sido autenticado correctamente
-    res.redirect('/user/profile');
+
+    res.redirect('/success');
   }
 );
+
+userRoute.get("/success", async (req, res) => {
+  const { failure, success} = await googleAuth.registerWithGoogle(profile);
+  res.render("success", { user: profile})
+})
 
 userRoute.get('/profile', googleHandler);
 
