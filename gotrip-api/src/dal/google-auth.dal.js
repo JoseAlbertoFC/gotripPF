@@ -1,5 +1,6 @@
 const { User } = require("../db");
 
+
 const googleAuthDal = {
   registerWithGoogle: async (oauthUser) => {
     console.log(oauthUser);

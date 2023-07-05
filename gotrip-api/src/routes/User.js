@@ -425,7 +425,7 @@ userRoute.get("/success", async (req, res) => {
   } else {
     console.log("Se ha registrado un nuevo usuario de google")
   }
-  res.render("/src/views/success.ejs", { user: userProfile})
+  res.render("success", { user: userProfile})
 })
 
 userRoute.get('/error', (req, res) => res.send('Error logging in via Google..'));
