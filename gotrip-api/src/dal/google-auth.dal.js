@@ -2,15 +2,16 @@ const User = require('../db');
 
 const googleAuthDal = {
   registerWithGoogle: async (oauthUser) => {
-    const isUserExists = await User.findOne({
-      email: oauthUser.email,
-    });
-    if (isUserExists) {
-      const failure = {
-        message: 'User already Registered.',
-      };
-      return { failure };
-    }
+    console.log(oauthUser)
+    // const isUserExists = await User.findOne({
+    //   email: oauthUser.email,
+    // });
+    // if (isUserExists) {
+    //   const failure = {
+    //     message: 'User already Registered.',
+    //   };
+    //   return { failure };
+    // }
 
     const user = new User({
       name: oauthUser.displayName,
