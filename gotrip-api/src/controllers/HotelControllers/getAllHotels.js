@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Hotel, Destination,Rooms,Gallery,User } = require("../../db");
+const { Hotel, Destination,Rooms,Gallery,User, Rating} = require("../../db");
 
 const {validaApi} = require("./buscaApi.js")
 const getHotelAll = async () => {
@@ -12,6 +12,7 @@ const getHotelAll = async () => {
           {model: Rooms, as: "rooms" },
           {model: Gallery, as: "gallery" },
           {model: User, as: "user" },
+          {model: Rating, as: "rating" },
         ],
       });
       return objHotels;
@@ -42,6 +43,7 @@ const getHotelParams = async (querysHotel) => {
         {model: Rooms, as: "rooms" },
         {model: Gallery, as: "gallery" },
         {model: User, as: "user" },
+        {model: Rating, as: "rating" },
       ],
     });
 
@@ -61,6 +63,7 @@ const getHotelById = async (idHotel) => {
         {model: Rooms, as: "rooms" },
         {model: Gallery, as: "gallery" },
         {model: User, as: "user" },
+        {model: Rating, as: "rating" },
       ],
     });
     if (!objHotel) return;
