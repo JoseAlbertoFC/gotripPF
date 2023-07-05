@@ -1,8 +1,8 @@
-const User = require('../db');
+const { User } = require('../db');
 
 const googleAuthDal = {
   registerWithGoogle: async (oauthUser) => {
-    console.log(oauthUser)
+    console.log(oauthUser.email)
     // const isUserExists = await User.findOne({
     //   email: oauthUser.email,
     // });
