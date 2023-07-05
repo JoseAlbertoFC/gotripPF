@@ -414,7 +414,7 @@ userRoute.get(
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
     // El usuario ha sido autenticado correctamente
-    res.redirect('/user/profile');
+    res.redirect('www.google.com');
   }
 );
 
