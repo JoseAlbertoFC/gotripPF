@@ -2,7 +2,7 @@ const { User } = require('../db');
 
 const googleAuthDal = {
   registerWithGoogle: async (oauthUser) => {
-    console.log(oauthUser.email)
+    console.log(oauthUser)
     // const isUserExists = await User.findOne({
     //   email: oauthUser.email,
     // });
@@ -16,8 +16,8 @@ const googleAuthDal = {
     const user = new User({
       name: oauthUser.displayName,
       thirdPartyCreated: true,
-      email: oauthUser.emails[0].value, 
-      photoUser: oauthUser.photos[0].value, 
+      email: oauthUser.email, 
+      photoUser: null, 
       password: "",
       gender: "Not Available",
       address: "Not Available",
