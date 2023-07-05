@@ -7,7 +7,7 @@ const { deleteRating } = require("../handlers/RatingHandlers/deleteRating");
 
 const ratingRoutes = Router();
 
-ratingRoutes.post("/", tokenHeader, roleUserHandler(["user"]), postRating);
+ratingRoutes.post("/", tokenHeader, roleUserHandler(["user", "admin", "host"]), postRating);
 ratingRoutes.get("/", tokenHeader, roleUserHandler(["user", "admin", "host"]), getRatings);
 ratingRoutes.delete("/:id", tokenHeader, roleUserHandler(["host"]), deleteRating);
 
