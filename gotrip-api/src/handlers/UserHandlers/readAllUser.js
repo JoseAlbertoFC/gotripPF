@@ -1,6 +1,5 @@
 const {
-  readUser,
-  googleData,
+  readUser
 } = require("../../controllers/UserControllers/readAllUser");
 
 // Porfa crea un archivo para cada handler
@@ -19,15 +18,4 @@ const readallUser = async (req, res) => {
   }
 };
 
-const dataGoogle = async (req, res) => {
-  const { data } = req.query;
-
-  try {
-    const result = await googleData(data);
-    res.status(200).json(result);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
-module.exports = { readallUser, dataGoogle };
+module.exports = { readallUser};

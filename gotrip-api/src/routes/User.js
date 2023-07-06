@@ -3,7 +3,7 @@ const { Router } = require("express");
 const googleAuth = require("../dal/google-auth.dal");
 const { userNew } = require("../handlers/UserHandlers/createUsers");
 const { deleteUserhandler } = require("../handlers/UserHandlers/deleteUser");
-const { readallUser, dataGoogle } = require("../handlers/UserHandlers/readAllUser");
+const { readallUser } = require("../handlers/UserHandlers/readAllUser");
 const { readallUserID } = require("../handlers/UserHandlers/readUserID");
 const { updatedataUser } = require("../handlers/UserHandlers/updateUser");
 const { restoreUserHandler } = require("../handlers/UserHandlers/restoreUser");
@@ -496,7 +496,6 @@ userRoute.get("/signout", (req, res) => {
 
 userRoute.get("/profile", googleHandler);
 
-userRoute.get("/dataGoogle", dataGoogle);
 
 // Ruta de logout
 userRoute.get("/logout", (req, res) => {
