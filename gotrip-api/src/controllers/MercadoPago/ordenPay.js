@@ -3,7 +3,7 @@ const mercadopago = require("mercadopago");
 const { ACCES_TOKEN } = process.env;
 
 // Esta funcion genera una orden de pago recibe el carrito y el userid junto con el bokingid para poder registrar los datos de la reserva que el cliente esta haciendo.
-const ORDEN_PAGO = async ({reserva, userId, bookingId, name, email}) => {
+const ORDEN_PAGO = async ({reserva, userId, name, email}) => {
   mercadopago.configure({
     access_token: ACCES_TOKEN,
   });
@@ -20,7 +20,6 @@ const ORDEN_PAGO = async ({reserva, userId, bookingId, name, email}) => {
     "https://gotrippf-production.up.railway.app/urlPago/webhook-pago/";
   const additionalData = {
     userId: userId,
-    bookingId: bookingId,
     email: email,
     name: name,
   };

@@ -4,7 +4,6 @@ const webhook = async (req, res) => {
   const payment = req.query;
   const id = req.query["data.id"];
   const userId = req.query["userId"];
-  const bookingId = req.query["bookingId"];
   const name = req.query["name"];
   const email = req.query["email"];
 
@@ -13,7 +12,6 @@ const webhook = async (req, res) => {
       payment,
       id,
       userId,
-      bookingId,
       email,
       name,
     });

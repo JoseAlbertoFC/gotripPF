@@ -14,13 +14,4 @@ const readUser = async () => {
   }
 };
 
-const googleData = async (data) => {
-  try {
-    console.log(data);
-  } catch (error) {
-    console.log(error.message);
-    throw new Error({ error: error.message });
-  }
-};
-
-module.exports = { readUser, googleData };
+module.exports = { readUser };
