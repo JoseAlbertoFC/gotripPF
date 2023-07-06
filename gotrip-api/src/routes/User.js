@@ -414,19 +414,20 @@ userRoute.get('/auth/google', passport.authenticate('google', { scope: ['email',
 userRoute.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }),(req, res) => {
     // El usuario ha sido autenticado correctamente
 
-    res.redirect('/user/success');
+    res.redirect('/user/login');
   }
 );
 
-userRoute.get("/success", async (req, res) => {
+userRoute.get("/user/login", async (req, res) => {
   const { failure, success} = await googleAuth.registerWithGoogle(userProfile);
   if(failure){
+    const token = jwt.sign(userProfile, 'secretKey');
     console.log("El usuario de google no existe en la base de datos")
-    res.redirect("/holaGoogle")
+    res.redirect(`https://gotrippf-production.up.railway.app/user/login?token=${token}`)
     res.status(200).json({ user: userProfile, message: "El usuario de google no existe en la base de datos" })
   } else {
     console.log("Se ha registrado un nuevo usuario de google")
-    res.redirect("/holaGoogle")
+    res.redirect(`https://gotrippf-production.up.railway.app/user/login?token=${token}`)
     res.status(200).json({ user: userProfile, message: "Se ha registrado un nuevo usuario de google" })
   }
 })
