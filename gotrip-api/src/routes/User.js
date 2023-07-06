@@ -419,18 +419,20 @@ userRoute.get('/auth/google/callback', passport.authenticate('google', { failure
 );
 
 userRoute.post("/user/login", async (req, res) => {
-  const { failure, success} = await googleAuth.registerWithGoogle(userProfile);
-  if(failure){
-    const token = jwt.sign(userProfile, 'secretKey');
-    console.log("El usuario de google no existe en la base de datos")
-    res.redirect(`https://gotrippf-production.up.railway.app/user/login?token=${token}`)
-    res.status(200).json({ user: userProfile, message: "El usuario de google no existe en la base de datos" })
+  const { failure, success } = await googleAuth.registerWithGoogle(userProfile);
+  const token = jwt.sign(userProfile, 'secretKey');
+
+  if (failure) {
+    console.log("El usuario de Google no existe en la base de datos");
+    res.status(200).json({ user: userProfile, message: "El usuario de Google no existe en la base de datos" });
   } else {
-    console.log("Se ha registrado un nuevo usuario de google")
-    res.redirect(`https://gotrippf-production.up.railway.app/user/login?token=${token}`)
-    res.status(200).json({ user: userProfile, message: "Se ha registrado un nuevo usuario de google" })
+    console.log("Se ha registrado un nuevo usuario de Google");
+    res.status(200).json({ user: userProfile, message: "Se ha registrado un nuevo usuario de Google" });
   }
-})
+
+  res.redirect(`https://gotrippf-production.up.railway.app/user/login?token=${token}`);
+});
+
 
 userRoute.get('/error', (req, res) => res.send('Error logging in via Google..'));
 
