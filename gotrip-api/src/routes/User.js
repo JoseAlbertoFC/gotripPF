@@ -422,9 +422,11 @@ userRoute.get("/success", async (req, res) => {
   const { failure, success} = await googleAuth.registerWithGoogle(userProfile);
   if(failure){
     console.log("El usuario de google no existe en la base de datos")
+    res.redirect("/holaGoogle")
     res.status(200).json({ user: userProfile, message: "El usuario de google no existe en la base de datos" })
   } else {
     console.log("Se ha registrado un nuevo usuario de google")
+    res.redirect("/holaGoogle")
     res.status(200).json({ user: userProfile, message: "Se ha registrado un nuevo usuario de google" })
   }
 })
