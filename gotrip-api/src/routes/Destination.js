@@ -19,7 +19,7 @@ const destinationRoutes = Router();
 
 destinationRoutes
   .get("/", getDestinations)
-  .get("/:id", tokenHeader, roleUserHandler(["user", "admin", "host"]), getDestinationsId)
+  .get("/:id", tokenHeader, getDestinationsId)
   .post("/", tokenHeader, roleUserHandler(["host"]),postDestination)
   .delete("/:id", tokenHeader, roleUserHandler(["host"]),deleteOfDestination)
   .put("/", tokenHeader, roleUserHandler(["host"]), putDestination);
