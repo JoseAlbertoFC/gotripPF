@@ -418,7 +418,7 @@ userRoute.get('/auth/google/callback', passport.authenticate('google', { failure
   }
 );
 
-userRoute.get("/user/login", async (req, res) => {
+userRoute.post("/user/login", async (req, res) => {
   const { failure, success} = await googleAuth.registerWithGoogle(userProfile);
   if(failure){
     const token = jwt.sign(userProfile, 'secretKey');
