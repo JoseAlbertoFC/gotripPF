@@ -443,11 +443,11 @@ userRoute.get(
   (req, res) => {
     // El usuario ha sido autenticado correctamente
 
-    res.redirect("/user/login");
+    res.redirect("/user/dataGoogle");
   }
 );
 
-userRoute.get(
+userRoute.post(
   "https://gotrippf-production.up.railway.app/user/dataGoogle",
   async (req, res) => {
     const { failure, success } = await googleAuth.registerWithGoogle(
