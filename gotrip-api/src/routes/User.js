@@ -418,7 +418,7 @@ userRoute.get('/auth/google/callback', passport.authenticate('google', { failure
   }
 );
 
-userRoute.post("/user/login", async (req, res) => {
+userRoute.post("https://gotrippf-production.up.railway.app/user/login", async (req, res) => {
   const { failure, success } = await googleAuth.registerWithGoogle(userProfile);
   const token = jwt.sign(userProfile, 'secretKey');
 
