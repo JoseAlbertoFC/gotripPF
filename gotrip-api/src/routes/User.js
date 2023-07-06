@@ -411,24 +411,26 @@ userRoute.get('/', (req, res) => {
 
 userRoute.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
 
-userRoute.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), async (req, res) => {
+userRoute.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }),(req, res) => {
     // El usuario ha sido autenticado correctamente
-    const { failure, success} = await googleAuth.registerWithGoogle(userProfile);
-    const token = jwt.sign(userProfile, 'secretKey');
-    if(failure){
-      console.log("El usuario de google no existe en la base de datos")
-      res.redirect(`/user/login?token=${token}`)
-      res.status(200).json({ user: userProfile, message: "El usuario de google no existe en la base de datos" })
-    } else {
-      console.log("Se ha registrado un nuevo usuario de google")
-      res.redirect(`/user/login?token=${token}`)
-      res.status(200).json({ user: userProfile, message: "Se ha registrado un nuevo usuario de google" })
-    }
+
+    res.redirect('/user/success');
   }
 );
 
-// userRoute.get("/success", async (req, res) => {
-// })
+userRoute.get("/success", async (req, res) => {
+  const { failure, success} = await googleAuth.registerWithGoogle(userProfile);
+  const token = jwt.sign(userProfile, 'secretKey');
+  if(failure){
+    console.log("El usuario de google no existe en la base de datos")
+    res.redirect(`/user/login?token=${token}`)
+    res.status(200).json({ user: userProfile, message: "El usuario de google no existe en la base de datos" })
+  } else {
+    console.log("Se ha registrado un nuevo usuario de google")
+    res.redirect(`/user/login?token=${token}`)
+    res.status(200).json({ user: userProfile, message: "Se ha registrado un nuevo usuario de google" })
+  }
+})
 
 userRoute.get('/error', (req, res) => res.send('Error logging in via Google..'));
 
