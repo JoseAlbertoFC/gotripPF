@@ -13,9 +13,9 @@ const hotelRoute = Router();
 
 hotelRoute.get('/findhotel', getHotel)
 
-hotelRoute.post('/newhotel', tokenHeader, roleUserHandler(["admin", "host"]), postNewHotel)
+hotelRoute.get('/findhotel/:idHotel',getHotelId)
 
-hotelRoute.get('/findhotel/:idHotel', tokenHeader, roleUserHandler(["user", "admin", "host"]),getHotelId)
+hotelRoute.post('/newhotel', tokenHeader, roleUserHandler(["admin", "host"]), postNewHotel)
 
 hotelRoute.put('/updhotel', tokenHeader, roleUserHandler(["admin", "host"]), putUpdateHotel)
 

@@ -1,26 +1,24 @@
-const { Router } = require ("express");
-// Aqui van todas la librerias que usaremso 
-const googleAuth = require('../dal/google-auth.dal');
+const { Router } = require("express");
+// Aqui van todas la librerias que usaremso
+const googleAuth = require("../dal/google-auth.dal");
 const { userNew } = require("../handlers/UserHandlers/createUsers");
 const { deleteUserhandler } = require("../handlers/UserHandlers/deleteUser");
-const { readallUser } = require("../handlers/UserHandlers/readAllUser");
+const { readallUser, dataGoogle } = require("../handlers/UserHandlers/readAllUser");
 const { readallUserID } = require("../handlers/UserHandlers/readUserID");
 const { updatedataUser } = require("../handlers/UserHandlers/updateUser");
-const { restoreUserHandler } = require("../handlers/UserHandlers/restoreUser")
+const { restoreUserHandler } = require("../handlers/UserHandlers/restoreUser");
 const { Loginuser } = require("../handlers/UserHandlers/loginUsers");
-const { readDeletedHandler } = require("../handlers/UserHandlers/getDeletedUsers")
+const {
+  readDeletedHandler,
+} = require("../handlers/UserHandlers/getDeletedUsers");
 const tokenHeader = require("../handlers/UserHandlers/auth");
 const roleUserHandler = require("../handlers/UserHandlers/roleUser");
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth2').Strategy;
-const session = require('express-session');
-const config = require('../controllers/GoogleAuth/google');
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth2").Strategy;
+const session = require("express-session");
+const config = require("../controllers/GoogleAuth/google");
 const { googleHandler } = require("../handlers/Google/googleHandler");
-const WhatsappHandler = require("../handlers/WhatsappHandlers/WhatsappHandler")
-
-
-
-
+const WhatsappHandler = require("../handlers/WhatsappHandlers/WhatsappHandler");
 
 // Aqui va el midleware de User
 const userRoute = Router();
@@ -33,7 +31,7 @@ const userRoute = Router();
  *
  * /user/createNewUser:
  *   post:
- *     summary: Crea un nuevo usuario la ruta no cuenta con proteccion de ruta 
+ *     summary: Crea un nuevo usuario la ruta no cuenta con proteccion de ruta
  *     tags:
  *       - Users
  *     requestBody:
@@ -113,17 +111,15 @@ const userRoute = Router();
  *                   type: string
  */
 
-
 // La no proteger esta ruta con el meto JWT
 
-
-userRoute.post("/createNewUser", userNew)
+userRoute.post("/createNewUser", userNew);
 
 /**
  * @swagger
  * /user/deleteUser/{userId}:
  *   delete:
- *     summary: Elimina un usuario por su ID -la ruta cuenta con proteccion de ruta solo acepta peticiones de admin y de host 
+ *     summary: Elimina un usuario por su ID -la ruta cuenta con proteccion de ruta solo acepta peticiones de admin y de host
  *     tags:
  *       - Users
  *     parameters:
@@ -142,19 +138,23 @@ userRoute.post("/createNewUser", userNew)
  *         description: Error al eliminar el usuario
  */
 
-
-userRoute.delete("/deleteUser/:id",tokenHeader,roleUserHandler(['admin','host']), deleteUserhandler)
+userRoute.delete(
+  "/deleteUser/:id",
+  tokenHeader,
+  roleUserHandler(["admin", "host"]),
+  deleteUserhandler
+);
 
 /**
  * @swagger
  * /user/readUser:
  *   get:
- *     summary: Obtiene todos los usuarios -la ruta cuenta con proteccion de ruta solo acepta peticiones de admin y de host 
+ *     summary: Obtiene todos los usuarios -la ruta cuenta con proteccion de ruta solo acepta peticiones de admin y de host
  *     tags:
  *       - Users
  *     responses:
  *       200:
- *         description: Lista de usuarios obtenida exitosamente 
+ *         description: Lista de usuarios obtenida exitosamente
  *         content:
  *           application/json:
  *             schema:
@@ -194,8 +194,12 @@ userRoute.delete("/deleteUser/:id",tokenHeader,roleUserHandler(['admin','host'])
  *         description: Error al obtener la lista de usuarios
  */
 
-
-userRoute.get("/readUser", tokenHeader, roleUserHandler(['admin', 'host']), readallUser)
+userRoute.get(
+  "/readUser",
+  tokenHeader,
+  roleUserHandler(["admin", "host"]),
+  readallUser
+);
 /**
  * @swagger
  * /user/readUser/{id}:
@@ -252,14 +256,17 @@ userRoute.get("/readUser", tokenHeader, roleUserHandler(['admin', 'host']), read
  *         description: Error al obtener el usuario
  */
 
-
-
-userRoute.get("/readUser/:id", tokenHeader, roleUserHandler(['admin', 'host']), readallUserID)
+userRoute.get(
+  "/readUser/:id",
+  tokenHeader,
+  roleUserHandler(["admin", "host"]),
+  readallUserID
+);
 /**
  * @swagger
  * /user/updateUser/{userId}:
  *   put:
- *     summary: Actualiza un usuario por su ID Esta ruta acepta peticiones de usuarios admin y host 
+ *     summary: Actualiza un usuario por su ID Esta ruta acepta peticiones de usuarios admin y host
  *     tags:
  *       - Users
  *     parameters:
@@ -328,8 +335,12 @@ userRoute.get("/readUser/:id", tokenHeader, roleUserHandler(['admin', 'host']), 
  *         - password
  */
 
-
-userRoute.put("/updateUser/:id",tokenHeader,roleUserHandler(["user", 'admin','host']), updatedataUser)
+userRoute.put(
+  "/updateUser/:id",
+  tokenHeader,
+  roleUserHandler(["user", "admin", "host"]),
+  updatedataUser
+);
 /**
  * @swagger
  * /user/login:
@@ -368,18 +379,30 @@ userRoute.put("/updateUser/:id",tokenHeader,roleUserHandler(["user", 'admin','ho
  *         - password
  */
 
-// El login no cuenta con proteccion de ruta cualquier usuario tiene acceso a las rutas 
-userRoute.post("/login",Loginuser)
-userRoute.put("/restoreUser/:userId",tokenHeader, roleUserHandler(["host"]), restoreUserHandler)
-userRoute.get("/readDeletedUsers", tokenHeader, roleUserHandler(["host"]), readDeletedHandler)
+// El login no cuenta con proteccion de ruta cualquier usuario tiene acceso a las rutas
+userRoute.post("/login", Loginuser);
+userRoute.put(
+  "/restoreUser/:userId",
+  tokenHeader,
+  roleUserHandler(["host"]),
+  restoreUserHandler
+);
+userRoute.get(
+  "/readDeletedUsers",
+  tokenHeader,
+  roleUserHandler(["host"]),
+  readDeletedHandler
+);
 
 // Configuración de Express
-userRoute.use(session({ secret: 'secretStuff', resave: false, saveUninitialized: true }));
+userRoute.use(
+  session({ secret: "secretStuff", resave: false, saveUninitialized: true })
+);
 userRoute.use(passport.initialize());
 userRoute.use(passport.session());
 
 // Configuración de Passport
-let userProfile 
+let userProfile;
 passport.use(
   new GoogleStrategy(
     {
@@ -389,8 +412,8 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       // Aquí puedes realizar acciones con el perfil del usuario obtenido de Google
-     // console.log(profile);
-     userProfile = profile;
+      // console.log(profile);
+      userProfile = profile;
       return done(null, userProfile);
     }
   )
@@ -405,65 +428,91 @@ passport.deserializeUser((user, done) => {
 });
 
 // Rutas
-userRoute.get('/', (req, res) => {
-  res.redirect('/user/auth/google');
+userRoute.get("/", (req, res) => {
+  res.redirect("/user/auth/google");
 });
 
-userRoute.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
+userRoute.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
 
-userRoute.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }),(req, res) => {
+userRoute.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  (req, res) => {
     // El usuario ha sido autenticado correctamente
 
-    res.redirect('/user/login');
+    res.redirect("/user/login");
   }
 );
 
-userRoute.post("https://gotrippf-production.up.railway.app/user/login", async (req, res) => {
-  const { failure, success } = await googleAuth.registerWithGoogle(userProfile);
-  const token = jwt.sign(userProfile, 'secretKey');
+userRoute.get(
+  "https://gotrippf-production.up.railway.app/user/dataGoogle",
+  async (req, res) => {
+    const { failure, success } = await googleAuth.registerWithGoogle(
+      userProfile
+    );
+    const token = jwt.sign(userProfile, "secretKey");
 
-  if (failure) {
-    console.log("El usuario de Google no existe en la base de datos");
-    res.status(200).json({ user: userProfile, message: "El usuario de Google no existe en la base de datos" });
-  } else {
-    console.log("Se ha registrado un nuevo usuario de Google");
-    res.status(200).json({ user: userProfile, message: "Se ha registrado un nuevo usuario de Google" });
+    if (failure) {
+      console.log("El usuario de Google no existe en la base de datos");
+      res
+        .status(200)
+        .json({
+          user: userProfile,
+          message: "El usuario de Google no existe en la base de datos",
+        });
+    } else {
+      console.log("Se ha registrado un nuevo usuario de Google");
+      res
+        .status(200)
+        .json({
+          user: userProfile,
+          message: "Se ha registrado un nuevo usuario de Google",
+        });
+    }
+
+    res.redirect(
+      `https://gotrippf-production.up.railway.app/user/dataGoogle?token=${token}`
+    );
   }
+);
 
-  res.redirect(`https://gotrippf-production.up.railway.app/user/login?token=${token}`);
-});
+userRoute.get("/error", (req, res) =>
+  res.send("Error logging in via Google..")
+);
 
-
-userRoute.get('/error', (req, res) => res.send('Error logging in via Google..'));
-
-userRoute.get('/signout', (req, res) => {
+userRoute.get("/signout", (req, res) => {
   try {
     req.session.destroy(function (err) {
-      console.log('session destroyed.');
+      console.log("session destroyed.");
     });
-    res.status(200).json({ message: 'Signed out successfully' });
+    res.status(200).json({ message: "Signed out successfully" });
   } catch (err) {
-    res.status(400).json({ message: 'Failed to sign out user' });
+    res.status(400).json({ message: "Failed to sign out user" });
   }
 });
 
-userRoute.get('/profile', googleHandler);
+userRoute.get("/profile", googleHandler);
+
+userRoute.get("/dataGoogle", dataGoogle);
 
 // Ruta de logout
-userRoute.get('/logout', (req, res) => {
+userRoute.get("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      console.error('Error al destruir la sesión:', err);
+      console.error("Error al destruir la sesión:", err);
     }
-    res.clearCookie('connect.sid');
+    res.clearCookie("connect.sid");
     res.status(200).json({ message: "Sesión cerrada exitosamente" });
-    res.redirect('/login');
+    res.redirect("/login");
   });
 });
 
 // Whatsapp implementaicon
 
 // Ruta para recibir mensajes de WhatsApp
-userRoute.post('/webhooks/messages', WhatsappHandler)
+userRoute.post("/webhooks/messages", WhatsappHandler);
 
-module.exports = userRoute
+module.exports = userRoute;
